@@ -1,5 +1,46 @@
-This is a dummy coommit 
+some helpful notes:
 
+-- Customers Table -- 
+Customer ID (Primary Key)
+First name
+Last name
+Phone
+Alt phone
+Email
+Address
+City
+State
+Zip
+TDL (Texas Drivers License)
+TDL Expiration Date
+Lease Agreement
+Customer Note
 
+-- Agents Table -- 
+Agent ID (Primary Key)
+Agent Name
+Other relevant details (if any)
 
-This will help me make sure to keep working on this lol
+-- Equipment Table -- 
+Equipment ID (Primary Key)
+Equipment Type
+Condition
+
+-- Rentals Table -- 
+Rental ID (Primary Key)
+Customer ID (Foreign Key)
+Agent ID (Foreign Key)
+Equipment ID (Foreign Key)
+Rental Date
+Return Date
+Return Time
+Insurance Exp date
+Internal note
+
+-- Vehicles Table -- 
+Vehicle ID (Primary Key)
+Customer ID (Foreign Key)
+Vehicle model
+Vehicle make
+Vehicle Year
+License Plate
