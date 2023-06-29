@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Display Data</title>
+    <style>
+        .my-table .table-striped > tbody > tr:nth-of-type(odd) {
+            background-color: #f2f2f2;
+        }
+
+        /* Added CSS for a wider table */
+        .table-container {
+            width: 100%;
+            overflow-x: scroll;
+        }
+
+        .table-container table {
+            width: 200%; /* Adjust the width as needed */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="text-center mt-4 mb-4">
+        <h2>Data Display</h2>
+    </div>
+    <div class="table-container">
+      <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addRowModal">Add Row</button>
+      <br>
+      <br>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="text-center">First Name</th>
+                <th class="text-center">Last Name</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Address</th>
+                <th class="text-center">Phone</th>
+                <th class="text-center">Alt Phone</th>
+                <th class="text-center">TDL #</th>
+                <th class="text-center">TDL Exp Date</th>
+                <th class="text-center">Insurance Exp</th>
+                <th class="text-center">Equipment Type</th>
+                <th class="text-center">Return Date</th>
+                <th class="text-center">Return Time</th>
+                <th class="text-center">Internal Note</th>
+                <th class="text-center">Customer Note</th>
+                <th class="text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+              {% for row in data %}
+                  <tr>
+                      <td>{{ row.FirstName }}</td>
+                      <td>{{ row.LastName }}</td>
+                      <td>{{ row.Email }}</td>
+                      <td>{{ row.Address }}</td>
+                      <td>{{ row.Phone }}</td>
+                      <td>{{ row.AltPhone }}</td>
+                      <td>{{ row.TDL }}</td>
+                      <td>{{ row.TDLExpirationDate }}</td>
+                      <td>{{ row.InsuranceExpDate }}</td>
+                      <td>{{ row.EquipmentType }}</td>
+                      <td>{{ row.ReturnDate }}</td>
+                      <td>{{ row.ReturnTime }}</td>
+                      <td>{{ row.InternalNote }}</td>
+                      <td>{{ row.CustomerNote }}</td>
+                      <td>
+                          <button class="btn btn-primary edit-button" data-toggle="modal" data-target="#editRowModal" data-customer-id="{{ row.CustomerID }}">Edit</button>
+                      </td>
+                  </tr>
+              {% endfor %}
+          </tbody>  
+        </table>
+    </div>
+
+    <!-- Add Row Modal -->
+    <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-labelledby="addRowModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="addRowModalLabel">Add Row</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <form id="addRowForm">
+                  <div class="modal-body">
+                      <!-- Input fields for each column here -->
+                      <input type="hidden" name="customer_id" id="customer_id" />
+                      <div class="form-group">
+                          <label for="add_first_name">First Name</label>
+                          <input type="text" name="add_first_name" id="add_first_name" class="form-control" placeholder="First Name">
+                      </div>
+                      <div class="form-group">
+                          <label for="add_last_name">Last Name</label>
+                          <input type="text" name="add_last_name" id="add_last_name" class="form-control" placeholder="Last Name">
+                      </div>
+                      <div class="form-group">
+                          <label for="add_email">Email</label>
+                          <input type="email" name="add_email" id="add_email" class="form-control" placeholder="Email">
+                      </div>
+                      <div class="form-group">
+                          <label for="add_address">Address</label>
+                          <input type="text" name="add_address" id="add_address" class="form-control" placeholder="Address">
+                      </div>
+                      <div class="form-group">
+                          <label for="add_phone">Phone</label>
+                          <input type="text" name="add_phone" id="add_phone" class="form-control" placeholder="Phone">
+                      </div>
+                      <div class="form-group">
+                          <label for="add_alt_phone">Alt Phone</label>
+                          <input type="text" name="add_alt_phone" id="add_alt_phone" class="form-control" placeholder="Alt Phone">
+                      </div>
+                      <div class="form-group">
+                          <label for="add_tdl">TDL #</label>
+                          <input type="text" name="add_tdl" id="add_tdl" class="form-control" placeholder="TDL #">
+                      </div>
+                      <div class="form-group">
+                          <label for="add_tdl_exp_date">TDL Exp Date</label>
+                          <input type="date" name="add_tdl_exp_date" id="add_tdl_exp_date" class="form-control" placeholder="TDL Exp Date">
+                      </div>
+                      <div class="form-group">
+                          <label for="add_insurance_exp_date">Insurance Exp</label>
+                          <input type="date" name="add_insurance_exp_date" id="add_insurance_exp_date" class="form-control" placeholder="Insurance Exp">
+                      </div>
+                      <div class="form-group">
+                          <label for="add_equipment_type">Equipment Type</label>
+                          <input type="text" name="add_equipment_type" id="add_equipment_type" class="form-control" placeholder="Equipment Type">
+                      </div>
+                      <div class="form-group">
+                          <label for="add_return_date">Return Date</label>
+                          <input type="date" name="add_return_date" id="add_return_date" class="form-control" placeholder="Return Date">
+                      </div>
+                      <div class="form-group">
+                          <label for="add_return_time">Return Time</label>
+                          <input type="text" name="add_return_time" id="add_return_time" class="form-control" placeholder="Return Time">
+                      </div>
+                      <div class="form-group">
+                          <label for="add_internal_note">Internal Note</label>
+                          <textarea name="add_internal_note" id="add_internal_note" class="form-control" placeholder="Internal Note"></textarea>
+                      </div>
+                      <div class="form-group">
+                          <label for="add_customer_note">Customer Note</label>
+                          <textarea name="add_customer_note" id="add_customer_note" class="form-control" placeholder="Customer Note"></textarea>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+    </div>
+
+   <!-- Edit Modal -->
+  <div class="modal fade" id="editRowModal" tabindex="-1" role="dialog" aria-labelledby="editRowModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editRowModalLabel">Edit Row</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editForm">
+                <div class="modal-body">
+                    <!-- Input fields for each column here -->
+                    <input type="hidden" name="customer_id" id="customer_id" />
+                    <div class="form-group">
+                        <label for="edit_first_name">First Name</label>
+                        <input type="text" name="edit_first_name" id="edit_first_name" class="form-control" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_last_name">Last Name</label>
+                        <input type="text" name="edit_last_name" id="edit_last_name" class="form-control" placeholder="Last Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_email">Email</label>
+                        <input type="email" name="edit_email" id="edit_email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_address">Address</label>
+                        <input type="text" name="edit_address" id="edit_address" class="form-control" placeholder="Address">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_phone">Phone</label>
+                        <input type="text" name="edit_phone" id="edit_phone" class="form-control" placeholder="Phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_alt_phone">Alt Phone</label>
+                        <input type="text" name="edit_alt_phone" id="edit_alt_phone" class="form-control" placeholder="Alt Phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_tdl">TDL #</label>
+                        <input type="text" name="edit_tdl" id="edit_tdl" class="form-control" placeholder="TDL #">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_tdl_exp_date">TDL Exp Date</label>
+                        <input type="date" name="edit_tdl_exp_date" id="edit_tdl_exp_date" class="form-control" placeholder="TDL Exp Date">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_insurance_exp_date">Insurance Exp</label>
+                        <input type="date" name="edit_insurance_exp_date" id="edit_insurance_exp_date" class="form-control" placeholder="Insurance Exp">
+                      </div>
+                    <div class="form-group">
+                        <label for="edit_equipment_type">Equipment Type</label>
+                        <input type="text" name="edit_equipment_type" id="edit_equipment_type" class="form-control" placeholder="Equipment Type">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_return_date">Return Date</label>
+                        <input type="date" name="edit_return_date" id="edit_return_date" class="form-control" placeholder="Return Date">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_return_time">Return Time</label>
+                        <input type="text" name="edit_return_time" id="edit_return_time" class="form-control" placeholder="Return Time">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_internal_note">Internal Note</label>
+                        <textarea name="edit_internal_note" id="edit_internal_note" class="form-control" placeholder="Internal Note"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_customer_note">Customer Note</label>
+                        <textarea name="edit_customer_note" id="edit_customer_note" class="form-control" placeholder="Customer Note"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
