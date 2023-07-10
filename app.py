@@ -334,9 +334,6 @@ def printable_page(customer_id):
     return render_template('printedPage.html', row=row)
 
 
-
-
-
 ###############################################################################################################
 
 if __name__ == '__main__':
