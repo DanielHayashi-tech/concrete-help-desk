@@ -367,6 +367,34 @@ def update_customer(id):
         return jsonify({'error': 'An error occurred while updating customer data', 'details': str(e)}), 500
 
 
+@app.route('/update_equipment/<int:id>', methods=['PUT'])
+def update_equipment(id):
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'Not authenticated'}), 401
+
+    # Get the equipment from the database
+    equipment = Equipment.query.get(id)
+
+    if not equipment:
+        # If the equipment was not found, return an error
+        return jsonify({'error': 'Equipment not found'}), 404
+
+    # Get the updated data from the request
+    data = request.get_json()
+
+    # Update the equipment data
+    for key, value in data.items():
+        setattr(equipment, key, value)
+
+    try:
+        # Save the changes to the database
+        db.session.commit()
+        return jsonify({'message': 'Equipment data updated successfully'})
+    except Exception as e:
+        db.session.rollback()  # Rollback the changes on error
+        print(e)  # print the error to the console
+        return jsonify({'error': 'An error occurred while updating equipment data', 'details': str(e)}), 500
+
 
 
 

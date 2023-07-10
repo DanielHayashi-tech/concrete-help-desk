@@ -145,12 +145,12 @@
                 <tbody>
                     {% for row in equipment_data %}
                     <tr>
-                        <td class="text-center">{{ row.EquipmentID }}</td>
-                        <td class="text-center">{{ row.EquipmentType }}</td>
-                        <td class="text-center">{{ row.Condition }}</td>
-                        <td class="text-center">{{ row.StatusID }}</td>
+                        <td class="text-center equipment-equipment-id">{{ row.EquipmentID }}</td>
+                        <td class="text-center equipment-equipment-type">{{ row.EquipmentType }}</td>
+                        <td class="text-center equipment-condition">{{ row.Condition }}</td>
+                        <td class="text-center equipment-status-id">{{ row.StatusID }}</td>
                         <td class="text-center">
-                            <button class="btn btn-primary edit-button" data-toggle="modal" data-target="#EditEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
+                            <button class="btn btn-primary edit-button-equipment" data-toggle="modal" data-target="#EditEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -246,7 +246,7 @@
 
     </div>
 
-    <!----------------------------- Modals ----------------------------->
+    <!----------------------------- Add Data Modals ----------------------------->
 
     <!-- Add Customer Modal -->
     <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel"
@@ -450,7 +450,7 @@
         </div>
     </div>
 
-    <!----------------------------- Edit Modals ----------------------------->
+    <!----------------------------- Edit Data Modals ----------------------------->
 
 
      <!-- Edit Customer Modal -->
@@ -525,7 +525,7 @@
                     </div>
                     <div class="form-group">
                         <label for="edit_status_id">Status ID</label>
-                        <textarea name="StatusID" id="edit_status_id" class="form-control" placeholder="Customer Note"></textarea>
+                        <textarea name="StatusID" id="edit_status_id" class="form-control" placeholder="Status ID"></textarea>
                     </div>
                  </div>
                  <div class="modal-footer">
@@ -559,6 +559,10 @@
                          <label for="edit_equipment_condtion">Equipment Conditon</label>
                          <input type="text" name="edit_equipment_condtion" id="edit_equipment_condtion" class="form-control" placeholder="Equipment Type">
                      </div>
+                     <div class="form-group">
+                        <label for="edit_status_id">Status ID</label>
+                        <textarea name="StatusID" id="edit_status_id" class="form-control" placeholder="Status ID"></textarea>
+                    </div>
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -670,6 +674,42 @@
 
 <script>
 // Map class names to input ids
+var mappingEquipment = {
+    "equipment-equipment-id": "edit_equipment_id",
+    "equipment-equipment-type": "edit_equipment_type",
+    "equipment-condition": "edit_equipment_condition",
+    "equipment-status-id": "edit_status_id"
+};
+
+$(document).on("click", ".edit-button-equipment", function () {
+    var row = $(this).closest("tr");
+
+    $.each(mappingEquipment, function(key, value){
+        var text = row.find("." + key).text();
+        $("#" + value).val(text);
+    });
+});
+
+$("#editForm").submit(function(e) {
+    e.preventDefault();  
+
+    var data = serializeToObject($(this).serializeArray());
+    var id = $("#edit_equipment_id").val();
+
+    $.ajax({
+        url: '/update_equipment/' + id,
+        type: 'PUT',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(response) {
+            // Handle success
+        },
+        error: function(error) {
+            // Handle error
+        }
+    });
+});
+
 var mapping = {
     "customer-customer-id": "edit_customer_id",
     "customer-first-name": "edit_first_name",
