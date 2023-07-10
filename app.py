@@ -193,6 +193,7 @@ def display_data():
     data = []
     for row in query:
         item = {
+            'CustomerID': row.CustomerID,
             'FirstName': row.FirstName,
             'LastName': row.LastName,
             'Email': row.Email,
@@ -254,7 +255,6 @@ def modals():
             'CustomerNote': row.CustomerNote,
             'StatusID': row.StatusID,
 
-
         }
         customers_data.append(item)
 
@@ -301,7 +301,31 @@ def modals():
         }
         rental_data.append(item)
 
-    return render_template('modals.html', customers_data=customers_data, equipment_data=equipment_data, rental_data=rental_data)
+    vehicles_query = db.session.query(
+        Vehicles.VehicleID,
+        Customers.CustomerID,
+        Vehicles.VehicleModel,
+        Vehicles.VehicleMake,
+        Vehicles.VehicleYear,
+        Vehicles.LicensePlate,
+        Vehicles.StatusID,
+     ).join(Customers, Customers.CustomerID == Vehicles.CustomerID 
+    ).order_by(Vehicles.VehicleID.desc()).all()
+
+    vehicles_data = []
+    for row in vehicles_query:
+        item = {
+            'VehicleID': row.VehicleID,
+            'CustomerID': row.CustomerID,
+            'VehicleModel': row.VehicleModel,
+            'VehicleMake': row.VehicleMake,
+            'VehicleYear': row.VehicleYear,
+            'LicensePlate': row.LicensePlate,
+            'StatusID': row.StatusID
+        }
+        vehicles_data.append(item)
+
+    return render_template('modals.html', customers_data=customers_data, equipment_data=equipment_data, rental_data=rental_data, vehicles_data=vehicles_data)
 
 @app.route('/printedPage/<customer_id>')
 def printable_page(customer_id):

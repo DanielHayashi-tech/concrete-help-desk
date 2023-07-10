@@ -75,6 +75,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th class="text-center">Customer ID</th>
                         <th class="text-center">First Name</th>
                         <th class="text-center">Last Name</th>
                         <th class="text-center">Email</th>
@@ -89,8 +90,6 @@
                         <th class="text-center">Insurance Experation Date</th>
                         <th class="text-center">Customer Note</th>
                         <th class="text-center">Status Id</th>
-                        
-
                         <th class="text-center">Actions</th>
 
                     </tr>
@@ -98,6 +97,7 @@
                 <tbody>
                     {% for row in customers_data %}
                     <tr>
+                        <td class="text-center">{{ row.CustomerID }}</td>
                         <td class="text-center">{{ row.FirstName }}</td>
                         <td class="text-center">{{ row.LastName }}</td>
                         <td class="text-center">{{ row.Email }}</td>
@@ -115,8 +115,7 @@
 
 
                         <td class="text-center">
-                            <button class="btn btn-primary edit-button" data-toggle="modal" data-target="#editCustomerModal"
-                                data-customer-id="{{ row.CustomerID }}">Edit</button>
+                            <button class="btn btn-primary edit-button" data-toggle="modal" data-target="#editCustomerModal" data-customer-id="{{ row.CustomerID }}">Edit</button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -124,15 +123,11 @@
             </table>
             <!-- Buttons -->
             <div class="button-container text-center mb-4">
-                <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addCustomerModal">Add
-                    Customer</button>
+                <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addCustomerModal">Add Customer</button>
             </div>
         </div>
 
         <!----------------------------- Equipment ----------------------------->
-
-
-
 
         <!-- Table -->
         <div class="table-container">
@@ -155,8 +150,7 @@
                         <td class="text-center">{{ row.Condition }}</td>
                         <td class="text-center">{{ row.StatusID }}</td>
                         <td class="text-center">
-                            <button class="btn btn-primary edit-button" data-toggle="modal" data-target="#EditEquipmentModal"
-                                data-equipment-id="{{ row.EquipmentID }}">Edit</button>
+                            <button class="btn btn-primary edit-button" data-toggle="modal" data-target="#EditEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -164,8 +158,7 @@
             </table>
             <!-- Buttons -->
             <div class="button-container text-center mb-4">
-                <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addEquipmentModal">Add
-                    Equipment</button>
+                <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addEquipmentModal">Add Equipment</button>
             </div>
         </div>
 
@@ -198,8 +191,7 @@
                         <td class="text-center">{{ row.InternalNote }}</td>
                         <td class="text-center">{{ row.StatusID }}</td>
                         <td class="text-center">
-                            <button class="btn btn-primary edit-button" data-toggle="modal" data-target="#editRentalModal"
-                                data-customer-id="{{ row.CustomerID }}">Edit</button>
+                            <button class="btn btn-primary edit-button" data-toggle="modal" data-target="#editRentalModal" data-customer-id="{{ row.CustomerID }}">Edit</button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -210,8 +202,53 @@
                 <button class="btn btn-primary edit-button" data-toggle="modal" data-target="#addRentalModal">Add Rental</button>
             </div>
         </div>
+        <!----------------------------- Vehicles ----------------------------->
+
+
+        <!-- Table -->
+        <div class="table-container">
+            <h3> Vehicles Table!</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center">Vehicle ID</th>
+                        <th class="text-center">Customer ID</th>
+                        <th class="text-center">Vehicle Model</th>
+                        <th class="text-center">Vehicle Make</th>
+                        <th class="text-center">Vehicle Year</th>
+                        <th class="text-center">License Plate</th>
+                        <th class="text-center">Status ID</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in vehicles_data %}
+                    <tr>
+                        <td class="text-center">{{ row.VehicleID }}</td>
+                        <td class="text-center">{{ row.CustomerID }}</td>
+                        <td class="text-center">{{ row.VehicleModel }}</td>
+                        <td class="text-center">{{ row.VehicleMake }}</td>
+                        <td class="text-center">{{ row.VehicleYear }}</td>
+                        <td class="text-center">{{ row.LicensePlate }}</td>
+                        <td class="text-center">{{ row.StatusID }}</td>
+                        <td class="text-center">
+                            <button class="btn btn-primary edit-button" data-toggle="modal" data-target="#editVehicleModal" data-equipment-id="{{ row.VehicleID }}">Edit</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- Buttons -->
+            <div class="button-container text-center mb-4">
+                <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addVehicleModal">Add Equipment</button>
+            </div>
+        </div>
 
     </div>
+
+
+
+    
 
 
 
@@ -241,18 +278,15 @@
                         </div>
                         <div class="form-group">
                             <label for="add_last_name">Last Name</label>
-                            <input type="text" name="add_last_name" id="add_last_name" class="form-control"
-                                placeholder="Last Name">
+                            <input type="text" name="add_last_name" id="add_last_name" class="form-control" placeholder="Last Name">
                         </div>
                         <div class="form-group">
                             <label for="add_email">Email</label>
-                            <input type="email" name="add_email" id="add_email" class="form-control"
-                                placeholder="Email">
+                            <input type="email" name="add_email" id="add_email" class="form-control" placeholder="Email">
                         </div>
                         <div class="form-group">
                             <label for="add_address">Address</label>
-                            <input type="text" name="add_address" id="add_address" class="form-control"
-                                placeholder="Address">
+                            <input type="text" name="add_address" id="add_address" class="form-control" placeholder="Address">
                         </div>
                         <div class="form-group">
                             <label for="add_city">City</label>
@@ -272,8 +306,7 @@
                         </div>
                         <div class="form-group">
                             <label for="add_alt_phone">Alt Phone</label>
-                            <input type="text" name="add_alt_phone" id="add_alt_phone" class="form-control"
-                                placeholder="Alt Phone">
+                            <input type="text" name="add_alt_phone" id="add_alt_phone" class="form-control" placeholder="Alt Phone">
                         </div>
                         <div class="form-group">
                             <label for="add_tdl">TDL #</label>
@@ -281,34 +314,27 @@
                         </div>
                         <div class="form-group">
                             <label for="add_tdl_exp_date">TDL Exp Date</label>
-                            <input type="date" name="add_tdl_exp_date" id="add_tdl_exp_date" class="form-control"
-                                placeholder="TDL Exp Date">
+                            <input type="date" name="add_tdl_exp_date" id="add_tdl_exp_date" class="form-control" placeholder="TDL Exp Date">
                         </div>
                         <div class="form-group">
                             <label for="add_insurance_exp_date">Insurance Exp</label>
-                            <input type="date" name="add_insurance_exp_date" id="add_insurance_exp_date"
-                                class="form-control" placeholder="Insurance Exp">
+                            <input type="date" name="add_insurance_exp_date" id="add_insurance_exp_date" class="form-control" placeholder="Insurance Exp">
                         </div>
-
                         <div class="form-group">
                             <label for="add_return_date">Return Date</label>
-                            <input type="date" name="add_return_date" id="add_return_date" class="form-control"
-                                placeholder="Return Date">
+                            <input type="date" name="add_return_date" id="add_return_date" class="form-control" placeholder="Return Date">
                         </div>
                         <div class="form-group">
                             <label for="add_return_time">Return Time</label>
-                            <input type="text" name="add_return_time" id="add_return_time" class="form-control"
-                                placeholder="Return Time">
+                            <input type="text" name="add_return_time" id="add_return_time" class="form-control" placeholder="Return Time">
                         </div>
                         <div class="form-group">
                             <label for="add_internal_note">Internal Note</label>
-                            <textarea name="add_internal_note" id="add_internal_note" class="form-control"
-                                placeholder="Internal Note"></textarea>
+                            <textarea name="add_internal_note" id="add_internal_note" class="form-control" placeholder="Internal Note"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="add_customer_note">Customer Note</label>
-                            <textarea name="add_customer_note" id="add_customer_note" class="form-control"
-                                placeholder="Customer Note"></textarea>
+                            <textarea name="add_customer_note" id="add_customer_note" class="form-control" placeholder="Customer Note"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -336,13 +362,11 @@
                         <!-- Input fields for each column here -->
                         <div class="form-group">
                             <label for="add_equipment_type">Equipment Type</label>
-                            <input type="text" name="add_equipment_type" id="add_equipment_type" class="form-control"
-                                placeholder="Equipment Type">
+                            <input type="text" name="add_equipment_type" id="add_equipment_type" class="form-control" placeholder="Equipment Type">
                         </div>
                         <div class="form-group">
                             <label for="update_equipment_condtion">Equipment Conditon</label>
-                            <input type="text" name="update_equipment_condtion" id="update_equipment_condtion"
-                                class="form-control" placeholder="Equipment Condition">
+                            <input type="text" name="update_equipment_condtion" id="update_equipment_condtion" class="form-control" placeholder="Equipment Condition">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -370,33 +394,27 @@
                         <!-- Input fields for each column here -->
                         <div class="form-group">
                             <label for="add_equipment_type">Equipment Type</label>
-                            <input type="text" name="add_equipment_type" id="add_equipment_type" class="form-control"
-                                placeholder="Equipment Type">
+                            <input type="text" name="add_equipment_type" id="add_equipment_type" class="form-control" placeholder="Equipment Type">
                         </div>
                         <div class="form-group">
                             <label for="update_equipment_condtion">Equipment Conditon</label>
-                            <input type="text" name="update_equipment_condtion" id="update_equipment_condtion"
-                                class="form-control" placeholder="Equipment Type">
+                            <input type="text" name="update_equipment_condtion" id="update_equipment_condtion" class="form-control" placeholder="Equipment Type">
                         </div>
                         <div class="form-group">
                             <label for="add_rental_date">Rental Date</label>
-                            <input type="date" name="add_rental_date" id="add_rental_date" class="form-control"
-                                placeholder="Day of the Rental">
+                            <input type="date" name="add_rental_date" id="add_rental_date" class="form-control" placeholder="Day of the Rental">
                         </div>
                         <div class="form-group">
                             <label for="add_return_date">Return Date</label>
-                            <input type="date" name="add_return_date" id="add_return_date" class="form-control"
-                                placeholder="Return Date">
+                            <input type="date" name="add_return_date" id="add_return_date" class="form-control" placeholder="Return Date">
                         </div>
                         <div class="form-group">
                             <label for="add_return_time">Return Time</label>
-                            <input type="text" name="add_return_time" id="add_return_time" class="form-control"
-                                placeholder="Return Time">
+                            <input type="text" name="add_return_time" id="add_return_time" class="form-control" placeholder="Return Time">
                         </div>
                         <div class="form-group">
                             <label for="add_internal_note">Internal Note</label>
-                            <textarea name="add_internal_note" id="add_internal_note" class="form-control"
-                                placeholder="Internal Note"></textarea>
+                            <textarea name="add_internal_note" id="add_internal_note" class="form-control" placeholder="Internal Note"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -408,7 +426,49 @@
         </div>
     </div>
 
-
+    <!-- Add Vehicle Modal -->
+    <div class="modal fade" id="addVehicleModal" tabindex="-1" role="dialog" aria-labelledby="addVehicleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addVehicleModalLabel">Add Vehicle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="addVehicleForm">
+                    <div class="modal-body">
+                        <!-- Input fields for each column here -->
+                        <div class="form-group">
+                            <label for="add_customer_id">Customer ID</label>
+                            <input type="text" name="add_customer_id" id="add_customer_id" class="form-control" placeholder="Equipment Type">
+                        </div>
+                        <div class="form-group">
+                            <label for="add_vehicle_model">Vehicle Model</label>
+                            <input type="text" name="add_vehicle_model" id="add_vehicle_model" class="form-control" placeholder="Vehicle Model">
+                        </div>
+                        <div class="form-group">
+                            <label for="add_vehicle_make">Vehicle Make</label>
+                            <input type="date" name="add_vehicle_make" id="add_vehicle_make" class="form-control" placeholder="Vehicle Make">
+                        </div>
+                        <div class="form-group">
+                            <label for="add_vehicle_year">Vehicle Year</label>
+                            <input type="date" name="add_vehicle_year" id="add_vehicle_year" class="form-control" placeholder="Vehicle Year">
+                        </div>
+                        <div class="form-group">
+                            <label for="add_lisence_plate">Lisence Plate</label>
+                            <input type="text" name="add_lisence_plate" id="add_lisence_plate" class="form-control" placeholder="Licesne Plate">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
         <!----------------------------- Edit Modals ----------------------------->
 
@@ -430,23 +490,19 @@
                      <input type="hidden" name="customer_id" id="customer_id" />
                      <div class="form-group">
                          <label for="edit_first_name">First Name</label>
-                         <input type="text" name="edit_first_name" id="edit_first_name" class="form-control"
-                             placeholder="First Name">
+                         <input type="text" name="edit_first_name" id="edit_first_name" class="form-control" placeholder="First Name">
                      </div>
                      <div class="form-group">
                          <label for="edit_last_name">Last Name</label>
-                         <input type="text" name="edit_last_name" id="edit_last_name" class="form-control"
-                             placeholder="Last Name">
+                         <input type="text" name="edit_last_name" id="edit_last_name" class="form-control" placeholder="Last Name">
                      </div>
                      <div class="form-group">
                          <label for="edit_email">Email</label>
-                         <input type="email" name="edit_email" id="edit_email" class="form-control"
-                             placeholder="Email">
+                         <input type="email" name="edit_email" id="edit_email" class="form-control" placeholder="Email">
                      </div>
                      <div class="form-group">
                          <label for="edit_address">Address</label>
-                         <input type="text" name="edit_address" id="edit_address" class="form-control"
-                             placeholder="Address">
+                         <input type="text" name="edit_address" id="edit_address" class="form-control" placeholder="Address">
                      </div>
                      <div class="form-group">
                          <label for="edit_city">City</label>
@@ -466,8 +522,7 @@
                      </div>
                      <div class="form-group">
                          <label for="edit_alt_phone">Alt Phone</label>
-                         <input type="text" name="edit_alt_phone" id="edit_alt_phone" class="form-control"
-                             placeholder="Alt Phone">
+                         <input type="text" name="edit_alt_phone" id="edit_alt_phone" class="form-control" placeholder="Alt Phone">
                      </div>
                      <div class="form-group">
                          <label for="edit_tdl">TDL #</label>
@@ -475,34 +530,28 @@
                      </div>
                      <div class="form-group">
                          <label for="edit_tdl_exp_date">TDL Exp Date</label>
-                         <input type="date" name="edit_tdl_exp_date" id="edit_tdl_exp_date" class="form-control"
-                             placeholder="TDL Exp Date">
+                         <input type="date" name="edit_tdl_exp_date" id="edit_tdl_exp_date" class="form-control" placeholder="TDL Exp Date">
                      </div>
                      <div class="form-group">
                          <label for="edit_insurance_exp_date">Insurance Exp</label>
-                         <input type="date" name="edit_insurance_exp_date" id="edit_insurance_exp_date"
-                             class="form-control" placeholder="Insurance Exp">
+                         <input type="date" name="edit_insurance_exp_date" id="edit_insurance_exp_date" class="form-control" placeholder="Insurance Exp">
                      </div>
 
                      <div class="form-group">
                          <label for="add_return_date">Return Date</label>
-                         <input type="date" name="add_return_date" id="add_return_date" class="form-control"
-                             placeholder="Return Date">
+                         <input type="date" name="add_return_date" id="add_return_date" class="form-control" placeholder="Return Date">
                      </div>
                      <div class="form-group">
                          <label for="add_return_time">Return Time</label>
-                         <input type="text" name="add_return_time" id="add_return_time" class="form-control"
-                             placeholder="Return Time">
+                         <input type="text" name="add_return_time" id="add_return_time" class="form-control" placeholder="Return Time">
                      </div>
                      <div class="form-group">
                          <label for="add_internal_note">Internal Note</label>
-                         <textarea name="add_internal_note" id="add_internal_note" class="form-control"
-                             placeholder="Internal Note"></textarea>
+                         <textarea name="add_internal_note" id="add_internal_note" class="form-control" placeholder="Internal Note"></textarea>
                      </div>
                      <div class="form-group">
                          <label for="add_customer_note">Customer Note</label>
-                         <textarea name="add_customer_note" id="add_customer_note" class="form-control"
-                             placeholder="Customer Note"></textarea>
+                         <textarea name="add_customer_note" id="add_customer_note" class="form-control" placeholder="Customer Note"></textarea>
                      </div>
                  </div>
                  <div class="modal-footer">
@@ -530,13 +579,11 @@
                      <!-- Input fields for each column here -->
                      <div class="form-group">
                          <label for="edit_equipment_type">Equipment Type</label>
-                         <input type="text" name="edit_equipment_type" id="edit_equipment_type" class="form-control"
-                             placeholder="Equipment Type">
+                         <input type="text" name="edit_equipment_type" id="edit_equipment_type" class="form-control" placeholder="Equipment Type">
                      </div>
                      <div class="form-group">
                          <label for="edit_equipment_condtion">Equipment Conditon</label>
-                         <input type="text" name="edit_equipment_condtion" id="edit_equipment_condtion"
-                             class="form-control" placeholder="Equipment Type">
+                         <input type="text" name="edit_equipment_condtion" id="edit_equipment_condtion" class="form-control" placeholder="Equipment Type">
                      </div>
                  </div>
                  <div class="modal-footer">
@@ -564,38 +611,31 @@
                      <!-- Input fields for each column here -->
                      <div class="form-group">
                          <label for="edit_Customer_ID">Customer ID</label>
-                         <input type="text" name="edit_equipment_type" id="edit_equipment_type" class="form-control"
-                             placeholder="Equipment Type">
+                         <input type="text" name="edit_equipment_type" id="edit_equipment_type" class="form-control" placeholder="Equipment Type">
                      </div>
                      <div class="form-group">
                          <label for="update_equipment_condtion">Equipment ID</label>
-                         <input type="text" name="update_equipment_condtion"Rental Date id="update_equipment_condtion"
-                             class="form-control" placeholder="Equipment Type">
+                         <input type="text" name="update_equipment_condtion"Rental Date id="update_equipment_condtion" class="form-control" placeholder="Equipment Type">
                      </div>
                      <div class="form-group">
                          <label for="edit_rental_date">Rental Date</label>
-                         <input type="date" name="edit_rental_date" id="edit_rental_date" class="form-control"
-                             placeholder="Day of the Rental">
+                         <input type="date" name="edit_rental_date" id="edit_rental_date" class="form-control" placeholder="Day of the Rental">
                      </div>
                      <div class="form-group">
                          <label for="edit_return_date">Return Date</label>
-                         <input type="date" name="edit_return_date" id="edit_return_date" class="form-control"
-                             placeholder="Return Date">
+                         <input type="date" name="edit_return_date" id="edit_return_date" class="form-control" placeholder="Return Date">
                      </div>
                      <div class="form-group">
                          <label for="edit_return_time">Return Time</label>
-                         <input type="text" name="edit_return_time" id="edit_return_time" class="form-control"
-                             placeholder="Return Time">
+                         <input type="text" name="edit_return_time" id="edit_return_time" class="form-control" placeholder="Return Time">
                      </div>
                      <div class="form-group">
                          <label for="edit_internal_note">Internal Note</label>
-                         <textarea name="edit_internal_note" id="edit_internal_note" class="form-control"
-                             placeholder="Internal Note"></textarea>
+                         <textarea name="edit_internal_note" id="edit_internal_note" class="form-control" placeholder="Internal Note"></textarea>
                      </div>
                      <div class="form-group">
                         <label for="update_status_id">Status ID</label>
-                        <textarea name="update_status_id" id="update_status_id" class="form-control"
-                            placeholder="Internal Note"></textarea>
+                        <textarea name="update_status_id" id="update_status_id" class="form-control" placeholder="Internal Note"></textarea>
                     </div>
                  </div>
                  <div class="modal-footer">
@@ -606,6 +646,52 @@
          </div>
      </div>
  </div>
+
+ <!-- Edit Vehicle Modal -->
+ <div class="modal fade" id="editVehicleModal" tabindex="-1" role="dialog" aria-labelledby="editVehicleModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog" role="document">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h5 class="modal-title" id="editVehicleModalLabel">Edit Vehicle</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+         <form id="editVehicleForm">
+             <div class="modal-body">
+                 <!-- Input fields for each column here -->
+                 <div class="form-group">
+                     <label for="edit_customer_id">Customer ID</label>
+                     <input type="text" name="edit_customer_id" id="edit_customer_id" class="form-control" placeholder="Customer ID">
+                 </div>
+                 <div class="form-group">
+                     <label for="edit_vehicle_model">Vehicle Model</label>
+                     <input type="text" name="edit_vehicle_model" id="edit_vehicle_model" class="form-control" placeholder="Vehicle Model">
+                 </div>
+                 <div class="form-group">
+                     <label for="edit_vehicle_make">Vehicle Make</label>
+                     <input type="date" name="edit_vehicle_make" id="edit_vehicle_make" class="form-control" placeholder="Vehicle Make">
+                 </div>
+                 <div class="form-group">
+                     <label for="edit_vehicle_year">Vehicle Year</label>
+                     <input type="date" name="edit_vehicle_year" id="edit_vehicle_year" class="form-control" placeholder="Vehicle Year">
+                 </div>
+                 <div class="form-group">
+                     <label for="edit_lisence_plate">Lisence Plate</label>
+                     <input type="text" name="edit_lisence_plate" id="edit_lisence_plate" class="form-control" placeholder="Lisence Plate">
+                 </div>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                 <button type="submit" class="btn btn-primary">Save Changes</button>
+             </div>
+         </form>
+     </div>
+ </div>
+</div>
+
+
 
 
 
