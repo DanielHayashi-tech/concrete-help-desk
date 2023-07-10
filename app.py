@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, current_user
@@ -5,7 +6,7 @@ import os
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 
-load_dotenv()  
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
@@ -16,7 +17,7 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Agents.query.get(user_id)
+    return db.session.get(Agents, user_id)
 
 
 # Configure the database
@@ -114,7 +115,7 @@ class Rentals(db.Model):
     EquipmentID = db.Column(db.Integer, db.ForeignKey('equipment.EquipmentID'))
     RentalDate = db.Column(db.Date)
     ReturnDate = db.Column(db.Date)
-    ReturnTime = db.Column(db.Time)
+    ReturnTime = db.Column(db.String(255))
     InternalNote = db.Column(db.Text)
     StatusID = db.Column(db.Integer, db.ForeignKey('rental_statuses.StatusID'))
     UpdatedByAgentID = db.Column(db.Integer, db.ForeignKey('agents.AgentID'))  # Added this field
@@ -161,16 +162,17 @@ def index():
         return redirect(url_for('login'))
     return render_template('index.html')  # render the index page with no data
 
+###############################################################################################################
 
 @app.route('/display', methods=['GET'])
 def display_data():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
 
-    # Use SQLAlchemy ORM to make a query
     query = db.session.query(
-        Customers.FirstName, 
-        Customers.LastName, 
+        Customers.CustomerID,
+        Customers.FirstName,
+        Customers.LastName,
         Customers.Email, 
         Customers.Address, 
         Customers.Phone, 
@@ -198,11 +200,11 @@ def display_data():
             'Phone': row.Phone,
             'AltPhone': row.AltPhone,
             'TDL': row.TDL,
-            'TDLExpirationDate': row.TDLExpirationDate,
+            'TDLExpirationDate': row.TDLExpirationDate.strftime('%Y-%m-%d'),  # adjust the format as necessary
             'InsuranceExpDate': row.InsuranceExpDate,
             'EquipmentType': row.EquipmentType,
             'ReturnDate': row.ReturnDate,
-            'ReturnTime': row.ReturnTime,
+            'ReturnTime': row.ReturnTime,  # adjust the format as necessary
             'InternalNote': row.InternalNote,
             'CustomerNote': row.CustomerNote
         }
@@ -210,7 +212,105 @@ def display_data():
 
     return render_template('display.html', data=data)
 
+###############################################################################################################
 
+@app.route('/modals', methods=['GET'])
+def modals():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    
+    customers_query = db.session.query(
+        Customers.FirstName,
+        Customers.LastName,
+        Customers.Email,
+        Customers.Phone,
+        Customers.AltPhone,
+        Customers.Address,
+        Customers.City,
+        Customers.State,
+        Customers.Zip,
+        Customers.TDL,
+        Customers.TDLExpirationDate,
+        Customers.InsuranceExpDate,
+        Customers.CustomerNote,
+        Customers.StatusID
+    ).order_by(Customers.CustomerID.desc()).all()
+
+    customers_data = []
+    for row in customers_query:
+        item = {
+            'FirstName': row.FirstName,
+            'LastName': row.LastName,
+            'Email': row.Email,
+            'Phone': row.Phone,
+            'AltPhone': row.AltPhone,
+            'Address': row.Address,
+            'City': row.City,
+            'State': row.State,
+            'Zip': row.Zip,
+            'TDL': row.TDL,
+            'TDLExpirationDate': row.TDLExpirationDate,
+            'InsuranceExpDate': row.InsuranceExpDate,
+
+        }
+        customers_data.append(item)
+
+    equipment_query = db.session.query(
+        Equipment.EquipmentID,
+        Equipment.EquipmentType,
+        Equipment.Condition,
+        Equipment.StatusID
+    ).order_by(Equipment.EquipmentID.desc()).all()
+
+    equipment_data = []
+    for row in equipment_query:
+        item = {
+            'EquipmentID': row.EquipmentID,
+            'EquipmentType': row.EquipmentType,
+            'Condition': row.Condition,
+            'StatusID': row.StatusID
+        }
+        equipment_data.append(item)
+
+
+    rental_query = db.session.query(
+        Customers.CustomerID,
+        Equipment.EquipmentID,
+        Rentals.RentalDate,
+        Rentals.ReturnDate,
+        Rentals.ReturnTime,
+        Rentals.InternalNote,
+        Rentals.StatusID,
+    ).join(Customers, Customers.CustomerID == Rentals.CustomerID
+    ).join(Equipment, Equipment.EquipmentID == Rentals.EquipmentID
+    ).order_by(Rentals.RentalID.desc()).all()
+
+    rental_data = []
+    for row in rental_query:
+        item = {
+            'CustomerID': row.CustomerID,
+            'EquipmentID': row.EquipmentID,
+            'RentalDate': row.RentalDate,
+            'ReturnDate': row.ReturnDate,
+            'ReturnTime': row.ReturnTime,
+            'InternalNote': row.InternalNote,
+            'StatusID': row.StatusID
+        }
+        rental_data.append(item)
+
+    return render_template('modals.html', customers_data=customers_data, equipment_data=equipment_data, rental_data=rental_data)
+
+@app.route('/printedPage/<customer_id>')
+def printable_page(customer_id):
+    customer_id = int(customer_id)  # Convert to integer
+    row = Customers.query.get_or_404(customer_id)  # This will return 404 if customer not found
+    return render_template('printedPage.html', row=row)
+
+
+
+
+
+###############################################################################################################
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <style media="print">
+        /* Add your print styles here */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Customer Information</h1>
+        <p><strong>Name:</strong> {{ row.FirstName }} {{ row.LastName }}</p>
+        <p><strong>Email:</strong> {{ row.Email }}</p>
+        <p><strong>Address:</strong> {{ row.Address }}</p>
+        <!-- And so on for all the fields you want to include -->
+    </div>
+    <button onClick="window.print()">Print this page</button>
+</body>
+</html>
