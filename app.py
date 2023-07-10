@@ -251,6 +251,9 @@ def modals():
             'TDL': row.TDL,
             'TDLExpirationDate': row.TDLExpirationDate,
             'InsuranceExpDate': row.InsuranceExpDate,
+            'CustomerNote': row.CustomerNote,
+            'StatusID': row.StatusID,
+
 
         }
         customers_data.append(item)

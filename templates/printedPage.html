@@ -13,12 +13,60 @@
 </head>
 <body>
     <div class="container">
-        <h1>Customer Information</h1>
+        <h1 class="text-center">Customer Agreement</h1>
+        <hr>
+        <h2>Customer Information</h2>
         <p><strong>Name:</strong> {{ row.FirstName }} {{ row.LastName }}</p>
         <p><strong>Email:</strong> {{ row.Email }}</p>
-        <p><strong>Address:</strong> {{ row.Address }}</p>
-        <!-- And so on for all the fields you want to include -->
+        <p><strong>Address:</strong> {{ row.Address }}, {{row.City}}, {{row.State}} {{row.Zip}}</p>
+        <p><strong>Driver License Number & Expiration Date:</strong> {{ row.TDL }}, {{row.TDLExpirationDate}}</p>
+        <p><strong>Insurance Expiration Date:</strong> {{ row.InsuranceExpDate }}</p>
+        <p><strong>Customer Note:</strong> {{ row.CustomerNote }}</p>
+        <p><strong>Customer Status:</strong> {{ row.StatusID }}</p>
+        <hr>
+        <h2>Agreement</h2>
+        <p>By signing this contract I confirm that I understand and ACCEPT the following terms and instructions:</p>
+        <ul>
+            <li>Recommended speed limit NOT TO EXCEED 50 MPH, sloshing can occur at sudden stops.</li>
+            <li>Rental period is 3 HOURS.</li>
+            <li>TRAILER MUST BE RETURNED CLEAN OR CHARGES MAY BE APPLIED.</li>
+            <li>THIS TRAILER CANNOT BE CLEANED AT ANY CAR WASH FACILITIES.</li>
+            <li>WE OFFER A FREE WASH OUT AREA DURING BUSINESS HOURS</li>
+            <li>CONCRETE TODAY IS NOT RESPONSIBLE FOR ANY VEHICLE DAMAGE THAT MAY BE INCURRED WHILE BEING LOADED, UNLOADED, PRESENT IN OUR YARD, OR WHILE USING OUR EQUIPMENT.</li>
+        </ul>
+        <hr>
+        <h2>Rental Contract Terms and Conditions</h2>
+        <p>THIS IS A CONTRACT. THIS CONTRACT CONTAINS IMPORTANT TERMS AND CONDITIONS. INCLUDING CONCRETE TODAY DISCLAIMER FROM LIABILITY FOR INJURY OR DAMAGE AND DETAILS OF CUSTOMERS'S OBLIGATIONS. THESE TERMS AND CONDITIONS ARE A PART OF THIS CONTRACT. BY SIGNING THIS CONTRACT, I CERTIFY THAT I HAVE READ AND AGREE TO ALL TERMS OF THIS CONTRACT. </p>
+        <ul>
+            <li>IF EQUIPMENT DOES NOT FUNCTION PROPERLY NOTIFY CONCRETE TODAY WITHIN 30 MINUTES OF OCCURENCE OR NO REFUND OR ALLOWANCES WILL BE MADE.</li>
+            <li>CONCRETE TODAY IS NOT RESPONSIBLE FOR ANY INJURIES OR DAMAGES INCURRED WHILE ENTERING, BEING LOADED OR UNLOADED, AND EXITING COMPANY PROPERTY OR WHILE USING EQUIPMENT LISTED IN THIS AGREEMENT.</li>
+        </ul>
+        <hr>
+        <Br></Br>
+        <h2>Signature</h2>
+        <div class="row">
+            <div class="col-6">
+                <p>Customer: ____________________________________________</p>
+                <p>Date: <span id="currentDate"></span></p>
+            </div>
+            <div class="col-6 text-right">
+                <p>Company Representative: _____________________________</p>
+                <p>Date: <span id="currentDateCompany"></span></p>
+            </div>
+        </div>
     </div>
     <button onClick="window.print()">Print this page</button>
+
+    <script>
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+        var yyyy = today.getFullYear();
+
+        today = mm + '/' + dd + '/' + yyyy;
+
+        document.getElementById('currentDate').textContent = today;
+        document.getElementById('currentDateCompany').textContent = today;
+    </script>
 </body>
 </html>
