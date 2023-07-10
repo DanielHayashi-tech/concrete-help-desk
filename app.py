@@ -1,5 +1,5 @@
 import datetime
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import Flask, flash, redirect, render_template, request, session, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, current_user
 import os
@@ -221,6 +221,7 @@ def modals():
         return redirect(url_for('login'))
     
     customers_query = db.session.query(
+        Customers.CustomerID,
         Customers.FirstName,
         Customers.LastName,
         Customers.Email,
@@ -240,6 +241,7 @@ def modals():
     customers_data = []
     for row in customers_query:
         item = {
+            'CustomerID': row.CustomerID,
             'FirstName': row.FirstName,
             'LastName': row.LastName,
             'Email': row.Email,
@@ -335,6 +337,39 @@ def printable_page(customer_id):
 
 
 ###############################################################################################################
+
+@app.route('/update_customer/<int:id>', methods=['PUT'])
+def update_customer(id):
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'Not authenticated'}), 401
+
+    # Get the customer from the database
+    customer = Customers.query.get(id)
+
+    if not customer:
+        # If the customer was not found, return an error
+        return jsonify({'error': 'Customer not found'}), 404
+
+    # Get the updated data from the request
+    data = request.get_json()
+
+    # Update the customer data
+    for key, value in data.items():
+        setattr(customer, key, value)
+
+    try:
+        # Save the changes to the database
+        db.session.commit()
+        return jsonify({'message': 'Customer data updated successfully'})
+    except Exception as e:
+        db.session.rollback()  # Rollback the changes on error
+        return jsonify({'error': 'An error occurred while updating customer data', 'details': str(e)}), 500
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

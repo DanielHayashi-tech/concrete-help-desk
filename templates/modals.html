@@ -97,21 +97,21 @@
                 <tbody>
                     {% for row in customers_data %}
                     <tr>
-                        <td class="text-center">{{ row.CustomerID }}</td>
-                        <td class="text-center">{{ row.FirstName }}</td>
-                        <td class="text-center">{{ row.LastName }}</td>
-                        <td class="text-center">{{ row.Email }}</td>
-                        <td class="text-center">{{ row.Phone }}</td>
-                        <td class="text-center">{{ row.AltPhone }}</td>
-                        <td class="text-center">{{ row.Address }}</td>
-                        <td class="text-center">{{ row.City }}</td>
-                        <td class="text-center">{{ row.State }}</td>
-                        <td class="text-center">{{ row.Zip }}</td>
-                        <td class="text-center">{{ row.TDL }}</td>
-                        <td class="text-center">{{ row.TDLExpirationDate}}</td>
-                        <td class="text-center">{{ row.InsuranceExpDate }}</td>
-                        <td class="text-center">{{ row.CustomerNote }}</td>
-                        <td class="text-center">{{ row.StatusID }}</td>
+                        <td class="text-center customer-customer-id">{{ row.CustomerID }}</td>
+                        <td class="text-center customer-first-name">{{ row.FirstName }}</td>
+                        <td class="text-center customer-last-name">{{ row.LastName }}</td>
+                        <td class="text-center customer-email">{{ row.Email }}</td>
+                        <td class="text-center customer-phone">{{ row.Phone }}</td>
+                        <td class="text-center customer-altphone">{{ row.AltPhone }}</td>
+                        <td class="text-center customer-address">{{ row.Address }}</td>
+                        <td class="text-center customer-city">{{ row.City }}</td>
+                        <td class="text-center customer-state">{{ row.State }}</td>
+                        <td class="text-center customer-zip">{{ row.Zip }}</td>
+                        <td class="text-center customer-tdl">{{ row.TDL }}</td>
+                        <td class="text-center customer-tdl-experation-date">{{ row.TDLExpirationDate}}</td>
+                        <td class="text-center customer-ins-experation-date">{{ row.InsuranceExpDate }}</td>
+                        <td class="text-center customer-note">{{ row.CustomerNote }}</td>
+                        <td class="text-center customer-status-id">{{ row.StatusID }}</td>
 
 
                         <td class="text-center">
@@ -246,15 +246,7 @@
 
     </div>
 
-
-
-    
-
-
-
     <!----------------------------- Modals ----------------------------->
-
-
 
     <!-- Add Customer Modal -->
     <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel"
@@ -319,18 +311,6 @@
                         <div class="form-group">
                             <label for="add_insurance_exp_date">Insurance Exp</label>
                             <input type="date" name="add_insurance_exp_date" id="add_insurance_exp_date" class="form-control" placeholder="Insurance Exp">
-                        </div>
-                        <div class="form-group">
-                            <label for="add_return_date">Return Date</label>
-                            <input type="date" name="add_return_date" id="add_return_date" class="form-control" placeholder="Return Date">
-                        </div>
-                        <div class="form-group">
-                            <label for="add_return_time">Return Time</label>
-                            <input type="text" name="add_return_time" id="add_return_time" class="form-control" placeholder="Return Time">
-                        </div>
-                        <div class="form-group">
-                            <label for="add_internal_note">Internal Note</label>
-                            <textarea name="add_internal_note" id="add_internal_note" class="form-control" placeholder="Internal Note"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="add_customer_note">Customer Note</label>
@@ -450,7 +430,7 @@
                         </div>
                         <div class="form-group">
                             <label for="add_vehicle_make">Vehicle Make</label>
-                            <input type="date" name="add_vehicle_make" id="add_vehicle_make" class="form-control" placeholder="Vehicle Make">
+                            <input type="text" name="add_vehicle_make" id="add_vehicle_make" class="form-control" placeholder="Vehicle Make">
                         </div>
                         <div class="form-group">
                             <label for="add_vehicle_year">Vehicle Year</label>
@@ -470,10 +450,10 @@
         </div>
     </div>
 
-        <!----------------------------- Edit Modals ----------------------------->
+    <!----------------------------- Edit Modals ----------------------------->
 
 
-     <!-- Add Customer Modal -->
+     <!-- Edit Customer Modal -->
      <div class="modal fade" id="editCustomerModal" tabindex="-1" role="dialog" aria-labelledby="editCustomerModalLabel"
      aria-hidden="true">
      <div class="modal-dialog" role="document">
@@ -536,23 +516,14 @@
                          <label for="edit_insurance_exp_date">Insurance Exp</label>
                          <input type="date" name="edit_insurance_exp_date" id="edit_insurance_exp_date" class="form-control" placeholder="Insurance Exp">
                      </div>
-
                      <div class="form-group">
-                         <label for="add_return_date">Return Date</label>
-                         <input type="date" name="add_return_date" id="add_return_date" class="form-control" placeholder="Return Date">
+                         <label for="edit_customer_note">Customer Note</label>
+                         <textarea name="edit_customer_note" id="edit_customer_note" class="form-control" placeholder="Customer Note"></textarea>
                      </div>
                      <div class="form-group">
-                         <label for="add_return_time">Return Time</label>
-                         <input type="text" name="add_return_time" id="add_return_time" class="form-control" placeholder="Return Time">
-                     </div>
-                     <div class="form-group">
-                         <label for="add_internal_note">Internal Note</label>
-                         <textarea name="add_internal_note" id="add_internal_note" class="form-control" placeholder="Internal Note"></textarea>
-                     </div>
-                     <div class="form-group">
-                         <label for="add_customer_note">Customer Note</label>
-                         <textarea name="add_customer_note" id="add_customer_note" class="form-control" placeholder="Customer Note"></textarea>
-                     </div>
+                        <label for="edit_status_id">Status ID</label>
+                        <textarea name="edit_status_id" id="edit_status_id" class="form-control" placeholder="Customer Note"></textarea>
+                    </div>
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -671,7 +642,7 @@
                  </div>
                  <div class="form-group">
                      <label for="edit_vehicle_make">Vehicle Make</label>
-                     <input type="date" name="edit_vehicle_make" id="edit_vehicle_make" class="form-control" placeholder="Vehicle Make">
+                     <input type="text" name="edit_vehicle_make" id="edit_vehicle_make" class="form-control" placeholder="Vehicle Make">
                  </div>
                  <div class="form-group">
                      <label for="edit_vehicle_year">Vehicle Year</label>
@@ -691,8 +662,74 @@
  </div>
 </div>
 
+<!-- Script for filling the form -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script>
+// Map class names to input ids
+var mapping = {
+    "customer-customer-id": "edit_customer_id",
+    "customer-first-name": "edit_first_name",
+    "customer-last-name": "edit_last_name",
+    "customer-email": "edit_email",
+    "customer-phone": "edit_phone",
+    "customer-altphone": "edit_alt_phone",
+    "customer-address": "edit_address",
+    "customer-city": "edit_city",
+    "customer-state": "edit_state",
+    "customer-zip": "edit_zip",
+    "customer-tdl": "edit_tdl",
+    "customer-tdl-experation-date": "edit_tdl_exp_date",
+    "customer-ins-experation-date": "edit_insurance_exp_date",
+    "customer-note": "edit_customer_note",
+    "customer-status-id": "edit_status_id"  // Corrected this line
+};
 
+// Function to run when an edit button is clicked
+$(document).on("click", ".edit-button", function () {
+    var row = $(this).closest("tr"); // Get the row that the button is in
+
+    // For each item in the mapping
+    $.each(mapping, function(key, value){
+        var text = row.find("." + key).text(); // Get the text from the table cell
+        // If it's a date, convert it to the input date format
+        if (key.includes("date")) {
+            text = new Date(text).toISOString().split('T')[0]; // Converts date to YYYY-MM-DD format
+        }
+        // Set the value of the corresponding input in the modal
+        $("#" + value).val(text);
+    });
+});
+
+// Function to convert form array to object
+function serializeToObject(formArray) {
+    var data = {};
+    for(var i = 0; i < formArray.length; i++){
+        data[formArray[i]['name']] = formArray[i]['value'];
+    }
+    return data;
+}
+
+$("#editCustomerForm").submit(function(e) {
+    e.preventDefault();  // Prevent the form from submitting normally
+
+    var data = serializeToObject($(this).serializeArray());  // Convert the form data to object
+    var id = $("#edit_customer_id").val();  // Get the id of the customer to update
+
+    $.ajax({
+        url: '/update_customer/' + id,
+        type: 'PUT',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(response) {
+            // Handle success: for example, show a success message and update the table
+        },
+        error: function(error) {
+            // Handle error: for example, show an error message
+        }
+    });
+});
+</script>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
