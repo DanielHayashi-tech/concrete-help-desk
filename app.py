@@ -363,6 +363,7 @@ def update_customer(id):
         return jsonify({'message': 'Customer data updated successfully'})
     except Exception as e:
         db.session.rollback()  # Rollback the changes on error
+        print(e)  # print the error to the console
         return jsonify({'error': 'An error occurred while updating customer data', 'details': str(e)}), 500
 
 

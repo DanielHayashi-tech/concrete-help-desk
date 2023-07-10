@@ -467,62 +467,65 @@
              <form id="editCustomerForm">
                  <div class="modal-body">
                      <!-- Input fields for each column here -->
-                     <input type="hidden" name="customer_id" id="customer_id" />
+                     <div class="form-group">
+                        <label for="customer_id">Customer ID</label>
+                        <input type="text" name=CustomerID id="edit_customer_id" class="form-control" disabled>
+                    </div>
                      <div class="form-group">
                          <label for="edit_first_name">First Name</label>
-                         <input type="text" name="edit_first_name" id="edit_first_name" class="form-control" placeholder="First Name">
+                         <input type="text" name="FirstName" id="edit_first_name" class="form-control" placeholder="First Name">
                      </div>
                      <div class="form-group">
                          <label for="edit_last_name">Last Name</label>
-                         <input type="text" name="edit_last_name" id="edit_last_name" class="form-control" placeholder="Last Name">
+                         <input type="text" name="LastName" id="edit_last_name" class="form-control" placeholder="Last Name">
                      </div>
                      <div class="form-group">
                          <label for="edit_email">Email</label>
-                         <input type="email" name="edit_email" id="edit_email" class="form-control" placeholder="Email">
+                         <input type="email" name="Email" id="edit_email" class="form-control" placeholder="Email">
                      </div>
                      <div class="form-group">
                          <label for="edit_address">Address</label>
-                         <input type="text" name="edit_address" id="edit_address" class="form-control" placeholder="Address">
+                         <input type="text" name="Address" id="edit_address" class="form-control" placeholder="Address">
                      </div>
                      <div class="form-group">
                          <label for="edit_city">City</label>
-                         <input type="text" name="edit_city" id="edit_city" class="form-control" placeholder="City">
+                         <input type="text" name="City" id="edit_city" class="form-control" placeholder="City">
                      </div>
                      <div class="form-group">
                          <label for="edit_state">State</label>
-                         <input type="text" name="edit_state" id="edit_state" class="form-control" placeholder="State">
+                         <input type="text" name="State" id="edit_state" class="form-control" placeholder="State">
                      </div>
                      <div class="form-group">
                          <label for="edit_zip">Zip</label>
-                         <input type="text" name="edit_zip" id="edit_zip" class="form-control" placeholder="Zip">
+                         <input type="text" name="Zip" id="edit_zip" class="form-control" placeholder="Zip">
                      </div>
                      <div class="form-group">
                          <label for="edit_phone">Phone</label>
-                         <input type="text" name="edit_phone" id="edit_phone" class="form-control" placeholder="Phone">
+                         <input type="text" name="Phone" id="edit_phone" class="form-control" placeholder="Phone">
                      </div>
                      <div class="form-group">
                          <label for="edit_alt_phone">Alt Phone</label>
-                         <input type="text" name="edit_alt_phone" id="edit_alt_phone" class="form-control" placeholder="Alt Phone">
+                         <input type="text" name="AltPhone" id="edit_alt_phone" class="form-control" placeholder="Alt Phone">
                      </div>
                      <div class="form-group">
                          <label for="edit_tdl">TDL #</label>
-                         <input type="text" name="edit_tdl" id="edit_tdl" class="form-control" placeholder="TDL #">
+                         <input type="text" name="TDL" id="edit_tdl" class="form-control" placeholder="TDL #">
                      </div>
                      <div class="form-group">
                          <label for="edit_tdl_exp_date">TDL Exp Date</label>
-                         <input type="date" name="edit_tdl_exp_date" id="edit_tdl_exp_date" class="form-control" placeholder="TDL Exp Date">
+                         <input type="date" name="TDLExpirationDate" id="edit_tdl_exp_date" class="form-control" placeholder="TDL Exp Date">
                      </div>
                      <div class="form-group">
                          <label for="edit_insurance_exp_date">Insurance Exp</label>
-                         <input type="date" name="edit_insurance_exp_date" id="edit_insurance_exp_date" class="form-control" placeholder="Insurance Exp">
+                         <input type="date" name="InsuranceExpDate" id="edit_insurance_exp_date" class="form-control" placeholder="Insurance Exp">
                      </div>
                      <div class="form-group">
-                         <label for="edit_customer_note">Customer Note</label>
-                         <textarea name="edit_customer_note" id="edit_customer_note" class="form-control" placeholder="Customer Note"></textarea>
-                     </div>
-                     <div class="form-group">
+                        <label for="edit_customer_note">Customer Note</label>
+                        <textarea name="CustomerNote" id="edit_customer_note" class="form-control" placeholder="Customer Note"></textarea>
+                    </div>
+                    <div class="form-group">
                         <label for="edit_status_id">Status ID</label>
-                        <textarea name="edit_status_id" id="edit_status_id" class="form-control" placeholder="Customer Note"></textarea>
+                        <textarea name="StatusID" id="edit_status_id" class="form-control" placeholder="Customer Note"></textarea>
                     </div>
                  </div>
                  <div class="modal-footer">
@@ -692,14 +695,24 @@ $(document).on("click", ".edit-button", function () {
     // For each item in the mapping
     $.each(mapping, function(key, value){
         var text = row.find("." + key).text(); // Get the text from the table cell
+
         // If it's a date, convert it to the input date format
-        if (key.includes("date")) {
-            text = new Date(text).toISOString().split('T')[0]; // Converts date to YYYY-MM-DD format
+        if (key.includes("date") && text) {
+            var date = new Date(text);
+
+            // If date is not valid, keep original text
+            if (isNaN(date.getTime())) {
+                text = '';
+            } else {
+                text = date.toISOString().split('T')[0]; // Converts date to YYYY-MM-DD format
+            }
         }
+
         // Set the value of the corresponding input in the modal
         $("#" + value).val(text);
     });
 });
+
 
 // Function to convert form array to object
 function serializeToObject(formArray) {
@@ -723,6 +736,8 @@ $("#editCustomerForm").submit(function(e) {
         contentType: 'application/json',
         success: function(response) {
             // Handle success: for example, show a success message and update the table
+            alert("Customer ID " + id + " has been successfully updated!");  // Alert the user with the success message
+            location.reload();
         },
         error: function(error) {
             // Handle error: for example, show an error message
@@ -731,8 +746,6 @@ $("#editCustomerForm").submit(function(e) {
 });
 </script>
 
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
