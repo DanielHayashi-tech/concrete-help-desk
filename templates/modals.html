@@ -72,12 +72,12 @@
                         <th class="text-center">First Name</th>
                         <th class="text-center">Last Name</th>
                         <th class="text-center">Email</th>
-                        <th class="text-center">Phone</th>
-                        <th class="text-center">Alt Phone</th>
                         <th class="text-center">Address</th>
                         <th class="text-center">City</th>
                         <th class="text-center">State</th>
                         <th class="text-center">Zip</th>
+                        <th class="text-center">Phone</th>
+                        <th class="text-center">Alt Phone</th>
                         <th class="text-center">TDL</th>
                         <th class="text-center">TDL Experation Date</th>
                         <th class="text-center">Insurance Experation Date</th>
@@ -94,12 +94,12 @@
                         <td class="text-center customer-first-name">{{ row.FirstName }}</td>
                         <td class="text-center customer-last-name">{{ row.LastName }}</td>
                         <td class="text-center customer-email">{{ row.Email }}</td>
-                        <td class="text-center customer-phone">{{ row.Phone }}</td>
-                        <td class="text-center customer-altphone">{{ row.AltPhone }}</td>
                         <td class="text-center customer-address">{{ row.Address }}</td>
                         <td class="text-center customer-city">{{ row.City }}</td>
                         <td class="text-center customer-state">{{ row.State }}</td>
                         <td class="text-center customer-zip">{{ row.Zip }}</td>
+                        <td class="text-center customer-phone">{{ row.Phone }}</td>
+                        <td class="text-center customer-altphone">{{ row.AltPhone }}</td>
                         <td class="text-center customer-tdl">{{ row.TDL }}</td>
                         <td class="text-center customer-tdl-experation-date">{{ row.TDLExpirationDate}}</td>
                         <td class="text-center customer-ins-experation-date">{{ row.InsuranceExpDate }}</td>
@@ -257,59 +257,61 @@
                 <form id="addCustomerForm">
                     <div class="modal-body">
                         <!-- Input fields for each column here -->
-                        <input type="hidden" name="customer_id" id="customer_id" />
                         <div class="form-group">
-                            <label for="add_first_name">First Name</label>
-                            <input type="text" name="add_first_name" id="add_first_name" class="form-control"
-                                placeholder="First Name">
+                            <label for="FirstName">First Name</label>
+                            <input type="text" name="FirstName" id="FirstName" class="form-control" placeholder="First Name">
                         </div>
                         <div class="form-group">
-                            <label for="add_last_name">Last Name</label>
-                            <input type="text" name="add_last_name" id="add_last_name" class="form-control" placeholder="Last Name">
+                            <label for="LastName">Last Name</label>
+                            <input type="text" name="LastName" id="LastName" class="form-control" placeholder="Last Name">
                         </div>
                         <div class="form-group">
-                            <label for="add_email">Email</label>
-                            <input type="email" name="add_email" id="add_email" class="form-control" placeholder="Email">
+                            <label for="Email">Email</label>
+                            <input type="email" name="Email" id="Email" class="form-control" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <label for="add_address">Address</label>
-                            <input type="text" name="add_address" id="add_address" class="form-control" placeholder="Address">
+                            <label for="Address">Address</label>
+                            <input type="text" name="Address" id="Address" class="form-control" placeholder="Address">
                         </div>
                         <div class="form-group">
-                            <label for="add_city">City</label>
-                            <input type="text" name="add_city" id="add_city" class="form-control" placeholder="City">
+                            <label for="City">City</label>
+                            <input type="text" name="City" id="City" class="form-control" placeholder="City">
                         </div>
                         <div class="form-group">
-                            <label for="add_state">State</label>
-                            <input type="text" name="add_state" id="add_state" class="form-control" placeholder="State">
+                            <label for="State">State</label>
+                            <input type="text" name="State" id="State" class="form-control" placeholder="State">
                         </div>
                         <div class="form-group">
-                            <label for="add_zip">Zip</label>
-                            <input type="text" name="add_zip" id="add_zip" class="form-control" placeholder="Zip">
+                            <label for="Zip">Zip</label>
+                            <input type="text" name="Zip" id="Zip" class="form-control" placeholder="Zip">
                         </div>
                         <div class="form-group">
-                            <label for="add_phone">Phone</label>
-                            <input type="text" name="add_phone" id="add_phone" class="form-control" placeholder="Phone">
+                            <label for="Phone">Phone</label>
+                            <input type="text" name="Phone" id="Phone" class="form-control" placeholder="Phone">
                         </div>
                         <div class="form-group">
-                            <label for="add_alt_phone">Alt Phone</label>
-                            <input type="text" name="add_alt_phone" id="add_alt_phone" class="form-control" placeholder="Alt Phone">
+                            <label for="AltPhone">Alt Phone</label>
+                            <input type="text" name="AltPhone" id="AltPhone" class="form-control" placeholder="Alt Phone">
                         </div>
                         <div class="form-group">
-                            <label for="add_tdl">TDL #</label>
-                            <input type="text" name="add_tdl" id="add_tdl" class="form-control" placeholder="TDL #">
+                            <label for="TDL">TDL #</label>
+                            <input type="text" name="TDL" id="TDL" class="form-control" placeholder="TDL #">
                         </div>
                         <div class="form-group">
-                            <label for="add_tdl_exp_date">TDL Exp Date</label>
-                            <input type="date" name="add_tdl_exp_date" id="add_tdl_exp_date" class="form-control" placeholder="TDL Exp Date">
+                            <label for="TDLExpirationDate">TDL Exp Date</label>
+                            <input type="date" name="TDLExpirationDate" id="TDLExpirationDate" class="form-control" placeholder="TDL Exp Date">
                         </div>
                         <div class="form-group">
-                            <label for="add_insurance_exp_date">Insurance Exp</label>
-                            <input type="date" name="add_insurance_exp_date" id="add_insurance_exp_date" class="form-control" placeholder="Insurance Exp">
+                            <label for="InsuranceExpDate">Insurance Exp</label>
+                            <input type="date" name="InsuranceExpDate" id="InsuranceExpDate" class="form-control" placeholder="Insurance Exp">
                         </div>
                         <div class="form-group">
-                            <label for="add_customer_note">Customer Note</label>
-                            <textarea name="add_customer_note" id="add_customer_note" class="form-control" placeholder="Customer Note"></textarea>
+                            <label for="CustomerNote">Customer Note</label>
+                            <textarea name="CustomerNote" id="CustomerNote" class="form-control" placeholder="Customer Note"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="StatusID">Status ID</label>
+                            <input type="text" name="StatusID" id="StatusID" class="form-control" placeholder="Status ID">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -336,8 +338,8 @@
                     <div class="modal-body">
                         <!-- Input fields for each column here -->
                         <div class="form-group">
-                            <label for="add_equipment_type">Equipment Type</label>
-                            <input type="text" name="add_equipment_type" id="add_equipment_type" class="form-control" placeholder="Equipment Type">
+                            <label for="EquipmentType">Equipment Type</label>
+                            <input type="text" name="EquipmentType" id="EquipmentType" class="form-control" placeholder="Equipment Type">
                         </div>
                         <div class="form-group">
                             <label for="update_equipment_condtion">Equipment Conditon</label>
@@ -900,6 +902,33 @@ $("#editCustomerForm").submit(function(e) {
         }
     });
 });
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$("#addCustomerForm").submit(function(e) {
+    e.preventDefault();  
+
+    var data = serializeToObject($(this).serializeArray());
+
+    $.ajax({
+        url: '/create_customer',
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(response) {
+            // Handle success: for example, show a success message and update the table
+            alert("New customer has been successfully added!");  // Alert the user with the success message
+            location.reload();
+        },
+        error: function(error) {
+            // Handle error: for example, show an error message
+            alert("An error occurred. Please try again.");
+        }
+    });
+});
+
 </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>

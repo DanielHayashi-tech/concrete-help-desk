@@ -213,8 +213,7 @@ def display_data():
 
     return render_template('display.html', data=data)
 
-###############################################################################################################
-
+##############################################################################################################################################################################################################################
 @app.route('/modals', methods=['GET'])
 def modals():
     if not current_user.is_authenticated:
@@ -331,6 +330,8 @@ def modals():
 
     return render_template('modals.html', customers_data=customers_data, equipment_data=equipment_data, rental_data=rental_data, vehicles_data=vehicles_data)
 
+##############################################################################################################################################################################################################################
+
 @app.route('/printedPage/<customer_id>')
 def printable_page(customer_id):
     customer_id = int(customer_id)  # Convert to integer
@@ -338,7 +339,7 @@ def printable_page(customer_id):
     return render_template('printedPage.html', row=row)
 
 
-###############################################################################################################
+##############################################################################################################################################################################################################################
 
 @app.route('/update_customer/<int:id>', methods=['PUT'])
 def update_customer(id):
@@ -455,6 +456,44 @@ def update_vehicles(id):
         db.session.rollback()  # Rollback the changes on error
         print(e)  # print the error to the console
         return jsonify({'error': 'An error occurred while updating vehicles data', 'details': str(e)}), 500
+
+##############################################################################################################################################################################################################################
+
+@app.route('/create_customer', methods=['POST'])
+def create_customer():
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'Not authenticated'}), 401
+
+    data = request.get_json()
+    print(data)  # Add this line to print the received data
+
+
+    # Create a new Customer instance
+    new_customer = Customers(
+        FirstName=data['FirstName'],
+        LastName=data['LastName'],
+        Email=data['Email'],
+        Address=data['Address'],
+        City=data['City'],
+        State=data['State'],
+        Zip=data['Zip'],
+        Phone=data['Phone'],
+        AltPhone=data['AltPhone'],
+        TDL=data['TDL'],
+        TDLExpirationDate=data['TDLExpirationDate'],
+        InsuranceExpDate=data['InsuranceExpDate'],
+        CustomerNote=data['CustomerNote'],
+        StatusID=data['StatusID']
+    )
+
+    db.session.add(new_customer)
+
+    try:
+        db.session.commit()
+        return jsonify({'message': 'New customer added successfully!'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'An error occurred while creating new customer', 'details': str(e)}), 500
 
 
 
