@@ -543,7 +543,7 @@
                      <span aria-hidden="true">&times;</span>
                  </button>
              </div>
-             <form id="editRentalsForm">
+             <form id="editEquipmentForm">
                  <div class="modal-body">
                      <!-- Input fields for each column here -->
                      <div class="form-group">
@@ -559,8 +559,8 @@
                          <input type="text" name="Condition" id="edit_equipment_condition" class="form-control" placeholder="Equipment Type">
                      </div>
                      <div class="form-group">
-                        <label for="edit_status_id">Status ID</label>
-                        <textarea name="StatusID" id="edit_status_id" class="form-control" placeholder="Status ID"></textarea>
+                        <label for="edit_status_id_equipment">Status ID</label>
+                        <textarea name="StatusID" id="edit_status_id_equipment" class="form-control" placeholder="Status ID"></textarea>
                     </div>
                  </div>
                  <div class="modal-footer">
@@ -587,16 +587,16 @@
                     <div class="modal-body">
                         <!-- Input fields for each column here -->
                         <div class="form-group">
-                            <label for="edit_rental_id">Rental ID</label>
-                            <input type="text" name="#RentalID" id="edit_rental_id" class="form-control" placeholder="Rental ID" disabled>
+                            <label for="edit_rentals_id">Rental ID</label>
+                            <input type="text" name="#RentalID" id="edit_rentals_id" class="form-control" placeholder="Rental ID" disabled>
                         </div>
                         <div class="form-group">
-                            <label for="customer_id">Customer ID</label>
-                            <input type="text" name=CustomerID id="edit_customer_id" class="form-control" placeholder="Customer ID disabled>
+                            <label for="edit_customer_id_rentals">Customer ID</label>
+                            <input type="text" name=CustomerID id="edit_customer_id_rentals" class="form-control" placeholder="Customer ID" disabled>
                         </div>
                         <div class="form-group">
-                            <label for="edit_equipment_id">Equipment ID</label>
-                            <input type="text" name="#EquipmentID" id="edit_equipment_id" class="form-control" placeholder="Equipment ID" disabled>
+                            <label for="edit_equipment_id_rentals">Equipment ID</label>
+                            <input type="text" name="#EquipmentID" id="edit_equipment_id_rentals" class="form-control" placeholder="Equipment ID" disabled>
                         </div>
                         <div class="form-group">
                             <label for="add_rental_date">Rental Date</label>
@@ -615,8 +615,8 @@
                             <textarea name="InternalNote" id="edit_internal_note" class="form-control" placeholder="Internal Note"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="edit_status_id">Status ID</label>
-                            <input type="text" name="#StatusID" id="edit_status_id" class="form-control" placeholder="Equipment Type">
+                            <label for="edit_status_id_rental">Status ID</label>
+                            <input type="text" name="#StatusID" id="edit_status_id_rental" class="form-control" placeholder="Status ID">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -643,8 +643,12 @@
              <div class="modal-body">
                  <!-- Input fields for each column here -->
                  <div class="form-group">
-                     <label for="edit_customer_id">Customer ID</label>
-                     <input type="text" name="CustomerID" id="edit_customer_id" class="form-control" placeholder="Customer ID" disabled>
+                    <label for="edit_vehicle_id">Vehicle ID</label>
+                    <input type="text" name="VehicleID" id="edit_vehicle_id" class="form-control" placeholder="Vehicle ID" disabled>
+                </div>
+                 <div class="form-group">
+                     <label for="edit_customer_id_vehicles">Customer ID</label>
+                     <input type="text" name="CustomerID" id="edit_customer_id_vehicles" class="form-control" placeholder="Customer ID" disabled>
                  </div>
                  <div class="form-group">
                      <label for="edit_vehicle_model">Vehicle Model</label>
@@ -663,8 +667,8 @@
                      <input type="text" name="LisencePlate" id="edit_vehicle_lp" class="form-control" placeholder="Lisence Plate">
                  </div>
                  <div class="form-group">
-                    <label for="edit_status_id">Status ID</label>
-                    <input type="text" name="StatusID" id="edit_status_id" class="form-control" placeholder="Lisence Plate">
+                    <label for="edit_status_id_vehicle">Status ID</label>
+                    <input type="text" name="StatusID" id="edit_status_id_vehicle" class="form-control" placeholder="Status ID">
                 </div>
              </div>
              <div class="modal-footer">
@@ -680,24 +684,48 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-// Map class names to input ids  
+
+// Function to convert form array to object
+function serializeToObject(formArray) {
+    var data = {};
+    for(var i = 0; i < formArray.length; i++){
+        data[formArray[i]['name']] = formArray[i]['value'];
+    }
+    return data;
+}
 
 
 var mappingvVehicles = {
     "vehicles-id": "edit_vehicle_id",
-    "vehicles-fk-customer-id": "edit_customer_id",
+    "vehicles-fk-customer-id": "edit_customer_id_vehicles",
     "vehicles-model": "edit_vehicle_model",
     "vehicles-make": "edit_vehicle_make",
     "vehicles-year": "edit_vehicle_year",
     "vehicles-lp": "edit_vehicle_lp",
-    "vehicles-status-id": "edit_status_id"
+    "vehicles-status-id": "edit_status_id_vehicle"
 };
 
+// Function to run when an edit button is clicked
 $(document).on("click", ".edit-button-vehicles", function () {
-    var row = $(this).closest("tr");
+    var row = $(this).closest("tr"); // Get the row that the button is in
 
+    // For each item in the mapping
     $.each(mappingvVehicles, function(key, value){
-        var text = row.find("." + key).text();
+        var text = row.find("." + key).text(); // Get the text from the table cell
+
+        // If it's a date, convert it to the input date format
+        if (key.includes("date") && text) {
+            var date = new Date(text);
+
+            // If date is not valid, keep original text
+            if (isNaN(date.getTime())) {
+                text = '';
+            } else {
+                text = date.toISOString().split('T')[0]; // Converts date to YYYY-MM-DD format
+            }
+        }
+
+        // Set the value of the corresponding input in the modal
         $("#" + value).val(text);
     });
 });
@@ -706,7 +734,7 @@ $("#editVehiclesForm").submit(function(e) {
     e.preventDefault();  
 
     var data = serializeToObject($(this).serializeArray());
-    var id = $("#edit_vehicles_id").val();
+    var id = $("#edit_vehicle_id").val();
 
     $.ajax({
         url: '/update_vehicles/' + id,
@@ -714,10 +742,12 @@ $("#editVehiclesForm").submit(function(e) {
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function(response) {
-            // Handle success
+            // Handle success: for example, show a success message and update the table
+            alert("Vehicle ID " + id + " has been successfully updated!");  // Alert the user with the success message
+            location.reload();
         },
         error: function(error) {
-            // Handle error
+            // Handle error: for example, show an error message
         }
     });
 });
@@ -727,14 +757,14 @@ $("#editVehiclesForm").submit(function(e) {
 
 var mappingRentals = {
     "rentals-id": "edit_rentals_id",
-    "rentals-fk-customer-id": "edit_customer_id",
-    "rentals-equipment-fk-id": "edit_eqipment_id",
+    "rentals-fk-customer-id": "edit_customer_id_rentals",
+    "rentals-equipment-fk-id": "edit_equipment_id_rentals",
     "rentals-rentals-date": "edit_rentals_date",
     "rentals-date": "edit_rental_date",
     "rentals-return-date": "edit_return_date",
     "rentals-return-time": "edit_return_time",
     "rentals-internal-note": "edit_internal_note",
-    "rentals-status-id": "edit_status_id"
+    "rentals-status-id": "edit_status_id_rental"
 };
 
 $(document).on("click", ".edit-button-rentals", function () {
@@ -758,10 +788,12 @@ $("#editRentalForm").submit(function(e) {
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function(response) {
-            // Handle success
+            // Handle success: for example, show a success message and update the table
+            alert("Rental ID " + id + " has been successfully updated!");  // Alert the user with the success message
+            location.reload();
         },
         error: function(error) {
-            // Handle error
+            // Handle error: for example, show an error message
         }
     });
 });
@@ -772,7 +804,7 @@ var mappingEquipment = {
     "equipment-equipment-id": "edit_equipment_id",
     "equipment-equipment-type": "edit_equipment_type",
     "equipment-equipment-condition": "edit_equipment_condition",
-    "equipment-status-id": "edit_status_id",
+    "equipment-status-id": "edit_status_id_equipment",
 };
 
 $(document).on("click", ".edit-button-equipment", function () {
@@ -796,10 +828,12 @@ $("#editEquipmentForm").submit(function(e) {
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function(response) {
-            // Handle success
+            // Handle success: for example, show a success message and update the table
+            alert("Equipment ID " + id + " has been successfully updated!");  // Alert the user with the success message
+            location.reload();
         },
         error: function(error) {
-            // Handle error
+            // Handle error: for example, show an error message
         }
     });
 });
@@ -847,16 +881,6 @@ $(document).on("click", ".edit-button-customers", function () {
         $("#" + value).val(text);
     });
 });
-
-
-// Function to convert form array to object
-function serializeToObject(formArray) {
-    var data = {};
-    for(var i = 0; i < formArray.length; i++){
-        data[formArray[i]['name']] = formArray[i]['value'];
-    }
-    return data;
-}
 
 $("#editCustomerForm").submit(function(e) {
     e.preventDefault();  // Prevent the form from submitting normally
