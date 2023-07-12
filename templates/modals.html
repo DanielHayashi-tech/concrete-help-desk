@@ -180,8 +180,8 @@
                         <td class="text-center rentals-id">{{ row.RentalID }}</td>
                         <td class="text-center rentals-fk-customer-id">{{ row.CustomerID }}</td>
                         <td class="text-center rentals-equipment-fk-id">{{ row.EquipmentID }}</td>
-                        <td class="text-center rentals-rentals-date">{{ row.RentalDate }}</td>
-                        <td class="text-center rentals-date">{{ row.ReturnDate }}</td>
+                        <td class="text-center rentals-rental-date">{{ row.RentalDate }}</td>
+                        <td class="text-center rentals-return-date">{{ row.ReturnDate }}</td>
                         <td class="text-center rentals-return-time">{{ row.ReturnTime }}</td>
                         <td class="text-center rentals-internal-note">{{ row.InternalNote }}</td>
                         <td class="text-center rentals-status-id">{{ row.StatusID }}</td>
@@ -599,8 +599,8 @@
                             <input type="text" name="#EquipmentID" id="edit_equipment_id_rentals" class="form-control" placeholder="Equipment ID" disabled>
                         </div>
                         <div class="form-group">
-                            <label for="add_rental_date">Rental Date</label>
-                            <input type="date" name="RentalDate" id="add_rental_date" class="form-control" placeholder="Day of the Rental">
+                            <label for="edit_rental_date">Rental Date</label>
+                            <input type="date" name="RentalDate" id="edit_rental_date" class="form-control" placeholder="Day of the Rental">
                         </div>
                         <div class="form-group">
                             <label for="edit_return_date">Return Date</label>
@@ -660,7 +660,7 @@
                  </div>
                  <div class="form-group">
                      <label for="edit_vehicle_year">Vehicle Year</label>
-                     <input type="date" name="VehicleYear" id="edit_vehicle_year" class="form-control" placeholder="Vehicle Year">
+                     <input type="text" name="VehicleYear" id="edit_vehicle_year" class="form-control" placeholder="Vehicle Year">
                  </div>
                  <div class="form-group">
                      <label for="edit_vehicle_lp">Lisence Plate</label>
@@ -753,14 +753,11 @@ $("#editVehiclesForm").submit(function(e) {
 });
 
 
-
-
 var mappingRentals = {
     "rentals-id": "edit_rentals_id",
     "rentals-fk-customer-id": "edit_customer_id_rentals",
     "rentals-equipment-fk-id": "edit_equipment_id_rentals",
-    "rentals-rentals-date": "edit_rentals_date",
-    "rentals-date": "edit_rental_date",
+    "rentals-rental-date": "edit_rental_date",
     "rentals-return-date": "edit_return_date",
     "rentals-return-time": "edit_return_time",
     "rentals-internal-note": "edit_internal_note",
