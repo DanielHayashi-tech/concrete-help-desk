@@ -465,7 +465,7 @@ def create_customer():
         return jsonify({'error': 'Not authenticated'}), 401
 
     data = request.get_json()
-    print(data)  # Add this line to print the received data
+    print(data)  
 
 
     # Create a new Customer instance
@@ -496,6 +496,76 @@ def create_customer():
         return jsonify({'error': 'An error occurred while creating new customer', 'details': str(e)}), 500
 
 
+@app.route('/create_equipment', methods=['POST'])
+def create_equipment():
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    data = request.get_json()
+
+    new_equipment = Equipment(
+        EquipmentType=data['EquipmentType'],
+        Condition=data['update_equipment_condition'],
+        StatusID=data['StatusID']
+    )
+
+    db.session.add(new_equipment)
+    
+    try:
+        db.session.commit()
+        return jsonify({'message': 'New customer added successfully!'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'An error occurred while creating new customer', 'details': str(e)}), 500
+
+
+@app.route('/create_rental', methods=['POST'])
+def create_rental():
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'Not authenticated'}), 401
+    data = request.get_json()
+
+    new_rental = Rentals(
+        CustomerID=data['CustomerID'],
+        EquipmentID=data['EquipmentID'],
+        RentalDate=data['RentalDate'],
+        ReturnDate=data['ReturnDate'],
+        ReturnTime=data['ReturnTime'],
+        InternalNote=data['InternalNote'],
+        StatusID=data['StatusID']
+    )
+    db.session.add(new_rental)
+    try:
+        db.session.commit()
+        return jsonify({'message': 'New customer added successfully!'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'An error occurred while creating new customer', 'details': str(e)}), 500
+
+
+@app.route('/create_vehicle', methods=['POST'])
+def create_vehicle():
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    data = request.get_json()
+
+    new_vehicle = Vehicles(
+        CustomerID=data['add_customer_id'],
+        VehicleModel=data['add_vehicle_model'],
+        VehicleMake=data['add_vehicle_make'],
+        VehicleYear=data['add_vehicle_year'],
+        LicensePlate=data['add_lisence_plate'],
+        StatusID=data['StatusID']
+    )
+    db.session.add(new_vehicle)
+
+    try:
+        db.session.commit()
+        return jsonify({'message': 'New customer added successfully!'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'An error occurred while creating new customer', 'details': str(e)}), 500
 
 
 

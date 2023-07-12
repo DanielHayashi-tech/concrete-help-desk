@@ -929,6 +929,68 @@ $("#addCustomerForm").submit(function(e) {
     });
 });
 
+$("#addEquipmentForm").submit(function(event) {
+    event.preventDefault();
+    const formData = $(this).serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
+    $.ajax({
+        type: "POST",
+        url: "/create_equipment",
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+            location.reload();
+        },
+        error: function(error) {
+            // Handle error: for example, show an error message
+            alert("An error occurred. Please try again.");
+        }
+    });
+});
+
+$("#addRentalForm").submit(function(event) {
+    event.preventDefault();
+    const formData = $(this).serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
+    $.ajax({
+        type: "POST",
+        url: "/create_rental",
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+            location.reload();
+        },
+        error: function(error) {
+            // Handle error: for example, show an error message
+            alert("An error occurred. Please try again.");
+        }
+    });
+});
+
+$("#addVehicleForm").submit(function(event) {
+    event.preventDefault();
+    const formData = $(this).serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
+    $.ajax({
+        type: "POST",
+        url: "/create_vehicle",
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+            location.reload();
+        },
+        error: function(error) {
+            // Handle error: for example, show an error message
+            alert("An error occurred. Please try again.");
+        }
+    });
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
