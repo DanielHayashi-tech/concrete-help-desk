@@ -279,6 +279,7 @@ def modals():
 
 
     rental_query = db.session.query(
+        Rentals.RentalID,
         Customers.CustomerID,
         Equipment.EquipmentID,
         Rentals.RentalDate,
@@ -293,6 +294,7 @@ def modals():
     rental_data = []
     for row in rental_query:
         item = {
+            'RentalID': row.RentalID, 
             'CustomerID': row.CustomerID,
             'EquipmentID': row.EquipmentID,
             'RentalDate': row.RentalDate,
@@ -365,8 +367,8 @@ def update_customer(id):
         db.session.rollback()  # Rollback the changes on error
         print(e)  # print the error to the console
         return jsonify({'error': 'An error occurred while updating customer data', 'details': str(e)}), 500
-
-
+    
+    
 @app.route('/update_equipment/<int:id>', methods=['PUT'])
 def update_equipment(id):
     if not current_user.is_authenticated:
@@ -377,7 +379,7 @@ def update_equipment(id):
 
     if not equipment:
         # If the equipment was not found, return an error
-        return jsonify({'error': 'Equipment not found'}), 404
+        return jsonify({'error': 'equipment not found'}), 404
 
     # Get the updated data from the request
     data = request.get_json()
@@ -389,11 +391,70 @@ def update_equipment(id):
     try:
         # Save the changes to the database
         db.session.commit()
-        return jsonify({'message': 'Equipment data updated successfully'})
+        return jsonify({'message': 'equipment data updated successfully'})
     except Exception as e:
         db.session.rollback()  # Rollback the changes on error
         print(e)  # print the error to the console
         return jsonify({'error': 'An error occurred while updating equipment data', 'details': str(e)}), 500
+    
+
+
+@app.route('/update_rentals/<int:id>', methods=['PUT'])
+def update_rentals(id):
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'Not authenticated'}), 401
+
+    # Get the rentals from the database
+    rentals = Rentals.query.get(id)
+
+    if not rentals:
+        # If the rentals was not found, return an error
+        return jsonify({'error': 'rentals not found'}), 404
+
+    # Get the updated data from the request
+    data = request.get_json()
+
+    # Update the rentals data
+    for key, value in data.items():
+        setattr(rentals, key, value)
+
+    try:
+        # Save the changes to the database
+        db.session.commit()
+        return jsonify({'message': 'rentals data updated successfully'})
+    except Exception as e:
+        db.session.rollback()  # Rollback the changes on error
+        print(e)  # print the error to the console
+        return jsonify({'error': 'An error occurred while updating rentals data', 'details': str(e)}), 500
+    
+
+@app.route('/update_vehicles/<int:id>', methods=['PUT'])
+def update_vehicles(id):
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'Not authenticated'}), 401
+
+    # Get the vehicles from the database
+    vehicles = Vehicles.query.get(id)
+
+    if not vehicles:
+        # If the vehicles was not found, return an error
+        return jsonify({'error': 'vehicles not found'}), 404
+
+    # Get the updated data from the request
+    data = request.get_json()
+
+    # Update the vehicles data
+    for key, value in data.items():
+        setattr(vehicles, key, value)
+
+    try:
+        # Save the changes to the database
+        db.session.commit()
+        return jsonify({'message': 'vehicles data updated successfully'})
+    except Exception as e:
+        db.session.rollback()  # Rollback the changes on error
+        print(e)  # print the error to the console
+        return jsonify({'error': 'An error occurred while updating vehicles data', 'details': str(e)}), 500
 
 
 
