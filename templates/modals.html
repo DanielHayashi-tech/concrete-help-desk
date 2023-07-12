@@ -332,7 +332,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="adEquipmentForm">
+                <form id="addEquipmentForm">
                     <div class="modal-body">
                         <!-- Input fields for each column here -->
                         <div class="form-group">
@@ -341,13 +341,14 @@
                         </div>
                         <div class="form-group">
                             <label for="EquipmentCondition">Equipment Condition</label>
-                            <input type="text" name="EquipmentCondition" id="EquipmentCondition" class="form-control" placeholder="Equipment Condition">
+                            <input type="text" name="EquipmentCondition" id="EquipmentCondition" class="form-control" placeholder="Description of the Condition">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="StatusID">Status ID</label>
-                        <select class="form-control" id="StatusID" name="StatusID">
-                        </select>
+                        <div class="form-group">
+                            <label for="addStatusID">Status ID</label>
+                            <select class="form-control" id="addStatusID" name="StatusID">
+                                <!-- Options will be dynamically generated -->
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -850,7 +851,7 @@ $(document).on("click", ".edit-button-equipment", async function () {  // <-- no
                 $("#" + value).val(rowData[key]);
             }
         });
-    }, 150);
+    }, 300);
 });
 
 $("#editEquipmentForm").submit(function(e) {
@@ -969,16 +970,19 @@ $("#addCustomerForm").submit(function(e) {
 });
 
 $("#addEquipmentForm").submit(function(event) {
-    event.preventDefault();
+    event.preventDefault();  // Prevent the default form submission
+
     const formData = $(this).serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
+
     $.ajax({
         type: "POST",
-        url: "/create_equipment",
+        url: "/create_equipment",  // URL that handles the form submission on the server
         contentType: "application/json",
         data: JSON.stringify(formData),
         dataType: "json",
         success: function(response) {
-            console.log(response);
+            // Handle success: for example, show a success message and update the table
+            alert("New Equipment has been successfully added!");  // Alert the user with the success message
             location.reload();
         },
         error: function(error) {
@@ -987,6 +991,7 @@ $("#addEquipmentForm").submit(function(event) {
         }
     });
 });
+
 
 $("#addRentalForm").submit(function(event) {
     event.preventDefault();
@@ -1031,25 +1036,46 @@ $("#addVehicleForm").submit(function(event) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $('#editEquipmentModal').on('show.bs.modal', function (event) {
-        // Fetch the status IDs from the server
-        fetch('/getEquipment_status_ids')  // update here
-            .then(response => response.json())
-            .then(data => {
-                const select = document.getElementById('editStatusID');
+    // Fetch the status IDs from the server
+    fetch('/getEquipment_status_ids')  // update here
+        .then(response => response.json())
+        .then(data => {
+            const select = document.getElementById('editStatusID');
 
-                // Remove all previous options
-                while (select.firstChild) {
-                    select.removeChild(select.firstChild);
-                }
+            // Remove all previous options
+            while (select.firstChild) {
+                select.removeChild(select.firstChild);
+            }
 
-                data.forEach(status => {
-                    const option = document.createElement('option');
-                    option.value = status.id;
-                    option.text = status.name + " (" + status.id + ")";
-                    select.appendChild(option);
-                });
+            data.forEach(status => {
+                const option = document.createElement('option');
+                option.value = status.id;
+                option.text = status.name + " (" + status.id + ")";
+                select.appendChild(option);
             });
+        });
     });
+
+$('#addEquipmentModal').on('show.bs.modal', function (event) {
+// Fetch the status IDs from the server
+fetch('/getEquipment_status_ids')
+    .then(response => response.json())
+    .then(data => {
+        const select = document.getElementById('addStatusID');
+
+        // Remove all previous options
+        while (select.firstChild) {
+            select.removeChild(select.firstChild);
+        }
+
+        data.forEach(status => {
+            const option = document.createElement('option');
+            option.value = status.id;
+            option.text = status.name + " (" + status.id + ")";
+            select.appendChild(option);
+        });
+    });
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
