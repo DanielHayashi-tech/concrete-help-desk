@@ -96,7 +96,7 @@ class Customers(db.Model):
     LeaseAgreement = db.Column(db.Text)
     CustomerNote = db.Column(db.Text)
     StatusID = db.Column(db.Integer, db.ForeignKey('customer_statuses.StatusID'))
-    UpdatedByAgentID = db.Column(db.Integer, db.ForeignKey('agents.AgentID'))  # Added this field
+    UpdatedByAgentID = db.Column(db.Integer, db.ForeignKey('agents.AgentID'))  
     rentals = db.relationship('Rentals', backref='customer', lazy=True)
     vehicles = db.relationship('Vehicles', backref='customer', lazy=True)
 
@@ -105,7 +105,7 @@ class Equipment(db.Model):
     EquipmentType = db.Column(db.String(255))
     Condition = db.Column(db.String(255))
     StatusID = db.Column(db.Integer, db.ForeignKey('equipment_statuses.StatusID'))
-    UpdatedByAgentID = db.Column(db.Integer, db.ForeignKey('agents.AgentID'))  # Added this field
+    UpdatedByAgentID = db.Column(db.Integer, db.ForeignKey('agents.AgentID'))  
     rentals = db.relationship('Rentals', backref='equipment', lazy=True)
 
 class Rentals(db.Model):
@@ -118,7 +118,7 @@ class Rentals(db.Model):
     ReturnTime = db.Column(db.String(255))
     InternalNote = db.Column(db.Text)
     StatusID = db.Column(db.Integer, db.ForeignKey('rental_statuses.StatusID'))
-    UpdatedByAgentID = db.Column(db.Integer, db.ForeignKey('agents.AgentID'))  # Added this field
+    UpdatedByAgentID = db.Column(db.Integer, db.ForeignKey('agents.AgentID'))  
 
 class Vehicles(db.Model):
     VehicleID = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -128,7 +128,7 @@ class Vehicles(db.Model):
     VehicleYear = db.Column(db.String(4))  # Year is represented as a string of length 4 in Flask-SQLAlchemy
     LicensePlate = db.Column(db.String(20))
     StatusID = db.Column(db.Integer, db.ForeignKey('vehicle_statuses.StatusID'))
-    UpdatedByAgentID = db.Column(db.Integer, db.ForeignKey('agents.AgentID'))  # Added this field
+    UpdatedByAgentID = db.Column(db.Integer, db.ForeignKey('agents.AgentID'))  
 
 ###############################################################################################################
 
@@ -263,8 +263,14 @@ def modals():
         Equipment.EquipmentID,
         Equipment.EquipmentType,
         Equipment.Condition,
-        Equipment.StatusID
-    ).order_by(Equipment.EquipmentID.desc()).all()
+        Equipment.StatusID,
+        EquipmentStatuses.StatusName
+    ).join(
+        EquipmentStatuses,
+        EquipmentStatuses.StatusID == Equipment.StatusID
+    ).order_by(
+        Equipment.EquipmentID.desc()
+    ).all()
 
     equipment_data = []
     for row in equipment_query:
@@ -272,7 +278,8 @@ def modals():
             'EquipmentID': row.EquipmentID,
             'EquipmentType': row.EquipmentType,
             'Condition': row.Condition,
-            'StatusID': row.StatusID
+            'StatusID': row.StatusID,
+            'EquipmentStatusName': row.StatusName
         }
         equipment_data.append(item)
 
@@ -457,6 +464,16 @@ def update_vehicles(id):
         print(e)  # print the error to the console
         return jsonify({'error': 'An error occurred while updating vehicles data', 'details': str(e)}), 500
 
+
+##############################################################################################################################################################################################################################
+
+
+@app.route('/getEquipment_status_ids', methods=['GET'])
+def get_status_ids():
+    status_ids = EquipmentStatuses.query.all()
+    return jsonify([{'id': status.StatusID, 'name': status.StatusName} for status in status_ids]), 200
+
+
 ##############################################################################################################################################################################################################################
 
 @app.route('/create_customer', methods=['POST'])
@@ -485,7 +502,6 @@ def create_customer():
         CustomerNote=data['CustomerNote'],
         StatusID=data['StatusID']
     )
-
     db.session.add(new_customer)
 
     try:
@@ -505,7 +521,7 @@ def create_equipment():
 
     new_equipment = Equipment(
         EquipmentType=data['EquipmentType'],
-        Condition=data['update_equipment_condition'],
+        Condition=data['EquipmentCondition'],
         StatusID=data['StatusID']
     )
 
@@ -513,11 +529,11 @@ def create_equipment():
     
     try:
         db.session.commit()
-        return jsonify({'message': 'New customer added successfully!'}), 200
+        return jsonify({'message': 'New equipment added successfully!'}), 200
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': 'An error occurred while creating new customer', 'details': str(e)}), 500
-
+        return jsonify({'error': 'An error occurred while creating new equipment', 'details': str(e)}), 500
+    
 
 @app.route('/create_rental', methods=['POST'])
 def create_rental():

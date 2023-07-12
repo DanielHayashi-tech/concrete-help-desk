@@ -141,7 +141,7 @@
                         <td class="text-center equipment-equipment-id">{{ row.EquipmentID }}</td>
                         <td class="text-center equipment-equipment-type">{{ row.EquipmentType }}</td>
                         <td class="text-center equipment-equipment-condition">{{ row.Condition }}</td>
-                        <td class="text-center equipment-status-id">{{ row.StatusID }}</td>
+                        <td class="text-center equipment-status-id">{{ row.StatusID }} ({{ row.EquipmentStatusName }})</td>
                         <td class="text-center">
                             <button class="btn btn-primary edit-button-equipment" data-toggle="modal" data-target="#editEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
                         </td>
@@ -244,8 +244,7 @@
     <!----------------------------- Add Data Modals ----------------------------->
 
     <!-- Add Customer Modal -->
-    <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -324,12 +323,11 @@
     </div>
 
     <!-- Add Equipment Modal -->
-    <div class="modal fade" id="addEquipmentModal" tabindex="-1" role="dialog" aria-labelledby="addEquipmentModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="addEquipmentModal" tabindex="-1" role="dialog" aria-labelledby="addEquipmentModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addEquipmentModalLabel">Add Equipemnt</h5>
+                    <h5 class="modal-title" id="addEquipmentModalLabel">Add Equipment</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -342,9 +340,14 @@
                             <input type="text" name="EquipmentType" id="EquipmentType" class="form-control" placeholder="Equipment Type">
                         </div>
                         <div class="form-group">
-                            <label for="update_equipment_condtion">Equipment Conditon</label>
-                            <input type="text" name="update_equipment_condtion" id="update_equipment_condtion" class="form-control" placeholder="Equipment Condition">
+                            <label for="EquipmentCondition">Equipment Condition</label>
+                            <input type="text" name="EquipmentCondition" id="EquipmentCondition" class="form-control" placeholder="Equipment Condition">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="StatusID">Status ID</label>
+                        <select class="form-control" id="StatusID" name="StatusID">
+                        </select>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -535,44 +538,43 @@
  </div>
 
  <!-- Edit Equipment Modal -->
- <div class="modal fade" id="editEquipmentModal" tabindex="-1" role="dialog" aria-labelledby="editEquipmentModalLabel"
-     aria-hidden="true">
-     <div class="modal-dialog" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="editEquipmentModalLabel">Edit Equipemnt</h5>
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                 </button>
-             </div>
-             <form id="editEquipmentForm">
-                 <div class="modal-body">
-                     <!-- Input fields for each column here -->
-                     <div class="form-group">
-                        <label for="edit_equipment_id">Equipment ID</label>
-                        <input type="text" name="EquipmentID" id="edit_equipment_id" class="form-control" placeholder="Equipment ID" disabled>
+<div class="modal fade" id="editEquipmentModal" tabindex="-1" role="dialog" aria-labelledby="editEquipmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEquipmentModalLabel">Edit Equipment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editEquipmentForm">
+                <div class="modal-body">
+                    <!-- Hidden field for the equipment ID -->
+                    <input type="hidden" id="editEquipmentID" name="EquipmentID">
+                    <!-- Input fields for each column here -->
+                    <div class="form-group">
+                        <label for="editEquipmentType">Equipment Type</label>
+                        <input type="text" name="EquipmentType" id="editEquipmentType" class="form-control" placeholder="Equipment Type">
                     </div>
-                     <div class="form-group">
-                         <label for="edit_equipment_type">Equipment Type</label>
-                         <input type="text" name="EquipmentType" id="edit_equipment_type" class="form-control" placeholder="Equipment Type">
-                     </div>
-                     <div class="form-group">
-                         <label for="edit_equipment_condtion">Equipment Conditon</label>
-                         <input type="text" name="Condition" id="edit_equipment_condition" class="form-control" placeholder="Equipment Type">
-                     </div>
-                     <div class="form-group">
-                        <label for="edit_status_id_equipment">Status ID</label>
-                        <textarea name="StatusID" id="edit_status_id_equipment" class="form-control" placeholder="Status ID"></textarea>
+                    <div class="form-group">
+                        <label for="editEquipmentCondition">Equipment Condition</label>
+                        <input type="text" name="Condition" id="editEquipmentCondition" class="form-control" placeholder="Equipment Condition">
                     </div>
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                     <button type="submit" class="btn btn-primary">Save Changes</button>
-                 </div>
-             </form>
-         </div>
-     </div>
- </div>
+                    <div class="form-group">
+                        <label for="editStatusID">Status ID</label>
+                        <select class="form-control" id="editStatusID" name="StatusID">
+                            <!-- Options will be dynamically generated -->
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
     <!-- Edit Rental Modal -->
     <div class="modal fade" id="editRentalModal" tabindex="-1" role="dialog" aria-labelledby="editRentalModalLabel"
@@ -696,7 +698,6 @@ function serializeToObject(formArray) {
     return data;
 }
 
-
 var mappingvVehicles = {
     "vehicles-id": "edit_vehicle_id",
     "vehicles-fk-customer-id": "edit_customer_id_vehicles",
@@ -754,7 +755,6 @@ $("#editVehiclesForm").submit(function(e) {
     });
 });
 
-
 var mappingRentals = {
     "rentals-id": "edit_rentals_id",
     "rentals-fk-customer-id": "edit_customer_id_rentals",
@@ -797,29 +797,69 @@ $("#editRentalForm").submit(function(e) {
     });
 });
 
-
-
 var mappingEquipment = {
-    "equipment-equipment-id": "edit_equipment_id",
-    "equipment-equipment-type": "edit_equipment_type",
-    "equipment-equipment-condition": "edit_equipment_condition",
-    "equipment-status-id": "edit_status_id_equipment",
+    "equipment-equipment-id": "editEquipmentID",
+    "equipment-equipment-type": "editEquipmentType",
+    "equipment-equipment-condition": "editEquipmentCondition",
+    "equipment-status-id": "editStatusID"  // change this to "equipment-status" if you also update the class name in your HTML template
 };
 
-$(document).on("click", ".edit-button-equipment", function () {
-    var row = $(this).closest("tr");
+// Function to run when an edit button is clicked
+$(document).on("click", ".edit-button-equipment", async function () {  // <-- note the addition of 'async'
+    var row = $(this).closest("tr"); // Get the row that the button is in
 
-    $.each(mappingEquipment, function(key, value){
-        var text = row.find("." + key).text();
-        $("#" + value).val(text);
+    // Store the row data in a variable to be used later
+    var rowData = {};
+    $.each(mappingEquipment, function(key, value) {
+        var text = row.find("." + key).text(); // Get the text from the table cell
+        rowData[key] = text;
     });
+
+    // Fetch the status IDs from the server and wait for the operation to complete before moving on
+    let response = await fetch('/getEquipment_status_ids');
+    let data = await response.json();
+
+    const select = document.getElementById('editStatusID');
+
+    // Remove all previous options
+    while (select.firstChild) {
+        select.removeChild(select.firstChild);
+    }
+
+    data.forEach(status => {
+        const option = document.createElement('option');
+        option.value = status.id;
+        option.text = status.name + " (" + status.id + ")";
+        select.appendChild(option);
+    });
+
+    // Now that the dropdown has been populated, set the selected value
+    setTimeout(() => {
+        $.each(mappingEquipment, function(key, value){
+            if (key === "equipment-status-id") {
+                var select = $("#" + value);
+                var statusID = rowData[key].split(' ')[0];  // get just the status ID part
+                var matchingOptionValue = select.find('option').filter(function() {
+                    return $(this).val() == statusID;  
+                }).val();
+
+                console.log('Matching Option Value:', matchingOptionValue);
+                select.val(matchingOptionValue);
+            } else {
+                // Set the value of the corresponding input in the modal
+                $("#" + value).val(rowData[key]);
+            }
+        });
+    }, 150);
 });
 
 $("#editEquipmentForm").submit(function(e) {
     e.preventDefault();  
 
     var data = serializeToObject($(this).serializeArray());
-    var id = $("#edit_equipment_id").val();
+    var id = $("#editEquipmentID").val();
+    console.log(data);
+
 
     $.ajax({
         url: '/update_equipment/' + id,
@@ -828,15 +868,16 @@ $("#editEquipmentForm").submit(function(e) {
         contentType: 'application/json',
         success: function(response) {
             // Handle success: for example, show a success message and update the table
-            alert("Equipment ID " + id + " has been successfully updated!");  // Alert the user with the success message
+            alert("Equipment ID " + id + " has been successfully updated!"); 
             location.reload();
+            console.log(data)
         },
         error: function(error) {
             // Handle error: for example, show an error message
+            console,log(error)
         }
     });
 });
-
 
 var Customermapping = {
     "customer-customer-id": "edit_customer_id",
@@ -902,8 +943,6 @@ $("#editCustomerForm").submit(function(e) {
         }
     });
 });
-
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -988,6 +1027,29 @@ $("#addVehicleForm").submit(function(event) {
         }
     });
 });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$('#editEquipmentModal').on('show.bs.modal', function (event) {
+        // Fetch the status IDs from the server
+        fetch('/getEquipment_status_ids')  // update here
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('editStatusID');
+
+                // Remove all previous options
+                while (select.firstChild) {
+                    select.removeChild(select.firstChild);
+                }
+
+                data.forEach(status => {
+                    const option = document.createElement('option');
+                    option.value = status.id;
+                    option.text = status.name + " (" + status.id + ")";
+                    select.appendChild(option);
+                });
+            });
+    });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
