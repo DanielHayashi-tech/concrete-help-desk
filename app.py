@@ -469,25 +469,25 @@ def update_vehicles(id):
 
 
 @app.route('/getEquipment_status_ids', methods=['GET'])
-def get_status_ids():
+def get_status_ids_equipment():
     status_ids = EquipmentStatuses.query.all()
     return jsonify([{'id': status.StatusID, 'name': status.StatusName} for status in status_ids]), 200
 
-# @app.route('/getCustomer_status_ids', methods=['GET'])
-# def get_status_ids():
-#     status_ids = CustomerStatuses.query.all()
-#     return jsonify([{'id': status.StatusID, 'name': status.StatusName} for status in status_ids]), 200
+@app.route('/getCustomer_status_ids', methods=['GET'])
+def get_status_ids_customers():
+    status_ids = CustomerStatuses.query.all()
+    return jsonify([{'id': status.StatusID, 'name': status.StatusName} for status in status_ids]), 200
 
-# @app.route('/getRental_status_ids', methods=['GET'])
-# def get_status_ids():
-#     status_ids = RentalStatuses.query.all()
-#     return jsonify([{'id': status.StatusID, 'name': status.StatusName} for status in status_ids]), 200
+@app.route('/getRentals_status_ids', methods=['GET'])
+def get_status_ids_rentals():
+    status_ids = RentalStatuses.query.all()
+    return jsonify([{'id': status.StatusID, 'name': status.StatusName} for status in status_ids]), 200
 
 
-# @app.route('/getVehicle_status_ids', methods=['GET'])
-# def get_status_ids():
-#     status_ids = VehicleStatuses.query.all()
-#     return jsonify([{'id': status.StatusID, 'name': status.StatusName} for status in status_ids]), 200
+@app.route('/getVehicle_status_ids', methods=['GET'])
+def get_status_ids_vehicles():
+    status_ids = VehicleStatuses.query.all()
+    return jsonify([{'id': status.StatusID, 'name': status.StatusName} for status in status_ids]), 200
 
 ##############################################################################################################################################################################################################################
 
