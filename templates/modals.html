@@ -60,402 +60,409 @@
             <h1> Modals Woohoo!</h1>
         </div>
 
-        <!----------------------------- Customer ----------------------------->
 
-        <!-- Customer Table -->
-        <div class="table-container">
-            <h3> Customers Table!</h3>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th class="text-center">Customer ID</th>
-                        <th class="text-center">First Name</th>
-                        <th class="text-center">Last Name</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Address</th>
-                        <th class="text-center">City</th>
-                        <th class="text-center">State</th>
-                        <th class="text-center">Zip</th>
-                        <th class="text-center">Phone</th>
-                        <th class="text-center">Alt Phone</th>
-                        <th class="text-center">TDL</th>
-                        <th class="text-center">TDL Experation Date</th>
-                        <th class="text-center">Insurance Experation Date</th>
-                        <th class="text-center">Customer Note</th>
-                        <th class="text-center">Status Id</th>
-                        <th class="text-center">Actions</th>
+<!-- Customer Table -->
+<div class="table-container">
+    <h3> Customers Table!</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">Customer ID</th>
+                <th class="text-center">First Name</th>
+                <th class="text-center">Last Name</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Address</th>
+                <th class="text-center">City</th>
+                <th class="text-center">State</th>
+                <th class="text-center">Zip</th>
+                <th class="text-center">Phone</th>
+                <th class="text-center">Alt Phone</th>
+                <th class="text-center">TDL</th>
+                <th class="text-center">TDL Experation Date</th>
+                <th class="text-center">Insurance Experation Date</th>
+                <th class="text-center">Customer Note</th>
+                <th class="text-center">Status Id</th>
+                <th class="text-center">Actions</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in customers_data %}
-                    <tr>
-                        <td class="text-center customer-customer-id">{{ row.CustomerID }}</td>
-                        <td class="text-center customer-first-name">{{ row.FirstName }}</td>
-                        <td class="text-center customer-last-name">{{ row.LastName }}</td>
-                        <td class="text-center customer-email">{{ row.Email }}</td>
-                        <td class="text-center customer-address">{{ row.Address }}</td>
-                        <td class="text-center customer-city">{{ row.City }}</td>
-                        <td class="text-center customer-state">{{ row.State }}</td>
-                        <td class="text-center customer-zip">{{ row.Zip }}</td>
-                        <td class="text-center customer-phone">{{ row.Phone }}</td>
-                        <td class="text-center customer-altphone">{{ row.AltPhone }}</td>
-                        <td class="text-center customer-tdl">{{ row.TDL }}</td>
-                        <td class="text-center customer-tdl-experation-date">{{ row.TDLExpirationDate}}</td>
-                        <td class="text-center customer-ins-experation-date">{{ row.InsuranceExpDate }}</td>
-                        <td class="text-center customer-note">{{ row.CustomerNote }}</td>
-                        <td class="text-center customer-status-id">{{ row.StatusID }}</td>
-
-
-                        <td class="text-center">
-                            <button class="btn btn-primary edit-button-customers" data-toggle="modal" data-target="#editCustomerModal" data-customer-id="{{ row.CustomerID }}">Edit</button>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <!-- Buttons -->
-            <div class="button-container text-center mb-4">
-                <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addCustomerModal">Add Customer</button>
-            </div>
-        </div>
-
-        <!----------------------------- Equipment ----------------------------->
-
-        <!-- Equipment Table -->
-        <div class="table-container">
-            <h3> Equipment Table!</h3>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th class="text-center">Equipment ID</th>
-                        <th class="text-center">Equipment Type</th>
-                        <th class="text-center">Condition</th>
-                        <th class="text-center">Status ID</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in equipment_data %}
-                    <tr>
-                        <td class="text-center equipment-equipment-id">{{ row.EquipmentID }}</td>
-                        <td class="text-center equipment-equipment-type">{{ row.EquipmentType }}</td>
-                        <td class="text-center equipment-equipment-condition">{{ row.Condition }}</td>
-                        <td class="text-center equipment-status-id">{{ row.StatusID }} ({{ row.EquipmentStatusName }})</td>
-                        <td class="text-center">
-                            <button class="btn btn-primary edit-button-equipment" data-toggle="modal" data-target="#editEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <!-- Buttons -->
-            <div class="button-container text-center mb-4">
-                <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addEquipmentModal">Add Equipment</button>
-            </div>
-        </div>
-
-        <!----------------------------- Rentals ----------------------------->
-
-        <!-- Rentals Table -->
-        <div class="table-container">
-            <h3> Rentals Table!</h3>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th class="text-center">Rental ID</th>
-                        <th class="text-center">Customer ID</th>
-                        <th class="text-center">Equipment ID</th>
-                        <th class="text-center">Rental Date</th>
-                        <th class="text-center">Return Date</th>
-                        <th class="text-center">Return Time</th>
-                        <th class="text-center">Internal Note</th>
-                        <th class="text-center">Status ID</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in rental_data %}
-                    <tr>
-                        <td class="text-center rentals-id">{{ row.RentalID }}</td>
-                        <td class="text-center rentals-fk-customer-id">{{ row.CustomerID }}</td>
-                        <td class="text-center rentals-equipment-fk-id">{{ row.EquipmentID }}</td>
-                        <td class="text-center rentals-rental-date">{{ row.RentalDate }}</td>
-                        <td class="text-center rentals-return-date">{{ row.ReturnDate }}</td>
-                        <td class="text-center rentals-return-time">{{ row.ReturnTime }}</td>
-                        <td class="text-center rentals-internal-note">{{ row.InternalNote }}</td>
-                        <td class="text-center rentals-status-id">{{ row.StatusID }}</td>
-                        <td class="text-center">
-                            <button class="btn btn-primary edit-button-rentals" data-toggle="modal" data-target="#editRentalModal" data-customer-id="{{ row.RentalID }}">Edit</button>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <!-- Buttons -->
-            <div class="button-container text-center mb-4">
-                <button class="btn btn-primary -rentals" data-toggle="modal" data-target="#addRentalModal">Add Rental</button>
-            </div>
-        </div>
-        <!----------------------------- Vehicles ----------------------------->
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in customers_data %}
+            <tr>
+                <td class="text-center customer-customer-id">{{ row.CustomerID }}</td>
+                <td class="text-center customer-first-name">{{ row.FirstName }}</td>
+                <td class="text-center customer-last-name">{{ row.LastName }}</td>
+                <td class="text-center customer-email">{{ row.Email }}</td>
+                <td class="text-center customer-address">{{ row.Address }}</td>
+                <td class="text-center customer-city">{{ row.City }}</td>
+                <td class="text-center customer-state">{{ row.State }}</td>
+                <td class="text-center customer-zip">{{ row.Zip }}</td>
+                <td class="text-center customer-phone">{{ row.Phone }}</td>
+                <td class="text-center customer-altphone">{{ row.AltPhone }}</td>
+                <td class="text-center customer-tdl">{{ row.TDL }}</td>
+                <td class="text-center customer-tdl-experation-date">{{ row.TDLExpirationDate}}</td>
+                <td class="text-center customer-ins-experation-date">{{ row.InsuranceExpDate }}</td>
+                <td class="text-center customer-note">{{ row.CustomerNote }}</td>
+                <td class="text-center customer-status-id">{{ row.StatusID }}</td>
 
 
-        <!-- Vehicles Table -->
-        <div class="table-container">
-            <h3> Vehicles Table!</h3>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th class="text-center">Vehicle ID</th>
-                        <th class="text-center">Customer ID</th>
-                        <th class="text-center">Vehicle Model</th>
-                        <th class="text-center">Vehicle Make</th>
-                        <th class="text-center">Vehicle Year</th>
-                        <th class="text-center">License Plate</th>
-                        <th class="text-center">Status ID</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in vehicles_data %}
-                    <tr>
-                        <td class="text-center vehicles-id">{{ row.VehicleID }}</td>
-                        <td class="text-center vehicles-fk-customer-id">{{ row.CustomerID }}</td>
-                        <td class="text-center vehicles-model">{{ row.VehicleModel }}</td>
-                        <td class="text-center vehicles-make">{{ row.VehicleMake }}</td>
-                        <td class="text-center vehicles-year">{{ row.VehicleYear }}</td>
-                        <td class="text-center vehicles-lp">{{ row.LicensePlate }}</td>
-                        <td class="text-center vehicles-status-id">{{ row.StatusID }}</td>
-                        <td class="text-center">
-                            <button class="btn btn-primary edit-button-vehicles" data-toggle="modal" data-target="#editVehicleModal" data-equipment-id="{{ row.VehicleID }}">Edit</button>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <!-- Buttons -->
-            <div class="button-container text-center mb-4">
-                <button class="btn btn-primary add-button-vehicles" data-toggle="modal" data-target="#addVehicleModal">Add Vehicle</button>
-            </div>
-        </div>
-
+                <td class="text-center">
+                    <button class="btn btn-primary edit-button-customers" data-toggle="modal" data-target="#editCustomerModal" data-customer-id="{{ row.CustomerID }}">Edit</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Buttons -->
+    <div class="button-container text-center mb-4">
+        <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addCustomerModal">Add Customer</button>
     </div>
+</div>
 
-    <!----------------------------- Add Data Modals ----------------------------->
+        
 
-    <!-- Add Customer Modal -->
-    <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addCustomerModalLabel">Add Customer</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+<!-- Equipment Table -->
+<div class="table-container">
+    <h3> Equipment Table!</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">Equipment ID</th>
+                <th class="text-center">Equipment Type</th>
+                <th class="text-center">Condition</th>
+                <th class="text-center">Status ID</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in equipment_data %}
+            <tr>
+                <td class="text-center equipment-equipment-id">{{ row.EquipmentID }}</td>
+                <td class="text-center equipment-equipment-type">{{ row.EquipmentType }}</td>
+                <td class="text-center equipment-equipment-condition">{{ row.Condition }}</td>
+                <td class="text-center equipment-status-id">{{ row.StatusID }} ({{ row.EquipmentStatusName }})</td>
+                <td class="text-center">
+                    <button class="btn btn-primary edit-button-equipment" data-toggle="modal" data-target="#editEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Buttons -->
+    <div class="button-container text-center mb-4">
+        <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addEquipmentModal">Add Equipment</button>
+    </div>
+</div>
+
+
+<!-- Rentals Table -->
+<div class="table-container">
+    <h3> Rentals Table!</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">Rental ID</th>
+                <th class="text-center">Customer ID</th>
+                <th class="text-center">Equipment ID</th>
+                <th class="text-center">Rental Date</th>
+                <th class="text-center">Return Date</th>
+                <th class="text-center">Return Time</th>
+                <th class="text-center">Internal Note</th>
+                <th class="text-center">Status ID</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rental_data %}
+            <tr>
+                <td class="text-center rentals-id">{{ row.RentalID }}</td>
+                <td class="text-center rentals-fk-customer-id">{{ row.CustomerID }}</td>
+                <td class="text-center rentals-equipment-fk-id">{{ row.EquipmentID }}</td>
+                <td class="text-center rentals-rental-date">{{ row.RentalDate }}</td>
+                <td class="text-center rentals-return-date">{{ row.ReturnDate }}</td>
+                <td class="text-center rentals-return-time">{{ row.ReturnTime }}</td>
+                <td class="text-center rentals-internal-note">{{ row.InternalNote }}</td>
+                <td class="text-center rentals-status-id">{{ row.StatusID }}</td>
+                <td class="text-center">
+                    <button class="btn btn-primary edit-button-rentals" data-toggle="modal" data-target="#editRentalModal" data-customer-id="{{ row.RentalID }}">Edit</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Buttons -->
+    <div class="button-container text-center mb-4">
+        <button class="btn btn-primary add-rentals" data-toggle="modal" data-target="#addRentalModal">Add Rental</button>
+    </div>
+</div>
+
+
+<!-- Vehicles Table -->
+<div class="table-container">
+    <h3> Vehicles Table!</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">Vehicle ID</th>
+                <th class="text-center">Customer ID</th>
+                <th class="text-center">Vehicle Model</th>
+                <th class="text-center">Vehicle Make</th>
+                <th class="text-center">Vehicle Year</th>
+                <th class="text-center">License Plate</th>
+                <th class="text-center">Status ID</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in vehicles_data %}
+            <tr>
+                <td class="text-center vehicles-id">{{ row.VehicleID }}</td>
+                <td class="text-center vehicles-fk-customer-id">{{ row.CustomerID }}</td>
+                <td class="text-center vehicles-model">{{ row.VehicleModel }}</td>
+                <td class="text-center vehicles-make">{{ row.VehicleMake }}</td>
+                <td class="text-center vehicles-year">{{ row.VehicleYear }}</td>
+                <td class="text-center vehicles-lp">{{ row.LicensePlate }}</td>
+                <td class="text-center vehicles-status-id">{{ row.StatusID }}</td>
+                <td class="text-center">
+                    <button class="btn btn-primary edit-button-vehicles" data-toggle="modal" data-target="#editVehicleModal" data-equipment-id="{{ row.VehicleID }}">Edit</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Buttons -->
+    <div class="button-container text-center mb-4">
+        <button class="btn btn-primary add-button-vehicles" data-toggle="modal" data-target="#addVehicleModal">Add Vehicle</button>
+    </div>
+</div>
+
+
+<!---------------------------------------------------------- Add Data Modals ---------------------------------------------------------->
+
+<!-- Add Customer Modal -->
+<div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="addCustomerModalLabel">Add Customer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form id="addCustomerForm">
+            <div class="modal-body">
+                <!-- Input fields for each column here -->
+                <div class="form-group">
+                    <label for="FirstName">First Name</label>
+                    <input type="text" name="FirstName" id="FirstName" class="form-control" placeholder="First Name">
                 </div>
-                <form id="addCustomerForm">
-                    <div class="modal-body">
-                        <!-- Input fields for each column here -->
-                        <div class="form-group">
-                            <label for="FirstName">First Name</label>
-                            <input type="text" name="FirstName" id="FirstName" class="form-control" placeholder="First Name">
-                        </div>
-                        <div class="form-group">
-                            <label for="LastName">Last Name</label>
-                            <input type="text" name="LastName" id="LastName" class="form-control" placeholder="Last Name">
-                        </div>
-                        <div class="form-group">
-                            <label for="Email">Email</label>
-                            <input type="email" name="Email" id="Email" class="form-control" placeholder="Email">
-                        </div>
-                        <div class="form-group">
-                            <label for="Address">Address</label>
-                            <input type="text" name="Address" id="Address" class="form-control" placeholder="Address">
-                        </div>
-                        <div class="form-group">
-                            <label for="City">City</label>
-                            <input type="text" name="City" id="City" class="form-control" placeholder="City">
-                        </div>
-                        <div class="form-group">
-                            <label for="State">State</label>
-                            <input type="text" name="State" id="State" class="form-control" placeholder="State">
-                        </div>
-                        <div class="form-group">
-                            <label for="Zip">Zip</label>
-                            <input type="text" name="Zip" id="Zip" class="form-control" placeholder="Zip">
-                        </div>
-                        <div class="form-group">
-                            <label for="Phone">Phone</label>
-                            <input type="text" name="Phone" id="Phone" class="form-control" placeholder="Phone">
-                        </div>
-                        <div class="form-group">
-                            <label for="AltPhone">Alt Phone</label>
-                            <input type="text" name="AltPhone" id="AltPhone" class="form-control" placeholder="Alt Phone">
-                        </div>
-                        <div class="form-group">
-                            <label for="TDL">TDL #</label>
-                            <input type="text" name="TDL" id="TDL" class="form-control" placeholder="TDL #">
-                        </div>
-                        <div class="form-group">
-                            <label for="TDLExpirationDate">TDL Exp Date</label>
-                            <input type="date" name="TDLExpirationDate" id="TDLExpirationDate" class="form-control" placeholder="TDL Exp Date">
-                        </div>
-                        <div class="form-group">
-                            <label for="InsuranceExpDate">Insurance Exp</label>
-                            <input type="date" name="InsuranceExpDate" id="InsuranceExpDate" class="form-control" placeholder="Insurance Exp">
-                        </div>
-                        <div class="form-group">
-                            <label for="CustomerNote">Customer Note</label>
-                            <textarea name="CustomerNote" id="CustomerNote" class="form-control" placeholder="Customer Note"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="StatusID">Status ID</label>
-                            <input type="text" name="StatusID" id="StatusID" class="form-control" placeholder="Status ID">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add Equipment Modal -->
-    <div class="modal fade" id="addEquipmentModal" tabindex="-1" role="dialog" aria-labelledby="addEquipmentModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addEquipmentModalLabel">Add Equipment</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="form-group">
+                    <label for="LastName">Last Name</label>
+                    <input type="text" name="LastName" id="LastName" class="form-control" placeholder="Last Name">
                 </div>
-                <form id="addEquipmentForm">
-                    <div class="modal-body">
-                        <!-- Input fields for each column here -->
-                        <div class="form-group">
-                            <label for="EquipmentType">Equipment Type</label>
-                            <input type="text" name="EquipmentType" id="EquipmentType" class="form-control" placeholder="Equipment Type">
-                        </div>
-                        <div class="form-group">
-                            <label for="EquipmentCondition">Equipment Condition</label>
-                            <input type="text" name="EquipmentCondition" id="EquipmentCondition" class="form-control" placeholder="Description of the Condition">
-                        </div>
-                        <div class="form-group">
-                            <label for="addStatusID">Status ID</label>
-                            <select class="form-control" id="addStatusID" name="StatusID">
-                                <!-- Options will be dynamically generated -->
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add Rental Modal -->
-    <div class="modal fade" id="addRentalModal" tabindex="-1" role="dialog" aria-labelledby="addRentalModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addRentalModalLabel">Add Rental</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                    <input type="email" name="Email" id="Email" class="form-control" placeholder="Email">
                 </div>
-                <form id="addRentaltForm">
-                    <div class="modal-body">
-                        <!-- Input fields for each column here -->
-                        <div class="form-group">
-                            <label for="add_customer_id">Customer ID</label>
-                            <input type="text" name="CustomerID" id="add_customer_id" class="form-control" placeholder="Equipment Type">
-                        </div>
-                        <div class="form-group">
-                            <label for="add_equipment_id">Equipment ID</label>
-                            <input type="text" name="EquipmentID" id="add_equipment_id" class="form-control" placeholder="Equipment Type">
-                        </div>
-                        <div class="form-group">
-                            <label for="add_rental_date">Rental Date</label>
-                            <input type="date" name="RentalDate" id="add_rental_date" class="form-control" placeholder="Day of the Rental">
-                        </div>
-                        <div class="form-group">
-                            <label for="add_return_date">Return Date</label>
-                            <input type="date" name="ReturnDate" id="add_return_date" class="form-control" placeholder="Return Date">
-                        </div>
-                        <div class="form-group">
-                            <label for="add_return_time">Return Time</label>
-                            <input type="text" name="ReturnTime" id="add_return_time" class="form-control" placeholder="Return Time">
-                        </div>
-                        <div class="form-group">
-                            <label for="add_internal_note">Internal Note</label>
-                            <textarea name="InternalNote" id="add_internal_note" class="form-control" placeholder="Internal Note"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add Vehicle Modal -->
-    <div class="modal fade" id="addVehicleModal" tabindex="-1" role="dialog" aria-labelledby="addVehicleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addVehicleModalLabel">Add Vehicle</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="form-group">
+                    <label for="Address">Address</label>
+                    <input type="text" name="Address" id="Address" class="form-control" placeholder="Address">
                 </div>
-                <form id="addVehicleForm">
-                    <div class="modal-body">
-                        <!-- Input fields for each column here -->
-                        <div class="form-group">
-                            <label for="add_customer_id">Customer ID</label>
-                            <input type="text" name="add_customer_id" id="add_customer_id" class="form-control" placeholder="Equipment Type">
-                        </div>
-                        <div class="form-group">
-                            <label for="add_vehicle_model">Vehicle Model</label>
-                            <input type="text" name="add_vehicle_model" id="add_vehicle_model" class="form-control" placeholder="Vehicle Model">
-                        </div>
-                        <div class="form-group">
-                            <label for="add_vehicle_make">Vehicle Make</label>
-                            <input type="text" name="add_vehicle_make" id="add_vehicle_make" class="form-control" placeholder="Vehicle Make">
-                        </div>
-                        <div class="form-group">
-                            <label for="add_vehicle_year">Vehicle Year</label>
-                            <input type="date" name="add_vehicle_year" id="add_vehicle_year" class="form-control" placeholder="Vehicle Year">
-                        </div>
-                        <div class="form-group">
-                            <label for="add_lisence_plate">Lisence Plate</label>
-                            <input type="text" name="add_lisence_plate" id="add_lisence_plate" class="form-control" placeholder="Licesne Plate">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                </form>
+                <div class="form-group">
+                    <label for="City">City</label>
+                    <input type="text" name="City" id="City" class="form-control" placeholder="City">
+                </div>
+                <div class="form-group">
+                    <label for="State">State</label>
+                    <input type="text" name="State" id="State" class="form-control" placeholder="State">
+                </div>
+                <div class="form-group">
+                    <label for="Zip">Zip</label>
+                    <input type="text" name="Zip" id="Zip" class="form-control" placeholder="Zip">
+                </div>
+                <div class="form-group">
+                    <label for="Phone">Phone</label>
+                    <input type="text" name="Phone" id="Phone" class="form-control" placeholder="Phone">
+                </div>
+                <div class="form-group">
+                    <label for="AltPhone">Alt Phone</label>
+                    <input type="text" name="AltPhone" id="AltPhone" class="form-control" placeholder="Alt Phone">
+                </div>
+                <div class="form-group">
+                    <label for="TDL">TDL #</label>
+                    <input type="text" name="TDL" id="TDL" class="form-control" placeholder="TDL #">
+                </div>
+                <div class="form-group">
+                    <label for="TDLExpirationDate">TDL Exp Date</label>
+                    <input type="date" name="TDLExpirationDate" id="TDLExpirationDate" class="form-control" placeholder="TDL Exp Date">
+                </div>
+                <div class="form-group">
+                    <label for="InsuranceExpDate">Insurance Exp</label>
+                    <input type="date" name="InsuranceExpDate" id="InsuranceExpDate" class="form-control" placeholder="Insurance Exp">
+                </div>
+                <div class="form-group">
+                    <label for="CustomerNote">Customer Note</label>
+                    <textarea name="CustomerNote" id="CustomerNote" class="form-control" placeholder="Customer Note"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="StatusID">Status ID</label>
+                    <select class="form-control" id="StatusID" name="StatusID">
+                        <!-- Options will be dynamically generated -->
+                    </select>
+                </div>
             </div>
-        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
     </div>
+</div>
+</div>
 
-    <!----------------------------- Edit Data Modals ----------------------------->
+
+<!-- Add Equipment Modal -->
+<div class="modal fade" id="addEquipmentModal" tabindex="-1" role="dialog" aria-labelledby="addEquipmentModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="addEquipmentModalLabel">Add Equipment</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form id="addEquipmentForm">
+            <div class="modal-body">
+                <!-- Input fields for each column here -->
+                <div class="form-group">
+                    <label for="EquipmentType">Equipment Type</label>
+                    <input type="text" name="EquipmentType" id="EquipmentType" class="form-control" placeholder="Equipment Type">
+                </div>
+                <div class="form-group">
+                    <label for="EquipmentCondition">Equipment Condition</label>
+                    <input type="text" name="EquipmentCondition" id="EquipmentCondition" class="form-control" placeholder="Description of the Condition">
+                </div>
+                <div class="form-group">
+                    <label for="addStatusID">Status ID</label>
+                    <select class="form-control" id="addStatusID" name="StatusID">
+                        <!-- Options will be dynamically generated -->
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+<!-- Add Rental Modal -->
+<div class="modal fade" id="addRentalModal" tabindex="-1" role="dialog" aria-labelledby="addRentalModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="addRentalModalLabel">Add Rental</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form id="addRentalForm">
+            <div class="modal-body">
+                <!-- Input fields for each column here -->
+                <div class="form-group">
+                    <label for="add_customer_id">Customer ID</label>
+                    <input type="text" name="CustomerID" id="add_customer_id" class="form-control" placeholder="Equipment Type">
+                </div>
+                <div class="form-group">
+                    <label for="add_equipment_id">Equipment ID</label>
+                    <input type="text" name="EquipmentID" id="add_equipment_id" class="form-control" placeholder="Equipment ID">
+                </div>
+                <div class="form-group">
+                    <label for="add_rental_date">Rental Date</label>
+                    <input type="date" name="RentalDate" id="add_rental_date" class="form-control" placeholder="Day of the Rental">
+                </div>
+                <div class="form-group">
+                    <label for="add_return_date">Return Date</label>
+                    <input type="date" name="ReturnDate" id="add_return_date" class="form-control" placeholder="Return Date">
+                </div>
+                <div class="form-group">
+                    <label for="add_return_time">Return Time</label>
+                    <input type="text" name="ReturnTime" id="add_return_time" class="form-control" placeholder="Return Time">
+                </div>
+                <div class="form-group">
+                    <label for="add_internal_note">Internal Note</label>
+                    <textarea name="InternalNote" id="add_internal_note" class="form-control" placeholder="Internal Note"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="add_status_id_rental">Status ID</label>
+                    <select name="StatusID" id="add_status_id_rental" class="form-control"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+<!-- Add Vehicle Modal -->
+<div class="modal fade" id="addVehicleModal" tabindex="-1" role="dialog" aria-labelledby="addVehicleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="addVehicleModalLabel">Add Vehicle</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form id="addVehicleForm">
+            <div class="modal-body">
+                <!-- Input fields for each column here -->
+                <div class="form-group">
+                    <label for="add_customer_id">Customer ID</label>
+                    <input type="text" name="add_customer_id" id="add_customer_id" class="form-control" placeholder="Equipment Type">
+                </div>
+                <div class="form-group">
+                    <label for="add_vehicle_model">Vehicle Model</label>
+                    <input type="text" name="add_vehicle_model" id="add_vehicle_model" class="form-control" placeholder="Vehicle Model">
+                </div>
+                <div class="form-group">
+                    <label for="add_vehicle_make">Vehicle Make</label>
+                    <input type="text" name="add_vehicle_make" id="add_vehicle_make" class="form-control" placeholder="Vehicle Make">
+                </div>
+                <div class="form-group">
+                    <label for="add_vehicle_year">Vehicle Year</label>
+                    <input type="date" name="add_vehicle_year" id="add_vehicle_year" class="form-control" placeholder="Vehicle Year">
+                </div>
+                <div class="form-group">
+                    <label for="add_lisence_plate">Lisence Plate</label>
+                    <input type="text" name="add_lisence_plate" id="add_lisence_plate" class="form-control" placeholder="Licesne Plate">
+                </div>
+                <div class="form-group">
+                    <label for="add_status_id_rental">Status ID</label>
+                    <select name="StatusID" id="add_status_id_vehicle" class="form-control"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+    <!---------------------------------------------------------- Edit Data Modals ---------------------------------------------------------->
 
 
      <!-- Edit Customer Modal -->
-     <div class="modal fade" id="editCustomerModal" tabindex="-1" role="dialog" aria-labelledby="editCustomerModalLabel"
+<div class="modal fade" id="editCustomerModal" tabindex="-1" role="dialog" aria-labelledby="editCustomerModalLabel"
      aria-hidden="true">
      <div class="modal-dialog" role="document">
          <div class="modal-content">
@@ -526,17 +533,19 @@
                     </div>
                     <div class="form-group">
                         <label for="edit_status_id">Status ID</label>
-                        <textarea name="StatusID" id="edit_status_id" class="form-control" placeholder="Status ID"></textarea>
+                        <select class="form-control" id="edit_status_id" name="StatusID">
+                            <!-- Options will be dynamically generated -->
+                        </select>
                     </div>
                  </div>
                  <div class="modal-footer">
-                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                     <button type="submit" class="btn btn-primary">Save Changes</button>
-                 </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
              </form>
          </div>
      </div>
- </div>
+</div>
 
  <!-- Edit Equipment Modal -->
 <div class="modal fade" id="editEquipmentModal" tabindex="-1" role="dialog" aria-labelledby="editEquipmentModalLabel" aria-hidden="true">
@@ -577,64 +586,66 @@
     </div>
 </div>
 
-    <!-- Edit Rental Modal -->
-    <div class="modal fade" id="editRentalModal" tabindex="-1" role="dialog" aria-labelledby="editRentalModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editRentalModalLabel">Edit Rental</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="editRentalForm">
-                    <div class="modal-body">
-                        <!-- Input fields for each column here -->
-                        <div class="form-group">
-                            <label for="edit_rentals_id">Rental ID</label>
-                            <input type="text" name="#RentalID" id="edit_rentals_id" class="form-control" placeholder="Rental ID" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit_customer_id_rentals">Customer ID</label>
-                            <input type="text" name=CustomerID id="edit_customer_id_rentals" class="form-control" placeholder="Customer ID" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit_equipment_id_rentals">Equipment ID</label>
-                            <input type="text" name="#EquipmentID" id="edit_equipment_id_rentals" class="form-control" placeholder="Equipment ID" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit_rental_date">Rental Date</label>
-                            <input type="date" name="RentalDate" id="edit_rental_date" class="form-control" placeholder="Day of the Rental">
-                        </div>
-                        <div class="form-group">
-                            <label for="edit_return_date">Return Date</label>
-                            <input type="date" name="ReturnDate" id="edit_return_date" class="form-control" placeholder="Return Date">
-                        </div>
-                        <div class="form-group">
-                            <label for="edit_return_time">Return Time</label>
-                            <input type="text" name="ReturnTime" id="edit_return_time" class="form-control" placeholder="Return Time">
-                        </div>
-                        <div class="form-group">
-                            <label for="edit_internal_note">Internal Note</label>
-                            <textarea name="InternalNote" id="edit_internal_note" class="form-control" placeholder="Internal Note"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit_status_id_rental">Status ID</label>
-                            <input type="text" name="#StatusID" id="edit_status_id_rental" class="form-control" placeholder="Status ID">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                </form>
+
+<!-- Edit Rental Modal -->
+<div class="modal fade" id="editRentalModal" tabindex="-1" role="dialog" aria-labelledby="editRentalModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editRentalModalLabel">Edit Rental</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <form id="editRentalForm">
+                <div class="modal-body">
+                    <!-- Input fields for each column here -->
+                    <div class="form-group">
+                        <label for="edit_rentals_id">Rental ID</label>
+                        <input type="text" name="#RentalID" id="edit_rentals_id" class="form-control" placeholder="Rental ID" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_customer_id_rentals">Customer ID</label>
+                        <input type="text" name=CustomerID id="edit_customer_id_rentals" class="form-control" placeholder="Customer ID" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_equipment_id_rentals">Equipment ID</label>
+                        <input type="text" name="equipmentId" id="edit_equipment_id" class="form-control" placeholder="Equipment ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_rental_date">Rental Date</label>
+                        <input type="date" name="RentalDate" id="edit_rental_date" class="form-control" placeholder="Day of the Rental">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_return_date">Return Date</label>
+                        <input type="date" name="ReturnDate" id="edit_return_date" class="form-control" placeholder="Return Date">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_return_time">Return Time</label>
+                        <input type="text" name="ReturnTime" id="edit_return_time" class="form-control" placeholder="Return Time">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_internal_note">Internal Note</label>
+                        <textarea name="InternalNote" id="edit_internal_note" class="form-control" placeholder="Internal Note"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_status_id_rental">Status ID</label>
+                        <select name="StatusID" id="edit_status_id_rental" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+
 
  <!-- Edit Vehicle Modal -->
- <div class="modal fade" id="editVehicleModal" tabindex="-1" role="dialog" aria-labelledby="editVehicleModalLabel"
+<div class="modal fade" id="editVehicleModal" tabindex="-1" role="dialog" aria-labelledby="editVehicleModalLabel"
  aria-hidden="true">
  <div class="modal-dialog" role="document">
      <div class="modal-content">
@@ -673,7 +684,7 @@
                  </div>
                  <div class="form-group">
                     <label for="edit_status_id_vehicle">Status ID</label>
-                    <input type="text" name="StatusID" id="edit_status_id_vehicle" class="form-control" placeholder="Status ID">
+                    <select name="StatusID" id="edit_status_id_vehicle" class="form-control"></select>
                 </div>
              </div>
              <div class="modal-footer">
@@ -699,7 +710,8 @@ function serializeToObject(formArray) {
     return data;
 }
 
-var mappingvVehicles = {
+// Mapping for Vehicles
+var mappingVehicles = {
     "vehicles-id": "edit_vehicle_id",
     "vehicles-fk-customer-id": "edit_customer_id_vehicles",
     "vehicles-model": "edit_vehicle_model",
@@ -709,53 +721,80 @@ var mappingvVehicles = {
     "vehicles-status-id": "edit_status_id_vehicle"
 };
 
+function fetchStatusIDsVehicle(select, status_id) {
+    return fetch('/getVehicle_status_ids')
+        .then(response => response.json())
+        .then(data => {
+            // Remove all previous options
+            while (select.firstChild) {
+                select.removeChild(select.firstChild);
+            }
+
+            data.forEach(status => {
+                const option = document.createElement('option');
+                option.value = status.id;
+                option.text = status.name + " (" + status.id + ")";
+                select.appendChild(option);
+            });
+
+            // Set the selected status id
+            if (status_id) select.value = status_id;
+        });
+}
+
 // Function to run when an edit button is clicked
 $(document).on("click", ".edit-button-vehicles", function () {
     var row = $(this).closest("tr"); // Get the row that the button is in
+    var status_id = row.find(".vehicles-status-id").text().trim(); // Get the status ID
 
-    // For each item in the mapping
-    $.each(mappingvVehicles, function(key, value){
-        var text = row.find("." + key).text(); // Get the text from the table cell
+    // Transfer row data to modal
+    for(var key in mappingVehicles){
+        $('#'+mappingVehicles[key]).val( row.find('.'+key).text() );
+    }
 
-        // If it's a date, convert it to the input date format
-        if (key.includes("date") && text) {
-            var date = new Date(text);
-
-            // If date is not valid, keep original text
-            if (isNaN(date.getTime())) {
-                text = '';
-            } else {
-                text = date.toISOString().split('T')[0]; // Converts date to YYYY-MM-DD format
-            }
-        }
-
-        // Set the value of the corresponding input in the modal
-        $("#" + value).val(text);
+    // Fetch the status IDs from the server
+    const select = document.getElementById('edit_status_id_vehicle');
+    fetchStatusIDsVehicle(select, status_id)  // Here's where we fetch the status IDs
+    .then(() => {
+        // Now you can show the modal
+        $('#editVehicleModal').modal('show');
     });
 });
 
-$("#editVehiclesForm").submit(function(e) {
-    e.preventDefault();  
+$(document).on("click", ".add-button-vehicles", function () {
+    // Fetch the status IDs from the server
+    const select = document.getElementById('add_status_id_vehicle');
+    fetchStatusIDsVehicle(select);
+});
 
-    var data = serializeToObject($(this).serializeArray());
-    var id = $("#edit_vehicle_id").val();
-
+$("#addVehicleForm").submit(function(event) {
+    event.preventDefault();
+    const formData = $(this).serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
     $.ajax({
-        url: '/update_vehicles/' + id,
-        type: 'PUT',
-        data: JSON.stringify(data),
-        contentType: 'application/json',
+        type: "POST",
+        url: "/create_vehicle",
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        dataType: "json",
         success: function(response) {
-            // Handle success: for example, show a success message and update the table
-            alert("Vehicle ID " + id + " has been successfully updated!");  // Alert the user with the success message
+            console.log(response);
             location.reload();
         },
         error: function(error) {
             // Handle error: for example, show an error message
+            alert("An error occurred. Please try again.");
         }
     });
 });
 
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                  VEHICLES                                                                                                                  //     
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Mapping for Rentals
 var mappingRentals = {
     "rentals-id": "edit_rentals_id",
     "rentals-fk-customer-id": "edit_customer_id_rentals",
@@ -767,14 +806,88 @@ var mappingRentals = {
     "rentals-status-id": "edit_status_id_rental"
 };
 
-$(document).on("click", ".edit-button-rentals", function () {
-    var row = $(this).closest("tr");
+function fetchStatusIDsRental(select, status_id) {
+    return fetch('/getRentals_status_ids')
+        .then(response => response.json())
+        .then(data => {
+            // Remove all previous options
+            while (select.firstChild) {
+                select.removeChild(select.firstChild);
+            }
 
-    $.each(mappingRentals, function(key, value){
-        var text = row.find("." + key).text();
-        $("#" + value).val(text);
+            data.forEach(status => {
+                const option = document.createElement('option');
+                option.value = status.id;
+                option.text = status.name + " (" + status.id + ")";
+                select.appendChild(option);
+            });
+
+            // Set the selected status id
+            if (status_id) select.value = status_id;
+        });
+}
+
+// Function to serialize form data to an object
+function serializeToObject(formArray) {
+    var formData = {};
+    for(var i = 0; i < formArray.length; i++) {
+        var field = formArray[i];
+        formData[field.name] = field.value;
+    }
+    return formData;
+}
+
+
+
+// Function to run when an edit button is clicked
+$(document).on("click", ".edit-button-rentals", function () {
+    var row = $(this).closest("tr"); // Get the row that the button is in
+    var status_id = row.find(".rentals-status-id").text().trim(); // Get the status ID
+
+    // Transfer row data to modal
+    for(var key in mappingRentals){
+        $('#'+mappingRentals[key]).val( row.find('.'+key).text() );
+    }
+
+    // Fetch the status IDs from the server
+    const select = document.getElementById('edit_status_id_rental');
+    fetchStatusIDsRental(select, status_id)  // Here's where we fetch the status IDs
+    .then(() => {
+        // Now you can show the modal
+        $('#editRentalModal').modal('show');
     });
 });
+
+
+
+$(document).on("click", ".add-rentals", function () {
+    // Fetch the status IDs from the server
+    const select = document.getElementById('add_status_id_rental');
+    fetchStatusIDsRental(select);
+});
+
+
+
+$("#addRentalForm").submit(function(event) {
+    event.preventDefault();
+    const formData = $(this).serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
+    
+    $.ajax({
+        type: "POST",
+        url: "/create_rental",
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        dataType: "json",
+        success: function(response) {
+            alert("New Rental has been successfully added!");
+            location.reload();
+        },
+        error: function(error) {
+            alert("An error occurred while adding the rental. Please try again.");
+        }
+    });
+});
+
 
 $("#editRentalForm").submit(function(e) {
     e.preventDefault();  
@@ -788,37 +901,45 @@ $("#editRentalForm").submit(function(e) {
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function(response) {
-            // Handle success: for example, show a success message and update the table
-            alert("Rental ID " + id + " has been successfully updated!");  // Alert the user with the success message
+            alert("Rental ID " + id + " has been successfully updated!");
             location.reload();
         },
         error: function(error) {
-            // Handle error: for example, show an error message
+            alert("An error occurred while updating the rental. Please try again.");
         }
     });
 });
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                  RENTALS                                                                                                                  //     
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var mappingEquipment = {
     "equipment-equipment-id": "editEquipmentID",
     "equipment-equipment-type": "editEquipmentType",
     "equipment-equipment-condition": "editEquipmentCondition",
-    "equipment-status-id": "editStatusID"  // change this to "equipment-status" if you also update the class name in your HTML template
+    "equipment-status-id": "editStatusID"
 };
 
+var statusIds;
+
+// Fetch the status IDs once when the page loads
+fetch('/getEquipment_status_ids')
+    .then(response => response.json())
+    .then(data => statusIds = data);
+
 // Function to run when an edit button is clicked
-$(document).on("click", ".edit-button-equipment", async function () {  // <-- note the addition of 'async'
+$(document).on("click", ".edit-button-equipment", function () {
     var row = $(this).closest("tr"); // Get the row that the button is in
+    var status_id = row.find(".equipment-status-id").text().trim().split(" ")[0]; // Get the status ID
 
-    // Store the row data in a variable to be used later
-    var rowData = {};
-    $.each(mappingEquipment, function(key, value) {
-        var text = row.find("." + key).text(); // Get the text from the table cell
-        rowData[key] = text;
-    });
-
-    // Fetch the status IDs from the server and wait for the operation to complete before moving on
-    let response = await fetch('/getEquipment_status_ids');
-    let data = await response.json();
+    // Transfer row data to modal
+    for(var key in mappingEquipment){
+        $('#'+mappingEquipment[key]).val( row.find('.'+key).text() );
+    }
 
     const select = document.getElementById('editStatusID');
 
@@ -827,40 +948,49 @@ $(document).on("click", ".edit-button-equipment", async function () {  // <-- no
         select.removeChild(select.firstChild);
     }
 
-    data.forEach(status => {
+    statusIds.forEach(status => {
         const option = document.createElement('option');
         option.value = status.id;
         option.text = status.name + " (" + status.id + ")";
         select.appendChild(option);
     });
 
-    // Now that the dropdown has been populated, set the selected value
-    setTimeout(() => {
-        $.each(mappingEquipment, function(key, value){
-            if (key === "equipment-status-id") {
-                var select = $("#" + value);
-                var statusID = rowData[key].split(' ')[0];  // get just the status ID part
-                var matchingOptionValue = select.find('option').filter(function() {
-                    return $(this).val() == statusID;  
-                }).val();
+    // Set the selected status id
+    select.value = status_id;
 
-                console.log('Matching Option Value:', matchingOptionValue);
-                select.val(matchingOptionValue);
-            } else {
-                // Set the value of the corresponding input in the modal
-                $("#" + value).val(rowData[key]);
-            }
-        });
-    }, 300);
+    // Now you can show the modal
+    $('#editEquipmentModal').modal('show');
 });
+
+
+
+$('#addEquipmentModal').on('show.bs.modal', function (event) {
+// Fetch the status IDs from the server
+fetch('/getEquipment_status_ids')
+    .then(response => response.json())
+    .then(data => {
+        const select = document.getElementById('addStatusID');
+
+        // Remove all previous options
+        while (select.firstChild) {
+            select.removeChild(select.firstChild);
+        }
+
+        data.forEach(status => {
+            const option = document.createElement('option');
+            option.value = status.id;
+            option.text = status.name + " (" + status.id + ")";
+            select.appendChild(option);
+        });
+    });
+});
+
 
 $("#editEquipmentForm").submit(function(e) {
     e.preventDefault();  
 
     var data = serializeToObject($(this).serializeArray());
     var id = $("#editEquipmentID").val();
-    console.log(data);
-
 
     $.ajax({
         url: '/update_equipment/' + id,
@@ -869,105 +999,17 @@ $("#editEquipmentForm").submit(function(e) {
         contentType: 'application/json',
         success: function(response) {
             // Handle success: for example, show a success message and update the table
-            alert("Equipment ID " + id + " has been successfully updated!"); 
-            location.reload();
-            console.log(data)
-        },
-        error: function(error) {
-            // Handle error: for example, show an error message
-            console,log(error)
-        }
-    });
-});
-
-var Customermapping = {
-    "customer-customer-id": "edit_customer_id",
-    "customer-first-name": "edit_first_name",
-    "customer-last-name": "edit_last_name",
-    "customer-email": "edit_email",
-    "customer-phone": "edit_phone",
-    "customer-altphone": "edit_alt_phone",
-    "customer-address": "edit_address",
-    "customer-city": "edit_city",
-    "customer-state": "edit_state",
-    "customer-zip": "edit_zip",
-    "customer-tdl": "edit_tdl",
-    "customer-tdl-experation-date": "edit_tdl_exp_date",
-    "customer-ins-experation-date": "edit_insurance_exp_date",
-    "customer-note": "edit_customer_note",
-    "customer-status-id": "edit_status_id"  // Corrected this line
-};
-
-// Function to run when an edit button is clicked
-$(document).on("click", ".edit-button-customers", function () {
-    var row = $(this).closest("tr"); // Get the row that the button is in
-
-    // For each item in the mapping
-    $.each(Customermapping, function(key, value){
-        var text = row.find("." + key).text(); // Get the text from the table cell
-
-        // If it's a date, convert it to the input date format
-        if (key.includes("date") && text) {
-            var date = new Date(text);
-
-            // If date is not valid, keep original text
-            if (isNaN(date.getTime())) {
-                text = '';
-            } else {
-                text = date.toISOString().split('T')[0]; // Converts date to YYYY-MM-DD format
-            }
-        }
-
-        // Set the value of the corresponding input in the modal
-        $("#" + value).val(text);
-    });
-});
-
-$("#editCustomerForm").submit(function(e) {
-    e.preventDefault();  // Prevent the form from submitting normally
-
-    var data = serializeToObject($(this).serializeArray());  // Convert the form data to object
-    var id = $("#edit_customer_id").val();  // Get the id of the customer to update
-
-    $.ajax({
-        url: '/update_customer/' + id,
-        type: 'PUT',
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        success: function(response) {
-            // Handle success: for example, show a success message and update the table
-            alert("Customer ID " + id + " has been successfully updated!");  // Alert the user with the success message
+            alert("Equipment ID " + id + " has been successfully updated!");  // Alert the user with the success message
             location.reload();
         },
         error: function(error) {
             // Handle error: for example, show an error message
+            alert("An error occurred while updating the equipment. Please try again.");
         }
     });
 });
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$("#addCustomerForm").submit(function(e) {
-    e.preventDefault();  
-
-    var data = serializeToObject($(this).serializeArray());
-
-    $.ajax({
-        url: '/create_customer',
-        type: 'POST',
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        success: function(response) {
-            // Handle success: for example, show a success message and update the table
-            alert("New customer has been successfully added!");  // Alert the user with the success message
-            location.reload();
-        },
-        error: function(error) {
-            // Handle error: for example, show an error message
-            alert("An error occurred. Please try again.");
-        }
-    });
-});
 
 $("#addEquipmentForm").submit(function(event) {
     event.preventDefault();  // Prevent the default form submission
@@ -993,54 +1035,100 @@ $("#addEquipmentForm").submit(function(event) {
 });
 
 
-$("#addRentalForm").submit(function(event) {
-    event.preventDefault();
-    const formData = $(this).serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
-    $.ajax({
-        type: "POST",
-        url: "/create_rental",
-        contentType: "application/json",
-        data: JSON.stringify(formData),
-        dataType: "json",
-        success: function(response) {
-            console.log(response);
-            location.reload();
-        },
-        error: function(error) {
-            // Handle error: for example, show an error message
-            alert("An error occurred. Please try again.");
-        }
-    });
-});
-
-$("#addVehicleForm").submit(function(event) {
-    event.preventDefault();
-    const formData = $(this).serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
-    $.ajax({
-        type: "POST",
-        url: "/create_vehicle",
-        contentType: "application/json",
-        data: JSON.stringify(formData),
-        dataType: "json",
-        success: function(response) {
-            console.log(response);
-            location.reload();
-        },
-        error: function(error) {
-            // Handle error: for example, show an error message
-            alert("An error occurred. Please try again.");
-        }
-    });
-});
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                  EQUIPMENT                                                                                                                  //     
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$('#editEquipmentModal').on('show.bs.modal', function (event) {
-    // Fetch the status IDs from the server
-    fetch('/getEquipment_status_ids')  // update here
+var Customermapping = {
+    "customer-customer-id": "edit_customer_id",
+    "customer-first-name": "edit_first_name",
+    "customer-last-name": "edit_last_name",
+    "customer-email": "edit_email",
+    "customer-phone": "edit_phone",
+    "customer-altphone": "edit_alt_phone",
+    "customer-address": "edit_address",
+    "customer-city": "edit_city",
+    "customer-state": "edit_state",
+    "customer-zip": "edit_zip",
+    "customer-tdl": "edit_tdl",
+    "customer-tdl-experation-date": "edit_tdl_exp_date",
+    "customer-ins-experation-date": "edit_insurance_exp_date",
+    "customer-note": "edit_customer_note",
+    "customer-status-id": "edit_status_id"  // Corrected this line
+};
+
+
+// Function to fetch the status IDs and populate the select list
+function fetchStatusIDs(select, status_id) {
+    return fetch('/getCustomer_status_ids')
         .then(response => response.json())
         .then(data => {
-            const select = document.getElementById('editStatusID');
+            // Remove all previous options
+            while (select.firstChild) {
+                select.removeChild(select.firstChild);
+            }
+
+            data.forEach(status => {
+                const option = document.createElement('option');
+                option.value = status.id;
+                option.text = status.name + " (" + status.id + ")";
+                select.appendChild(option);
+            });
+
+            // Set the selected status id
+            select.value = status_id;
+        });
+}
+
+// Function to run when an edit button is clicked
+$(document).on("click", ".edit-button-customers", function () {
+    var row = $(this).closest("tr"); // Get the row that the button is in
+    var status_id = row.find(".customer-status-id").text().trim(); // Get the status ID
+
+    // Transfer row data to modal
+    for(var key in Customermapping){
+        $('#'+Customermapping[key]).val( row.find('.'+key).text() );
+    }
+    
+    // Set status id as data attribute for the modal
+    $('#editCustomerModal').data('status-id', status_id);
+});
+
+$('#editCustomerModal').on('show.bs.modal', function (event) {
+    // Fetch the status IDs from the server
+    fetch('/getCustomer_status_ids')
+        .then(response => response.json())
+        .then(data => {
+            const select = document.getElementById('edit_status_id');
+
+            // Remove all previous options
+            while (select.firstChild) {
+                select.removeChild(select.firstChild);
+            }
+
+            data.forEach(status => {
+                const option = document.createElement('option');
+                option.value = status.id;
+                option.text = status.name + " (" + status.id + ")";
+                select.appendChild(option);
+            });
+
+            // Fetch stored status id
+            var status_id = $(this).data('status-id');
+            
+            // Wait until the status IDs have been fetched and the options have been added
+            // before setting the value
+            fetchStatusIDs(select, status_id);
+        });
+    });
+
+
+$('#addCustomerModal').on('show.bs.modal', function (event) {
+    // Fetch the status IDs from the server
+    fetch('/getCustomer_status_ids')
+        .then(response => response.json())
+        .then(data => {
+            const select = document.getElementById('StatusID');
 
             // Remove all previous options
             while (select.firstChild) {
@@ -1054,29 +1142,34 @@ $('#editEquipmentModal').on('show.bs.modal', function (event) {
                 select.appendChild(option);
             });
         });
-    });
+});
 
-$('#addEquipmentModal').on('show.bs.modal', function (event) {
-// Fetch the status IDs from the server
-fetch('/getEquipment_status_ids')
-    .then(response => response.json())
-    .then(data => {
-        const select = document.getElementById('addStatusID');
 
-        // Remove all previous options
-        while (select.firstChild) {
-            select.removeChild(select.firstChild);
+$("#editCustomerForm").submit(function(e) {
+    e.preventDefault();  // Prevent the form from submitting normally
+
+    var data = serializeToObject($(this).serializeArray());  // Convert the form data to object
+    var id = $("#edit_customer_id").val();  // Get the id of the customer to update
+
+    $.ajax({
+        url: '/update_customer/' + id,
+        type: 'PUT',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(response) {
+            // Handle success: for example, show a success message and update the table
+            alert("Customer ID " + id + " has been successfully updated!");  // Alert the user with the success message
+            location.reload();
+        },
+        error: function(error) {
+            // Handle error: for example, show an error message
         }
-
-        data.forEach(status => {
-            const option = document.createElement('option');
-            option.value = status.id;
-            option.text = status.name + " (" + status.id + ")";
-            select.appendChild(option);
-        });
     });
 });
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                  CUSTOMER                                                                                                                  //     
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 </script>

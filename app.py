@@ -130,7 +130,7 @@ class Vehicles(db.Model):
     StatusID = db.Column(db.Integer, db.ForeignKey('vehicle_statuses.StatusID'))
     UpdatedByAgentID = db.Column(db.Integer, db.ForeignKey('agents.AgentID'))  
 
-###############################################################################################################
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -162,7 +162,10 @@ def index():
         return redirect(url_for('login'))
     return render_template('index.html')  # render the index page with no data
 
-###############################################################################################################
+##############################################################################################################################################################################################################################
+#                                                                            LOGIN                                                                                                                                          #
+##############################################################################################################################################################################################################################
+
 
 @app.route('/display', methods=['GET'])
 def display_data():
@@ -214,6 +217,9 @@ def display_data():
     return render_template('display.html', data=data)
 
 ##############################################################################################################################################################################################################################
+#                                                                            DISPLAY                                                                                                                                          #
+##############################################################################################################################################################################################################################
+
 @app.route('/modals', methods=['GET'])
 def modals():
     if not current_user.is_authenticated:
@@ -338,6 +344,8 @@ def modals():
     return render_template('modals.html', customers_data=customers_data, equipment_data=equipment_data, rental_data=rental_data, vehicles_data=vehicles_data)
 
 ##############################################################################################################################################################################################################################
+#                                                                            TAABLES                                                                                                                                          #
+##############################################################################################################################################################################################################################
 
 @app.route('/printedPage/<customer_id>')
 def printable_page(customer_id):
@@ -347,6 +355,9 @@ def printable_page(customer_id):
 
 
 ##############################################################################################################################################################################################################################
+#                                                                            Printed Page                                                                                                                                          #
+##############################################################################################################################################################################################################################
+
 
 @app.route('/update_customer/<int:id>', methods=['PUT'])
 def update_customer(id):
@@ -464,7 +475,8 @@ def update_vehicles(id):
         print(e)  # print the error to the console
         return jsonify({'error': 'An error occurred while updating vehicles data', 'details': str(e)}), 500
 
-
+##############################################################################################################################################################################################################################
+#                                                                            UPDATE                                                                                                                                          #
 ##############################################################################################################################################################################################################################
 
 
@@ -490,6 +502,9 @@ def get_status_ids_vehicles():
     return jsonify([{'id': status.StatusID, 'name': status.StatusName} for status in status_ids]), 200
 
 ##############################################################################################################################################################################################################################
+#                                                                            GET                                                                                                                                          #
+##############################################################################################################################################################################################################################
+
 
 @app.route('/create_customer', methods=['POST'])
 def create_customer():
@@ -556,6 +571,8 @@ def create_rental():
         return jsonify({'error': 'Not authenticated'}), 401
     data = request.get_json()
 
+    print(f'Received data: {data}')
+
     new_rental = Rentals(
         CustomerID=data['CustomerID'],
         EquipmentID=data['EquipmentID'],
@@ -578,27 +595,26 @@ def create_rental():
 def create_vehicle():
     if not current_user.is_authenticated:
         return jsonify({'error': 'Not authenticated'}), 401
-    
     data = request.get_json()
 
     new_vehicle = Vehicles(
-        CustomerID=data['add_customer_id'],
-        VehicleModel=data['add_vehicle_model'],
-        VehicleMake=data['add_vehicle_make'],
-        VehicleYear=data['add_vehicle_year'],
-        LicensePlate=data['add_lisence_plate'],
+        CustomerID=data['CustomerID'],
+        VehicleModel=data['VehicleModel'],
+        VehicleMake=data['VehicleMake'],
+        VehicleYear=data['VehicleYear'],
+        LicensePlate=data['LicensePlate'],
         StatusID=data['StatusID']
     )
     db.session.add(new_vehicle)
-
     try:
         db.session.commit()
-        return jsonify({'message': 'New customer added successfully!'}), 200
+        return jsonify({'message': 'New vehicle added successfully!'}), 200
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': 'An error occurred while creating new customer', 'details': str(e)}), 500
-
-
+        return jsonify({'error': 'An error occurred while creating new vehicle', 'details': str(e)}), 500
+##############################################################################################################################################################################################################################
+#                                                                            CREATE                                                                                                                                          #
+##############################################################################################################################################################################################################################
 
 
 if __name__ == '__main__':
