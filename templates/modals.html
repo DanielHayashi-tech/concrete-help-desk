@@ -777,7 +777,7 @@ $("#addVehicleForm").submit(function(event) {
         data: JSON.stringify(formData),
         dataType: "json",
         success: function(response) {
-            console.log(response);
+            alert("New Vehicle has been successfully added!");
             location.reload();
         },
         error: function(error) {
@@ -801,7 +801,7 @@ $("#editVehiclesForm").submit(function(event) {
         data: JSON.stringify(formData),
         dataType: "json",
         success: function(response) {
-            console.log(response);
+            alert("Vehcile ID " + id + " has been successfully updated!");
             location.reload();
         },
         error: function(error) {
@@ -1189,6 +1189,28 @@ $("#editCustomerForm").submit(function(e) {
     });
 });
 
+
+$("#addCustomerForm").submit(function(e) {
+    e.preventDefault();  
+
+    var data = serializeToObject($(this).serializeArray());
+
+    $.ajax({
+        url: '/create_customer',
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(response) {
+            // Handle success: for example, show a success message and update the table
+            alert("New customer has been successfully added!");  // Alert the user with the success message
+            location.reload();
+        },
+        error: function(error) {
+            // Handle error: for example, show an error message
+            alert("An error occurred. Please try again.");
+        }
+    });
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                  CUSTOMER                                                                                                                  //     
