@@ -426,23 +426,23 @@ aria-hidden="true">
                 <!-- Input fields for each column here -->
                 <div class="form-group">
                     <label for="add_customer_id">Customer ID</label>
-                    <input type="text" name="add_customer_id" id="add_customer_id" class="form-control" placeholder="Equipment Type">
+                    <input type="text" name="CustomerID" id="add_customer_id" class="form-control" placeholder="Equipment Type">
                 </div>
                 <div class="form-group">
                     <label for="add_vehicle_model">Vehicle Model</label>
-                    <input type="text" name="add_vehicle_model" id="add_vehicle_model" class="form-control" placeholder="Vehicle Model">
+                    <input type="text" name="VehicleModel" id="add_vehicle_model" class="form-control" placeholder="Vehicle Model">
                 </div>
                 <div class="form-group">
                     <label for="add_vehicle_make">Vehicle Make</label>
-                    <input type="text" name="add_vehicle_make" id="add_vehicle_make" class="form-control" placeholder="Vehicle Make">
+                    <input type="text" name="VehicleMake" id="add_vehicle_make" class="form-control" placeholder="Vehicle Make">
                 </div>
                 <div class="form-group">
                     <label for="add_vehicle_year">Vehicle Year</label>
-                    <input type="date" name="add_vehicle_year" id="add_vehicle_year" class="form-control" placeholder="Vehicle Year">
+                    <input type="date" name="VehicleYear" id="add_vehicle_year" class="form-control" placeholder="Vehicle Year">
                 </div>
                 <div class="form-group">
                     <label for="add_lisence_plate">Lisence Plate</label>
-                    <input type="text" name="add_lisence_plate" id="add_lisence_plate" class="form-control" placeholder="Licesne Plate">
+                    <input type="text" name="LicensePlate" id="add_lisence_plate" class="form-control" placeholder="Licesne Plate">
                 </div>
                 <div class="form-group">
                     <label for="add_status_id_rental">Status ID</label>
@@ -680,7 +680,7 @@ aria-hidden="true">
                  </div>
                  <div class="form-group">
                      <label for="edit_vehicle_lp">Lisence Plate</label>
-                     <input type="text" name="LisencePlate" id="edit_vehicle_lp" class="form-control" placeholder="Lisence Plate">
+                     <input type="text" name="LicensePlate" id="edit_vehicle_lp" class="form-control" placeholder="Lisence Plate">
                  </div>
                  <div class="form-group">
                     <label for="edit_status_id_vehicle">Status ID</label>
@@ -788,6 +788,28 @@ $("#addVehicleForm").submit(function(event) {
 });
 
 
+$("#editVehiclesForm").submit(function(event) {
+    event.preventDefault();
+    
+    var vehicleId = $('#edit_vehicle_id').val(); // Get the vehicle ID from the form
+    const formData = serializeToObject($(this).serializeArray()); // Convert form data to an object
+
+    $.ajax({
+        type: "PUT",  // This should match the HTTP verb the server expects
+        url: "/update_vehicles/" + vehicleId, // Replace with your server-side route
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+            location.reload();
+        },
+        error: function(error) {
+            // Handle error: for example, show an error message
+            alert("An error occurred while trying to update the vehicle. Please try again.");
+        }
+    });
+});
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
