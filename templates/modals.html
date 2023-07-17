@@ -8,62 +8,214 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Playfair+Display:wght@500&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <title>Modal Buttons</title>
     <style>
-        .table td,
-        .table th {
-            border: 1px solid #ddd;
-        }
-
-        .my-table .table-striped>tbody>tr:nth-of-type(odd) {
+        /* Added CSS for table from the linked site */
+        body {
+            font-family: 'Lato', sans-serif;
+            color: #333;
             background-color: #f2f2f2;
         }
 
         .table-container {
+            overflow-x: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 1px 20px 0 rgba(69, 90, 100, .08);
+            margin-bottom: 30px;
+        }
+
+        .table-container .table {
             width: 100%;
-            overflow-x: scroll;
-            padding: 0 25px;
+            margin-bottom: 0;
         }
 
-        .table-container table {
-            width: 100%;
+        .table-container .table thead th {
+            text-align: center;
+            padding: .75rem 1rem;
+            background-color: #b3b3b3;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-weight: 600; /* Increase font weight for emphasis */
         }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
+        .table-container .table tbody td {
+            min-height: 1010px;
+            text-align: center;
+            padding: .75rem 1rem;
+            vertical-align: middle; /* Center vertically */
         }
 
-
-        .button-container .btn {
-            margin: 10px;
+        /* Zebra striping for rows */
+        .table-container .table tbody tr:nth-child(even) {
+            background-color: #e9ecef;
+            /* light grey */
         }
 
-        .back-button {
+        .modal-button {
             position: absolute;
             top: 20px;
             left: 20px;
         }
+
+        .modal-button span {
+            margin-left: 5px; /* Add some space between the arrow and the text */
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #7d4627;
+        }
+
+        .table-container .table tbody td:nth-child(14),
+        .table-container .table tbody td:nth-child(15) {
+            white-space: normal; /* Allow line breaks within the cell */
+            word-wrap: break-word; /* Wrap long words */
+        }
+
+        .table-container .table tbody td:last-child {
+            vertical-align: middle; /* Center vertically */
+        }
+
+        .table-container .table tbody td:last-child .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            color: #007bff;
+            border-color: #007bff;
+        }
+
+        .table-container .table tbody td:last-child .btn svg {
+            width: 1em;
+            height: 1em;
+        }
+
+        /* Additional styles for column widths */
+        .table-container .table thead th:nth-child(14),
+        .table-container .table tbody td:nth-child(14) {
+            width: 15%; /* Increased width for the Internal Note column */
+        }
+
+        /* Move the title to the left */
+        .table-title {
+            text-align: left;
+        }
+
+        /* Style the buttons */
+        .button-container .btn {
+            background-color: #b3b3b3;
+            color: #fff;
+            border: none;  /* Remove border */
+            margin-top: 20px;  /* Add space above the button */
+        }
+
+        .button-container .btn:hover {
+            background-color: #a3a3a3;
+            color: #fff;
+        }
+
+        .back-button i {
+        color: #000;
+        }
+
+        /* Styles for modal content */
+        .modal-content {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 1px 20px 0 rgba(69, 90, 100, .08);
+            padding: 20px;
+        }
+
+        /* Styles for modal header */
+        .modal-header {
+            background-color: #b3b3b3;
+            padding: .75rem 1rem;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            text-align: center;
+        }
+
+        /* Styles for modal titles */
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            color: #7d4627;
+            font-weight: 600;
+        }
+
+        /* Styles for form inputs */
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #b3b3b3;
+        }
+
+        /* Styles for modal footer */
+        .modal-footer {
+            padding: .75rem 1rem;
+            background-color: #f2f2f2;
+        }
+
+        /* Styles for modal buttons */
+        .modal-footer .btn {
+            background-color: #b3b3b3;
+            color: #fff;
+            border: none;  
+        }
+
+        .modal-footer .btn:hover {
+            background-color: #a3a3a3;
+            color: #fff;
+        }
+
+        /* Styles for close button */
+        .close {
+            color: #333;
+        }
+
+        .close:hover {
+            color: #7d4627;
+        }
+
     </style>
 </head>
 
 <body>
-    <a href="/display" class="btn btn-secondary back-button">Back to the Display! </a>
-    <BR>
-    <BR>
+    <a href="/display" class="btn btn-secondary modal-button">
+        <i class="fa fa-arrow-left"></i> 
+    </a>    <br>
+    <br>
     <div class="container-fluid">
 
         <!-- Title -->
         <div class="text-center mt-4 mb-4">
-            <h1> Modals Woohoo!</h1>
+            <h1> Update Customer Data</h1>
         </div>
 
 
+<!-- Customer Filter Section -->
+<div class="row mb-3">
+    <div class="col-6 mx-auto">
+        <div class="input-group">
+            <input type="text" class="form-control" id="filterFirstName" placeholder="Filter by First Name">
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
+            </div>
+        </div>
+    </div>
+</div>
+       
+
 <!-- Customer Table -->
 <div class="table-container">
-    <h3> Customers Table!</h3>
+    <h3 class="table-title mb-4">Manage Customer Data</h3>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -119,7 +271,19 @@
     </div>
 </div>
 
-        
+
+<!-- Equipment Filter Section -->
+<div class="row mb-3">
+    <div class="col-6 mx-auto">
+        <div class="input-group">
+            <input type="text" class="form-control" id="filterEquipmentType" placeholder="Filter by Equipment Type">
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Equipment Table -->
 <div class="table-container">
@@ -197,6 +361,19 @@
 </div>
 
 
+
+<!-- Vehicles Filter Section -->
+<div class="row mb-3">
+    <div class="col-6 mx-auto">
+        <div class="input-group">
+            <input type="text" class="form-control" id="filterVehicleModel" placeholder="Filter by Vehicle Model">
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Vehicles Table -->
 <div class="table-container">
     <h3> Vehicles Table!</h3>
@@ -235,6 +412,7 @@
         <button class="btn btn-primary add-button-vehicles" data-toggle="modal" data-target="#addVehicleModal">Add Vehicle</button>
     </div>
 </div>
+
 
 
 <!---------------------------------------------------------- Add Data Modals ---------------------------------------------------------->
@@ -437,9 +615,10 @@ aria-hidden="true">
                     <input type="text" name="VehicleMake" id="add_vehicle_make" class="form-control" placeholder="Vehicle Make">
                 </div>
                 <div class="form-group">
-                    <label for="add_vehicle_year">Vehicle Year</label>
-                    <input type="date" name="VehicleYear" id="add_vehicle_year" class="form-control" placeholder="Vehicle Year">
+                    <label for="edit_vehicle_year">Vehicle Year</label>
+                    <input type="number" name="VehicleYear" id="edit_vehicle_year" class="form-control" placeholder="Vehicle Year" min="1886" max="2099">
                 </div>
+                
                 <div class="form-group">
                     <label for="add_lisence_plate">Lisence Plate</label>
                     <input type="text" name="LicensePlate" id="add_lisence_plate" class="form-control" placeholder="Licesne Plate">
@@ -1215,6 +1394,39 @@ $("#addCustomerForm").submit(function(e) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                  CUSTOMER                                                                                                                  //     
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$(document).ready(function(){
+    $("#filterFirstName").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("table tbody tr").filter(function() {
+            $(this).toggle($(this).find('.customer-first-name').text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+
+$(document).ready(function(){
+    $("#filterEquipmentType").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("table tbody tr").filter(function() {
+            $(this).toggle($(this).find('.equipment-equipment-type').text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+
+
+$(document).ready(function(){
+    $("#filterVehicleModel").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("table tbody tr").filter(function() {
+            $(this).toggle($(this).find('.vehicles-model').text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                  FILTERS                                                                                                                  //     
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 </script>
 

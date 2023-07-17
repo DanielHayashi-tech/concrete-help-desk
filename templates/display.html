@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,88 +8,171 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 
-    <title>Display Data</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Playfair+Display:wght@500&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Customer Information Dashboard</title>
     <style>
-        .my-table .table-striped > tbody > tr:nth-of-type(odd) {
+        /* Added CSS for table from the linked site */
+        body {
+            font-family: 'Lato', sans-serif;
+            color: #333;
             background-color: #f2f2f2;
         }
 
-        /* Added CSS for a wider table */
         .table-container {
-            width: 100%;
-            overflow-x: scroll;
-            padding: 0 25px;
+            overflow-x: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 1px 20px 0 rgba(69, 90, 100, .08);
+            margin-bottom: 30px;
         }
 
-        .table-container table {
-            width: 200%; /* Adjust the width as needed */
+        .table-container .table {
+            width: 100%;
+            margin-bottom: 0;
         }
-        /* Button positioned at top-right corner */
+
+        .table-container .table thead th {
+            text-align: center;
+            padding: .75rem 1rem;
+            background-color: #b3b3b3;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-weight: 600; /* Increase font weight for emphasis */
+        }
+
+        .table-container .table tbody td {
+            text-align: center;
+            padding: .75rem 1rem;
+            vertical-align: middle; /* Center vertically */
+        }
+
+        /* Zebra striping for rows */
+        .table-container .table tbody tr:nth-child(even) {
+            background-color: #e9ecef;
+            /* light grey */
+        }
+
         .modal-button {
             position: absolute;
             top: 20px;
             right: 20px;
         }
 
+        .modal-button span {
+            margin-left: 5px; /* Add some space between the arrow and the text */
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #7d4627;
+        }
+
+        .table-container .table tbody td:nth-child(14),
+        .table-container .table tbody td:nth-child(15) {
+            white-space: normal; /* Allow line breaks within the cell */
+            word-wrap: break-word; /* Wrap long words */
+        }
+
+        .table-container .table tbody td:last-child {
+            vertical-align: middle; /* Center vertically */
+        }
+
+        .table-container .table tbody td:last-child .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            color: #007bff;
+            border-color: #007bff;
+        }
+
+        .table-container .table tbody td:last-child .btn svg {
+            width: 1em;
+            height: 1em;
+        }
+
+        /* Additional styles for column widths */
+        .table-container .table thead th:nth-child(14),
+        .table-container .table tbody td:nth-child(14) {
+            width: 15%; /* Increased width for the Internal Note column */
+        }
     </style>
 </head>
+
 <body>
-    <a href="/modals" class="btn btn-secondary modal-button">Lets see the Modals! </a>
+    <a href="/modals" class="btn btn-secondary modal-button">
+        <i class="fa fa-arrow-right"></i> 
+    </a>
 
-<div class="container-fluid">
-    <div class="text-center mt-4 mb-4">
-        <h2>Data Display</h2>
-    </div>
-    <div class="table-container">
-      <br>
-      <br>
+    <div class="container-fluid">
+        <div class="text-center mt-4 mb-4">
+            <h2>Customer Information Dashboard</h2>
+        </div>
+        <div class="table-container">
+            <br>
+            <br>
 
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th class="text-center">First Name</th>
-                <th class="text-center">Last Name</th>
-                <th class="text-center">Email</th>
-                <th class="text-center">Address</th>
-                <th class="text-center">Phone</th>
-                <th class="text-center">Alt Phone</th>
-                <th class="text-center">TDL #</th>
-                <th class="text-center">TDL Exp Date</th>
-                <th class="text-center">Insurance Exp</th>
-                <th class="text-center">Equipment Type</th>
-                <th class="text-center">Return Date</th>
-                <th class="text-center">Return Time</th>
-                <th class="text-center">Internal Note</th>
-                <th class="text-center">Customer Note</th>
-                <th class="text-center">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-              {% for row in data %}
-                  <tr>
-                      <td>{{ row.FirstName }}</td>
-                      <td>{{ row.LastName }}</td>
-                      <td>{{ row.Email }}</td>
-                      <td>{{ row.Address }}</td>
-                      <td>{{ row.Phone }}</td>
-                      <td>{{ row.AltPhone }}</td>
-                      <td>{{ row.TDL }}</td>
-                      <td>{{ row.TDLExpirationDate }}</td>
-                      <td>{{ row.InsuranceExpDate }}</td>
-                      <td>{{ row.EquipmentType }}</td>
-                      <td>{{ row.ReturnDate }}</td>
-                      <td>{{ row.ReturnTime }}</td>
-                      <td>{{ row.InternalNote }}</td>
-                      <td>{{ row.CustomerNote }}</td>
-                      <td>
-                        <a class="btn btn-primary" href="{{ url_for('printable_page', customer_id=row.CustomerID) }}" target="_blank">Print</a>
-                    </td>
-                  </tr>
-              {% endfor %}
-          </tbody>  
-        </table>
-    </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center">Customer ID</th>
+                        <th class="text-center">First Name</th>
+                        <th class="text-center">Last Name</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Address</th>
+                        <th class="text-center">Phone</th>
+                        <th class="text-center">Alt Phone</th>
+                        <th class="text-center">TDL #</th>
+                        <th class="text-center">TDL Exp Date</th>
+                        <th class="text-center">Insurance Exp</th>
+                        <th class="text-center">Equipment Type</th>
+                        <th class="text-center">Return Date</th>
+                        <th class="text-center">Return Time</th>
+                        <th class="text-center">Internal Note</th>
+                        <th class="text-center">Customer Note</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td>{{ row.CustomerID }}</td>
+                        <td>{{ row.FirstName }}</td>
+                        <td>{{ row.LastName }}</td>
+                        <td>{{ row.Email }}</td>
+                        <td>{{ row.Address }}</td>
+                        <td>{{ row.Phone }}</td>
+                        <td>{{ row.AltPhone }}</td>
+                        <td>{{ row.TDL }}</td>
+                        <td>{{ row.TDLExpirationDate }}</td>
+                        <td>{{ row.InsuranceExpDate }}</td>
+                        <td>{{ row.EquipmentType }}</td>
+                        <td>{{ row.ReturnDate }}</td>
+                        <td>{{ row.ReturnTime }}</td>
+                        <td>{{ row.InternalNote }}</td>
+                        <td>{{ row.CustomerNote }}</td>
+                        <td>
+                            <a class="btn btn-link"
+                                href="{{ url_for('printable_page', customer_id=row.CustomerID) }}"
+                                target="_blank">
+                                Print
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

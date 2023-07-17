@@ -6,44 +6,109 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <style media="print">
-        /* Add your print styles here */
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            padding: 2em;
+            font-family: 'Lato', sans-serif;
+            color: #333;
+            background-color: #f2f2f2;
+        }
+
+        .back-button {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            background-color: #f8f9fa;
+            color: #fff;
+            border-color: #f8f9fa;
+        }
+
+        .print-button {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+
+        .signature-area {
+            margin-top: 2em;
+            border-top: 1px solid #000;
+        }
+
+        h2 {
+            margin-top: 1em;
+            font-family: 'Playfair Display', serif;
+            color: #7d4627;
+        }
+
+        p.customer-note {
+            height: 100px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <a href="/display" class="btn btn-light mb-2 back-button"><i class="fa fa-arrow-left" style="color: #333;"></i></a>
+        <button class="btn btn-primary print-button" onClick="window.print()">Print this page</button>
+
         <h1 class="text-center">Customer Agreement</h1>
         <hr>
-        <h2>Customer Information</h2>
-        <p><strong>Name:</strong> {{ row.FirstName }} {{ row.LastName }}</p>
-        <p><strong>Email:</strong> {{ row.Email }}</p>
-        <p><strong>Address:</strong> {{ row.Address }}, {{row.City}}, {{row.State}} {{row.Zip}}</p>
-        <p><strong>Driver License Number & Expiration Date:</strong> {{ row.TDL }}, {{row.TDLExpirationDate}}</p>
-        <p><strong>Insurance Expiration Date:</strong> {{ row.InsuranceExpDate }}</p>
-        <p><strong>Customer Note:</strong> {{ row.CustomerNote }}</p>
-        <p><strong>Customer Status:</strong> {{ row.StatusID }}</p>
+        
+        <!-- Customer Information Section -->
+        <section>
+            <h2>Customer Information</h2>
+            <p><strong>Name:</strong> {{ row.FirstName }} {{ row.LastName }}</p>
+            <p><strong>Email:</strong> {{ row.Email }}</p>
+            <p><strong>Address:</strong> {{ row.Address }}, {{row.City}}, {{row.State}} {{row.Zip}}</p>
+            <p><strong>Driver License Number & Expiration Date:</strong> {{ row.TDL }}, {{row.TDLExpirationDate}}</p>
+            <p><strong>Insurance Expiration Date:</strong> {{ row.InsuranceExpDate }}</p>
+            <p class="customer-note"><strong>Customer Note:</strong> {{ row.CustomerNote }}</p>
+            <p><strong>Customer Status:</strong> {{ row.StatusID }}</p>
+        </section>
+        
         <hr>
-        <h2>Agreement</h2>
-        <p>By signing this contract I confirm that I understand and ACCEPT the following terms and instructions:</p>
-        <ul>
-            <li>Recommended speed limit NOT TO EXCEED 50 MPH, sloshing can occur at sudden stops.</li>
-            <li>Rental period is 3 HOURS.</li>
-            <li>TRAILER MUST BE RETURNED CLEAN OR CHARGES MAY BE APPLIED.</li>
-            <li>THIS TRAILER CANNOT BE CLEANED AT ANY CAR WASH FACILITIES.</li>
-            <li>WE OFFER A FREE WASH OUT AREA DURING BUSINESS HOURS</li>
-            <li>CONCRETE TODAY IS NOT RESPONSIBLE FOR ANY VEHICLE DAMAGE THAT MAY BE INCURRED WHILE BEING LOADED, UNLOADED, PRESENT IN OUR YARD, OR WHILE USING OUR EQUIPMENT.</li>
-        </ul>
+
+        <!-- Agreement Section -->
+        <section>
+            <h2>Agreement</h2>
+            <ul>
+                <li>Recommended speed limit NOT TO EXCEED 50 MPH, sloshing can occur at sudden stops.</li>
+                <li>Rental period is 3 HOURS.</li>
+                <li>TRAILER MUST BE RETURNED CLEAN OR CHARGES MAY BE APPLIED.</li>
+                <li>THIS TRAILER CANNOT BE CLEANED AT ANY CAR WASH FACILITIES.</li>
+                <li>WE OFFER A FREE WASH OUT AREA DURING BUSINESS HOURS</li>
+                <li>CONCRETE TODAY IS NOT RESPONSIBLE FOR ANY VEHICLE DAMAGE THAT MAY BE INCURRED WHILE BEING LOADED, UNLOADED, PRESENT IN OUR YARD, OR WHILE USING OUR EQUIPMENT.</li>
+            </ul>        
+        </section>
+
         <hr>
-        <h2>Rental Contract Terms and Conditions</h2>
-        <p>THIS IS A CONTRACT. THIS CONTRACT CONTAINS IMPORTANT TERMS AND CONDITIONS. INCLUDING CONCRETE TODAY DISCLAIMER FROM LIABILITY FOR INJURY OR DAMAGE AND DETAILS OF CUSTOMERS'S OBLIGATIONS. THESE TERMS AND CONDITIONS ARE A PART OF THIS CONTRACT. BY SIGNING THIS CONTRACT, I CERTIFY THAT I HAVE READ AND AGREE TO ALL TERMS OF THIS CONTRACT. </p>
-        <ul>
-            <li>IF EQUIPMENT DOES NOT FUNCTION PROPERLY NOTIFY CONCRETE TODAY WITHIN 30 MINUTES OF OCCURENCE OR NO REFUND OR ALLOWANCES WILL BE MADE.</li>
-            <li>CONCRETE TODAY IS NOT RESPONSIBLE FOR ANY INJURIES OR DAMAGES INCURRED WHILE ENTERING, BEING LOADED OR UNLOADED, AND EXITING COMPANY PROPERTY OR WHILE USING EQUIPMENT LISTED IN THIS AGREEMENT.</li>
-        </ul>
+
+        <!-- Rental Contract Section -->
+        <section>
+            <h2>Rental Contract Terms and Conditions</h2>
+            <p>THIS IS A CONTRACT. THIS CONTRACT CONTAINS IMPORTANT TERMS AND CONDITIONS. INCLUDING CONCRETE TODAY DISCLAIMER FROM LIABILITY FOR INJURY OR DAMAGE AND DETAILS OF CUSTOMERS'S OBLIGATIONS. THESE TERMS AND CONDITIONS ARE A PART OF THIS CONTRACT. BY SIGNING THIS CONTRACT, I CERTIFY THAT I HAVE READ AND AGREE TO ALL TERMS OF THIS CONTRACT. </p>
+            <ul>
+                <li>IF EQUIPMENT DOES NOT FUNCTION PROPERLY NOTIFY CONCRETE TODAY WITHIN 30 MINUTES OF OCCURENCE OR NO REFUND OR ALLOWANCES WILL BE MADE.</li>
+                <li>CONCRETE TODAY IS NOT RESPONSIBLE FOR ANY INJURIES OR DAMAGES INCURRED WHILE ENTERING, BEING LOADED OR UNLOADED, AND EXITING COMPANY PROPERTY OR WHILE USING EQUIPMENT LISTED IN THIS AGREEMENT.</li>
+            </ul>        
+        </section>
+
         <hr>
-        <Br></Br>
-        <h2>Signature</h2>
+
+        <!-- Signature Section -->
+        <section class="signature-area">
+            <h2>Signature</h2>
+        <br></br>
+        <br></br>
+
         <div class="row">
             <div class="col-6">
                 <p>Customer: ____________________________________________</p>
@@ -55,7 +120,8 @@
             </div>
         </div>
     </div>
-    <button onClick="window.print()">Print this page</button>
+        </section>
+    </div>
 
     <script>
         var today = new Date();
