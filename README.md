@@ -1,7 +1,7 @@
 
 ```
 concrete-help-desk
-├─ .env
+├─ .gitignore
 ├─ README.md
 ├─ __init__.py
 ├─ app.py
@@ -11,6 +11,8 @@ concrete-help-desk
 │  └─ js
 └─ templates
    ├─ display.html
-   └─ index.html
+   ├─ index.html
+   ├─ modals.html
+   └─ printedPage.html
 
 ```
