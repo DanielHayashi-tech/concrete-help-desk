@@ -293,31 +293,34 @@ def modals():
 
 
     rental_query = db.session.query(
-        Rentals.RentalID,
-        Customers.CustomerID,
-        Equipment.EquipmentID,
-        Rentals.RentalDate,
-        Rentals.ReturnDate,
-        Rentals.ReturnTime,
-        Rentals.InternalNote,
-        Rentals.StatusID,
+    Rentals.RentalID,
+    Customers.FirstName,
+    Customers.LastName,
+    Equipment.EquipmentType,
+    Rentals.RentalDate,
+    Rentals.ReturnDate,
+    Rentals.ReturnTime,
+    Rentals.InternalNote,
+    RentalStatuses.StatusName
     ).join(Customers, Customers.CustomerID == Rentals.CustomerID
     ).join(Equipment, Equipment.EquipmentID == Rentals.EquipmentID
+    ).join(RentalStatuses, RentalStatuses.StatusID == Rentals.StatusID
     ).order_by(Rentals.RentalID.desc()).all()
 
     rental_data = []
     for row in rental_query:
         item = {
             'RentalID': row.RentalID, 
-            'CustomerID': row.CustomerID,
-            'EquipmentID': row.EquipmentID,
+            'CustomerName': f"{row.FirstName} {row.LastName}",
+            'EquipmentType': row.EquipmentType,
             'RentalDate': row.RentalDate,
             'ReturnDate': row.ReturnDate,
             'ReturnTime': row.ReturnTime,
             'InternalNote': row.InternalNote,
-            'StatusID': row.StatusID
+            'StatusName': row.StatusName
         }
         rental_data.append(item)
+
 
     vehicles_query = db.session.query(
         Vehicles.VehicleID,

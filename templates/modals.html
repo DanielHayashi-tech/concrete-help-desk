@@ -340,13 +340,13 @@
             {% for row in rental_data %}
             <tr>
                 <td class="text-center rentals-id">{{ row.RentalID }}</td>
-                <td class="text-center rentals-fk-customer-id">{{ row.CustomerID }}</td>
-                <td class="text-center rentals-equipment-fk-id">{{ row.EquipmentID }}</td>
+                <td class="text-center rentals-fk-customer-id">{{ row.CustomerName }}</td>
+                <td class="text-center rentals-equipment-fk-id">{{ row.EquipmentType }}</td>
                 <td class="text-center rentals-rental-date">{{ row.RentalDate }}</td>
                 <td class="text-center rentals-return-date">{{ row.ReturnDate }}</td>
                 <td class="text-center rentals-return-time">{{ row.ReturnTime }}</td>
                 <td class="text-center rentals-internal-note">{{ row.InternalNote }}</td>
-                <td class="text-center rentals-status-id">{{ row.StatusID }}</td>
+                <td class="text-center rentals-status-id">{{ row.StatusName }}</td>
                 <td class="text-center">
                     <button class="btn btn-primary edit-button-rentals" data-toggle="modal" data-target="#editRentalModal" data-customer-id="{{ row.RentalID }}">Edit</button>
                 </td>
