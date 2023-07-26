@@ -228,22 +228,25 @@ def modals():
         return redirect(url_for('login'))
     
     customers_query = db.session.query(
-        Customers.CustomerID,
-        Customers.FirstName,
-        Customers.LastName,
-        Customers.Email,
-        Customers.Phone,
-        Customers.AltPhone,
-        Customers.Address,
-        Customers.City,
-        Customers.State,
-        Customers.Zip,
-        Customers.TDL,
-        Customers.TDLExpirationDate,
-        Customers.InsuranceExpDate,
-        Customers.CustomerNote,
-        Customers.StatusID
+    Customers.CustomerID,
+    Customers.FirstName,
+    Customers.LastName,
+    Customers.Email,
+    Customers.Phone,
+    Customers.AltPhone,
+    Customers.Address,
+    Customers.City,
+    Customers.State,
+    Customers.Zip,
+    Customers.TDL,
+    Customers.TDLExpirationDate,
+    Customers.InsuranceExpDate,
+    Customers.CustomerNote,
+    CustomerStatuses.StatusName  # Added StatusName
+    ).join(
+        CustomerStatuses, CustomerStatuses.StatusID == Customers.StatusID
     ).order_by(Customers.CustomerID.desc()).all()
+
 
     customers_data = []
     for row in customers_query:
@@ -262,8 +265,7 @@ def modals():
             'TDLExpirationDate': row.TDLExpirationDate,
             'InsuranceExpDate': row.InsuranceExpDate,
             'CustomerNote': row.CustomerNote,
-            'StatusID': row.StatusID,
-
+            'StatusName': row.StatusName,  # Changed from StatusID to StatusName
         }
         customers_data.append(item)
 

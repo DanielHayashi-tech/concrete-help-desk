@@ -105,6 +105,11 @@
             width: 15%; /* Increased width for the Internal Note column */
         }
 
+        .table-container .table thead th:nth-child(1),
+        .table-container .table tbody td:nth-child(1) {
+        display: none;
+        }
+
         /* Move the title to the left */
         .table-title {
             text-align: left;
@@ -220,8 +225,7 @@
         <thead>
             <tr>
                 <th class="text-center">Customer ID</th>
-                <th class="text-center">First Name</th>
-                <th class="text-center">Last Name</th>
+                <th class="text-center">Customer Name</th>
                 <th class="text-center">Email</th>
                 <th class="text-center">Address</th>
                 <th class="text-center">City</th>
@@ -233,7 +237,7 @@
                 <th class="text-center">TDL Experation Date</th>
                 <th class="text-center">Insurance Experation Date</th>
                 <th class="text-center">Customer Note</th>
-                <th class="text-center">Status Id</th>
+                <th class="text-center">Status Name</th>
                 <th class="text-center">Actions</th>
 
             </tr>
@@ -242,8 +246,7 @@
             {% for row in customers_data %}
             <tr>
                 <td class="text-center customer-customer-id">{{ row.CustomerID }}</td>
-                <td class="text-center customer-first-name">{{ row.FirstName }}</td>
-                <td class="text-center customer-last-name">{{ row.LastName }}</td>
+                <td class="text-center customer-customer-id">{{ row.FirstName }} {{ row.LastName }}</td>
                 <td class="text-center customer-email">{{ row.Email }}</td>
                 <td class="text-center customer-address">{{ row.Address }}</td>
                 <td class="text-center customer-city">{{ row.City }}</td>
@@ -255,9 +258,7 @@
                 <td class="text-center customer-tdl-experation-date">{{ row.TDLExpirationDate}}</td>
                 <td class="text-center customer-ins-experation-date">{{ row.InsuranceExpDate }}</td>
                 <td class="text-center customer-note">{{ row.CustomerNote }}</td>
-                <td class="text-center customer-status-id">{{ row.StatusID }}</td>
-
-
+                <td class="text-center customer-status-id">{{ row.StatusName }}</td>
                 <td class="text-center">
                     <button class="btn btn-primary edit-button-customers" data-toggle="modal" data-target="#editCustomerModal" data-customer-id="{{ row.CustomerID }}">Edit</button>
                 </td>
@@ -326,8 +327,8 @@
         <thead>
             <tr>
                 <th class="text-center">Rental ID</th>
-                <th class="text-center">Customer ID</th>
-                <th class="text-center">Equipment ID</th>
+                <th class="text-center">Customer Name</th>
+                <th class="text-center">Equipment Type</th>
                 <th class="text-center">Rental Date</th>
                 <th class="text-center">Return Date</th>
                 <th class="text-center">Return Time</th>
