@@ -68,11 +68,12 @@
             <p><strong>Name:</strong> {{ row.FirstName }} {{ row.LastName }}</p>
             <p><strong>Address:</strong> {{ row.Address }}, {{row.City}}, {{row.State}} {{row.Zip}}</p>
             <p><strong>Phone Number:</strong> {{row.Phone}}</p>
-            <p><strong>Equipment:</strong> {{row.EquipmentType}}</p>
+            <p><strong>Equipment:</strong> {{ EquipmentType }}</p>
+
 
 
             <p class="customer-note"><strong>Customer Note:</strong> {{ row.CustomerNote }}</p>
-            <p><strong>Customer Status:</strong> {{ row.StatusID }}</p>
+            <p><strong>Customer Status:</strong> {{ StatusName }}</p>
         </section>
         
         <hr>

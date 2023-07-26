@@ -352,8 +352,22 @@ def modals():
 @app.route('/printedPage/<customer_id>')
 def printable_page(customer_id):
     customer_id = int(customer_id)  # Convert to integer
-    row = Customers.query.get_or_404(customer_id)  # This will return 404 if customer not found
-    return render_template('printedPage.html', row=row)
+    customer = Customers.query.get_or_404(customer_id)  # This will return 404 if customer not found
+
+    # We can get customer status name directly from the customer object due to defined relationship
+    status_name = customer.status.StatusName
+
+    # Fetch equipment type for this customer's rentals
+    # We assume the customer has only one rental. If the customer can have multiple rentals,
+    # this code needs to be modified to handle that
+    rental = Rentals.query.filter_by(CustomerID=customer_id).first()
+    if rental is not None:
+        equipment_type = rental.equipment.EquipmentType
+    else:
+        equipment_type = None  # or some default value
+
+    # Pass the data to the template
+    return render_template('printedPage.html', row=customer, StatusName=status_name, EquipmentType=equipment_type)
 
 
 ##############################################################################################################################################################################################################################
