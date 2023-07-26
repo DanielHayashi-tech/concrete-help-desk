@@ -66,10 +66,11 @@
         <section>
             <h2>Customer Information</h2>
             <p><strong>Name:</strong> {{ row.FirstName }} {{ row.LastName }}</p>
-            <p><strong>Email:</strong> {{ row.Email }}</p>
             <p><strong>Address:</strong> {{ row.Address }}, {{row.City}}, {{row.State}} {{row.Zip}}</p>
-            <p><strong>Driver License Number & Expiration Date:</strong> {{ row.TDL }}, {{row.TDLExpirationDate}}</p>
-            <p><strong>Insurance Expiration Date:</strong> {{ row.InsuranceExpDate }}</p>
+            <p><strong>Phone Number:</strong> {{row.Phone}}</p>
+            <p><strong>Equipment:</strong> {{row.EquipmentType}}</p>
+
+
             <p class="customer-note"><strong>Customer Note:</strong> {{ row.CustomerNote }}</p>
             <p><strong>Customer Status:</strong> {{ row.StatusID }}</p>
         </section>

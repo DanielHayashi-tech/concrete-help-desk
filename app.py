@@ -147,7 +147,7 @@ def login():
             login_user(agent)
             session['username'] = username  # update session
             flash('Logged in successfully.')
-            return redirect(url_for('display_data'))
+            return redirect(url_for('modals'))
 
         flash('Invalid username or password.')
         return redirect(url_for('login'))
@@ -165,7 +165,6 @@ def index():
 ##############################################################################################################################################################################################################################
 #                                                                            LOGIN                                                                                                                                          #
 ##############################################################################################################################################################################################################################
-
 
 @app.route('/display', methods=['GET'])
 def display_data():
@@ -190,6 +189,7 @@ def display_data():
         Customers.CustomerNote
     ).join(Rentals, Customers.CustomerID == Rentals.CustomerID
     ).join(Equipment, Rentals.EquipmentID == Equipment.EquipmentID
+    ).filter(Customers.StatusID == 1  # Only select Customers with StatusID equals to 1 (Active customers)
     ).order_by(Customers.CustomerID.desc()).all()
 
     # Create a list of dictionaries to hold the data for each row
@@ -215,6 +215,8 @@ def display_data():
         data.append(item)
 
     return render_template('display.html', data=data)
+
+
 
 ##############################################################################################################################################################################################################################
 #                                                                            DISPLAY                                                                                                                                          #
@@ -612,9 +614,52 @@ def create_vehicle():
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': 'An error occurred while creating new vehicle', 'details': str(e)}), 500
+
+
 ##############################################################################################################################################################################################################################
 #                                                                            CREATE                                                                                                                                          #
 ##############################################################################################################################################################################################################################
+
+@app.route('/changeStatus', methods=['POST'])
+def change_status():
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'Not authenticated'}), 401
+
+    # Get the customer ID and status from the request data
+    customer_id = request.form.get('customerId')  # Note that these should match the names you used in the AJAX call
+    status_string = request.form.get('status')
+
+    # Convert the status from string to integer
+    if status_string == "Inactive":
+        status_id = 2
+    elif status_string == "Active":
+        status_id = 1
+    else:
+        return jsonify({'error': 'Invalid status'}), 400
+
+    # Get the customer from the database
+    customer = Customers.query.get(customer_id)
+
+    if not customer:
+        # If the customer was not found, return an error
+        return jsonify({'error': 'Customer not found'}), 404
+
+    # Update the status of the customer
+    customer.StatusID = status_id
+
+    try:
+        # Save the changes to the database
+        db.session.commit()
+        return jsonify({'message': 'Customer status updated successfully'})
+    except Exception as e:
+        db.session.rollback()  # Rollback the changes on error
+        print(e)  # print the error to the console
+        return jsonify({'error': 'An error occurred while updating customer status', 'details': str(e)}), 500
+##############################################################################################################################################################################################################################
+#                                                                    INACTIVE BUTTON                                                                                                                                         #
+##############################################################################################################################################################################################################################
+
+
 
 
 if __name__ == '__main__':

@@ -25,9 +25,8 @@
         }
 
         .table-container {
-            overflow-x: auto;
             background: #fff;
-            padding: 20px;
+            /* padding: 20px; */  /* commented this line */
             border-radius: 10px;
             box-shadow: 0 1px 20px 0 rgba(69, 90, 100, .08);
             margin-bottom: 30px;
@@ -39,19 +38,23 @@
         }
 
         .table-container .table thead th {
-            text-align: center;
-            padding: .75rem 1rem;
-            background-color: #b3b3b3;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            font-weight: 600; /* Increase font weight for emphasis */
+        text-align: center;
+        padding: .75rem 1rem;
+        background-color: #4a4a4a;
+        color: #ffffff;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        font-weight: 700;
         }
 
+
         .table-container .table tbody td {
-            text-align: center;
-            padding: .75rem 1rem;
-            vertical-align: middle; /* Center vertically */
+        text-align: center;
+        padding: .75rem 1rem;
+        vertical-align: middle;
+        border: 1px solid #ddd;
         }
+
 
         /* Zebra striping for rows */
         .table-container .table tbody tr:nth-child(even) {
@@ -103,6 +106,28 @@
         .table-container .table tbody td:nth-child(14) {
             width: 15%; /* Increased width for the Internal Note column */
         }
+
+        .table-container .table thead th:nth-child(1),
+        .table-container .table tbody td:nth-child(1) {
+        display: none;
+        }
+
+        .table-container .table tbody td.name {
+        white-space: nowrap; /* Prevents line breaks within the cell */
+        }
+
+        .btn-success {
+        color: #d51111;
+        background-color: #dfe8e1;
+        border-color: #f5f9f6;
+        }
+
+        .btn-danger {
+        color: #bb0808;
+        background-color: #f2eaeb;
+        border-color: #f9f7f7;
+        }
+
     </style>
 </head>
 
@@ -116,15 +141,12 @@
             <h2>Customer Information Dashboard</h2>
         </div>
         <div class="table-container">
-            <br>
-            <br>
-
-            <table class="table table-striped">
+            <div class="table-responsive">
+                <table class="table table-striped">
                 <thead>
                     <tr>
                         <th class="text-center">Customer ID</th>
-                        <th class="text-center">First Name</th>
-                        <th class="text-center">Last Name</th>
+                        <th class="text-center">Name</th>
                         <th class="text-center">Email</th>
                         <th class="text-center">Address</th>
                         <th class="text-center">Phone</th>
@@ -138,14 +160,14 @@
                         <th class="text-center">Internal Note</th>
                         <th class="text-center">Customer Note</th>
                         <th class="text-center">Actions</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     {% for row in data %}
                     <tr>
                         <td>{{ row.CustomerID }}</td>
-                        <td>{{ row.FirstName }}</td>
-                        <td>{{ row.LastName }}</td>
+                        <td class="name">{{ row.FirstName }} {{ row.LastName }}</td>
                         <td>{{ row.Email }}</td>
                         <td>{{ row.Address }}</td>
                         <td>{{ row.Phone }}</td>
@@ -164,15 +186,67 @@
                                 target="_blank">
                                 Print
                             </a>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-id="{{ row.CustomerID }}">Inactive</button>
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
+           
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+            <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to mark this customer as inactive?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="confirm-inactive">✔️</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">❌</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+        $(document).ready(function() {
+            var customerIdToInactive;
+        
+            $('#exampleModal').on('show.bs.modal', function (event) {
+              var button = $(event.relatedTarget)
+              customerIdToInactive = button.data('id')
+            })
+        
+            $('#confirm-inactive').click(function() {
+                // Send a request to your server to change the status of the customer
+                $.ajax({
+                    url: '/changeStatus',
+                    type: 'POST',
+                    data: {
+                        customerId: customerIdToInactive,
+                        status: "Inactive"
+                    },
+                    success: function(data) {
+                        // Refresh the page or do something else
+                        location.reload();
+                    }
+                });
+            });
+        });
+</script>   
+
+
+
+</div>
 </body>
 
 </html>

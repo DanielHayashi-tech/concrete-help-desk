@@ -956,7 +956,6 @@ $("#addVehicleForm").submit(function(event) {
         data: JSON.stringify(formData),
         dataType: "json",
         success: function(response) {
-            alert("New Vehicle has been successfully added!");
             location.reload();
         },
         error: function(error) {
@@ -980,7 +979,6 @@ $("#editVehiclesForm").submit(function(event) {
         data: JSON.stringify(formData),
         dataType: "json",
         success: function(response) {
-            alert("Vehcile ID " + id + " has been successfully updated!");
             location.reload();
         },
         error: function(error) {
@@ -1080,7 +1078,6 @@ $("#addRentalForm").submit(function(event) {
         data: JSON.stringify(formData),
         dataType: "json",
         success: function(response) {
-            alert("New Rental has been successfully added!");
             location.reload();
         },
         error: function(error) {
@@ -1102,7 +1099,6 @@ $("#editRentalForm").submit(function(e) {
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function(response) {
-            alert("Rental ID " + id + " has been successfully updated!");
             location.reload();
         },
         error: function(error) {
@@ -1199,8 +1195,6 @@ $("#editEquipmentForm").submit(function(e) {
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function(response) {
-            // Handle success: for example, show a success message and update the table
-            alert("Equipment ID " + id + " has been successfully updated!");  // Alert the user with the success message
             location.reload();
         },
         error: function(error) {
@@ -1224,8 +1218,6 @@ $("#addEquipmentForm").submit(function(event) {
         data: JSON.stringify(formData),
         dataType: "json",
         success: function(response) {
-            // Handle success: for example, show a success message and update the table
-            alert("New Equipment has been successfully added!");  // Alert the user with the success message
             location.reload();
         },
         error: function(error) {
@@ -1358,8 +1350,6 @@ $("#editCustomerForm").submit(function(e) {
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function(response) {
-            // Handle success: for example, show a success message and update the table
-            alert("Customer ID " + id + " has been successfully updated!");  // Alert the user with the success message
             location.reload();
         },
         error: function(error) {
@@ -1380,8 +1370,6 @@ $("#addCustomerForm").submit(function(e) {
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function(response) {
-            // Handle success: for example, show a success message and update the table
-            alert("New customer has been successfully added!");  // Alert the user with the success message
             location.reload();
         },
         error: function(error) {
