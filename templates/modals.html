@@ -225,7 +225,8 @@
         <thead>
             <tr>
                 <th class="text-center">Customer ID</th>
-                <th class="text-center">Customer Name</th>
+                <th class="text-center">First Name</th>
+                <th class="text-center">Last Name</th>
                 <th class="text-center">Email</th>
                 <th class="text-center">Address</th>
                 <th class="text-center">City</th>
@@ -246,11 +247,12 @@
             {% for row in customers_data %}
             <tr>
                 <td class="text-center customer-customer-id">{{ row.CustomerID }}</td>
-                <td class="text-center customer-customer-id">{{ row.FirstName }} {{ row.LastName }}</td>
+                <td class="text-center customer-first-name">{{ row.FirstName }}</td>
+                <td class="text-center customer-last-name">{{ row.LastName }}</td>
                 <td class="text-center customer-email">{{ row.Email }}</td>
                 <td class="text-center customer-address">{{ row.Address }}</td>
                 <td class="text-center customer-city">{{ row.City }}</td>
-                <td class="text-center customer-state">{{ row.State }}</td>
+                <td class="text-center customer-state">{{ row.State }}</td>w
                 <td class="text-center customer-zip">{{ row.Zip }}</td>
                 <td class="text-center customer-phone">{{ row.Phone }}</td>
                 <td class="text-center customer-altphone">{{ row.AltPhone }}</td>
