@@ -203,24 +203,47 @@
         <div class="text-center mt-4 mb-4">
             <h1> Update Customer Data</h1>
         </div>
-
-
-<!-- Customer Filter Section -->
-<div class="row mb-3">
-    <div class="col-6 mx-auto">
-        <div class="input-group">
-            <input type="text" class="form-control" id="filterFirstName" placeholder="Filter by First Name">
-            <div class="input-group-append">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
-            </div>
-        </div>
-    </div>
-</div>
        
 
 <!-- Customer Table -->
 <div class="table-container">
     <h3 class="table-title mb-4">Manage Customer Data</h3>
+         <!-- Customer Filter Section -->
+         <div class="row mb-3">
+            <div class="col-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="filterFirstName" placeholder="Filter by First Name">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="filterEmail" placeholder="Filter by Email">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="filterPhone" placeholder="Filter by Phone">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="filterEquipmentType" placeholder="Filter by Equipment Type">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Customer Filter Section -->
     <table class="table table-striped">
         <thead>
             <tr>
@@ -249,7 +272,7 @@
                 <td class="text-center customer-customer-id">{{ row.CustomerID }}</td>
                 <td class="text-center customer-first-name">{{ row.FirstName }}</td>
                 <td class="text-center customer-last-name">{{ row.LastName }}</td>
-                <td class="text-center customer-email">{{ row.Email }}</td>
+                <td class="customer-email text-center customer-email">{{ row.Email }}</td>
                 <td class="text-center customer-address">{{ row.Address }}</td>
                 <td class="text-center customer-city">{{ row.City }}</td>
                 <td class="text-center customer-state">{{ row.State }}</td>w
@@ -273,20 +296,6 @@
         <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addCustomerModal">Add Customer</button>
     </div>
 </div>
-
-
-<!-- Equipment Filter Section -->
-<div class="row mb-3">
-    <div class="col-6 mx-auto">
-        <div class="input-group">
-            <input type="text" class="form-control" id="filterEquipmentType" placeholder="Filter by Equipment Type">
-            <div class="input-group-append">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <!-- Equipment Table -->
 <div class="table-container">
@@ -1396,23 +1405,32 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
+    $("#filterEmail").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("table tbody tr").filter(function() {
+            $(this).toggle($(this).find('.customer-email').text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+
+$(document).ready(function(){
+    $("#filterPhone").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("table tbody tr").filter(function() {
+            $(this).toggle($(this).find('.customer-phone').text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+
+$(document).ready(function(){
     $("#filterEquipmentType").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $("table tbody tr").filter(function() {
-            $(this).toggle($(this).find('.equipment-equipment-type').text().toLowerCase().indexOf(value) > -1)
+            $(this).toggle($(this).find('.customer-equipment-type').text().toLowerCase().indexOf(value) > -1)
         });
     });
 });
-
-
-$(document).ready(function(){
-    $("#filterVehicleModel").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("table tbody tr").filter(function() {
-            $(this).toggle($(this).find('.vehicles-model').text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-});
+    
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                  FILTERS                                                                                                                  //     
