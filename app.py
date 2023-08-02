@@ -2,11 +2,14 @@ import datetime
 from flask import Flask, flash, redirect, render_template, request, session, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, current_user
+from flask_migrate import Migrate
 import os
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 
 load_dotenv()
+
+
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
@@ -25,8 +28,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + os.environ.get('DB_
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-
-# add a company table
+migrate = Migrate(app, db)
+class Company(db.Model):
+    CompanyID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    CompanyName = db.Column(db.String(255), nullable=False)
+    customers = db.relationship('Customers', backref='company', lazy=True)
 
 class AgentStatuses(db.Model):
     StatusID = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -99,6 +105,8 @@ class Customers(db.Model):
     UpdatedByAgentID = db.Column(db.Integer, db.ForeignKey('agents.AgentID'))  
     rentals = db.relationship('Rentals', backref='customer', lazy=True)
     vehicles = db.relationship('Vehicles', backref='customer', lazy=True)
+    CompanyID = db.Column(db.Integer, db.ForeignKey('company.CompanyID')) 
+
 
 class Equipment(db.Model):
     EquipmentID = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -501,6 +509,12 @@ def update_vehicles(id):
 ##############################################################################################################################################################################################################################
 #                                                                            UPDATE                                                                                                                                          #
 ##############################################################################################################################################################################################################################
+
+@app.route('/availableEquipment', methods=['GET'])
+def available_equipment():
+    available_equipments = Equipment.query.filter_by(StatusID=2).all()
+    result = [equipment.EquipmentType for equipment in available_equipments]
+    return jsonify(result), 200
 
 
 @app.route('/getEquipment_status_ids', methods=['GET'])

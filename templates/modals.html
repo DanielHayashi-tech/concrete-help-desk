@@ -15,7 +15,7 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <title>Modal Buttons</title>
+    <title>Update Information</title>
     <style>
         /* Added CSS for table from the linked site */
         body {
@@ -297,6 +297,10 @@
     </div>
 </div>
 
+        <!-- Title -->
+        <div class="text-center mt-4 mb-4">
+            <h1> Update Equipment Data</h1>
+        </div>
 <!-- Equipment Table -->
 <div class="table-container">
     <h3> Equipment Table!</h3>
@@ -327,48 +331,6 @@
     <!-- Buttons -->
     <div class="button-container text-center mb-4">
         <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addEquipmentModal">Add Equipment</button>
-    </div>
-</div>
-
-
-<!-- Rentals Table -->
-<div class="table-container">
-    <h3> Rentals Table!</h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th class="text-center">Rental ID</th>
-                <th class="text-center">Customer Name</th>
-                <th class="text-center">Equipment Type</th>
-                <th class="text-center">Rental Date</th>
-                <th class="text-center">Return Date</th>
-                <th class="text-center">Return Time</th>
-                <th class="text-center">Internal Note</th>
-                <th class="text-center">Status ID</th>
-                <th class="text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in rental_data %}
-            <tr>
-                <td class="text-center rentals-id">{{ row.RentalID }}</td>
-                <td class="text-center rentals-fk-customer-id">{{ row.CustomerName }}</td>
-                <td class="text-center rentals-equipment-fk-id">{{ row.EquipmentType }}</td>
-                <td class="text-center rentals-rental-date">{{ row.RentalDate }}</td>
-                <td class="text-center rentals-return-date">{{ row.ReturnDate }}</td>
-                <td class="text-center rentals-return-time">{{ row.ReturnTime }}</td>
-                <td class="text-center rentals-internal-note">{{ row.InternalNote }}</td>
-                <td class="text-center rentals-status-id">{{ row.StatusName }}</td>
-                <td class="text-center">
-                    <button class="btn btn-primary edit-button-rentals" data-toggle="modal" data-target="#editRentalModal" data-customer-id="{{ row.RentalID }}">Edit</button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <!-- Buttons -->
-    <div class="button-container text-center mb-4">
-        <button class="btn btn-primary add-rentals" data-toggle="modal" data-target="#addRentalModal">Add Rental</button>
     </div>
 </div>
 
@@ -443,7 +405,7 @@
                 </div>
                 <div class="form-group">
                     <label for="EquipmentType">Equipment Type</label>
-                    <input type="text" name="EquipmentType" id="EquipmentType" class="form-control" placeholder="Equipment Type">
+                    <select type="text" name="EquipmentType" id="EquipmentType" class="form-control" placeholder="Equipment Type"></select>
                 </div>
                 <div class="form-group">
                     <label for="EquipmentCondition">Equipment Condition</label>
@@ -509,57 +471,6 @@
 </div>
 </div>
 
-<!-- Add Rental Modal -->
-<div class="modal fade" id="addRentalModal" tabindex="-1" role="dialog" aria-labelledby="addRentalModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="addRentalModalLabel">Add Rental</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <form id="addRentalForm">
-            <div class="modal-body">
-                <!-- Input fields for each column here -->
-                <div class="form-group">
-                    <label for="add_customer_id">Customer ID</label>
-                    <input type="text" name="CustomerID" id="add_customer_id" class="form-control" placeholder="Equipment Type">
-                </div>
-                <div class="form-group">
-                    <label for="add_equipment_id">Equipment ID</label>
-                    <input type="text" name="EquipmentID" id="add_equipment_id" class="form-control" placeholder="Equipment ID">
-                </div>
-                <div class="form-group">
-                    <label for="add_rental_date">Rental Date</label>
-                    <input type="date" name="RentalDate" id="add_rental_date" class="form-control" placeholder="Day of the Rental">
-                </div>
-                <div class="form-group">
-                    <label for="add_return_date">Return Date</label>
-                    <input type="date" name="ReturnDate" id="add_return_date" class="form-control" placeholder="Return Date">
-                </div>
-                <div class="form-group">
-                    <label for="add_return_time">Return Time</label>
-                    <input type="text" name="ReturnTime" id="add_return_time" class="form-control" placeholder="Return Time">
-                </div>
-                <div class="form-group">
-                    <label for="add_internal_note">Internal Note</label>
-                    <textarea name="InternalNote" id="add_internal_note" class="form-control" placeholder="Internal Note"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="add_status_id_rental">Status ID</label>
-                    <select name="StatusID" id="add_status_id_rental" class="form-control"></select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-            </div>
-        </form>
-    </div>
-</div>
-</div>
 
     <!---------------------------------------------------------- Edit Data Modals ---------------------------------------------------------->
 
@@ -689,62 +600,6 @@ aria-hidden="true">
     </div>
 </div>
 
-
-<!-- Edit Rental Modal -->
-<div class="modal fade" id="editRentalModal" tabindex="-1" role="dialog" aria-labelledby="editRentalModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editRentalModalLabel">Edit Rental</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="editRentalForm">
-                <div class="modal-body">
-                    <!-- Input fields for each column here -->
-                    <div class="form-group">
-                        <label for="edit_rentals_id">Rental ID</label>
-                        <input type="text" name="#RentalID" id="edit_rentals_id" class="form-control" placeholder="Rental ID" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit_customer_id_rentals">Customer ID</label>
-                        <input type="text" name=CustomerID id="edit_customer_id_rentals" class="form-control" placeholder="Customer ID" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit_equipment_id_rentals">Equipment ID</label>
-                        <input type="text" name="equipmentId" id="edit_equipment_id" class="form-control" placeholder="Equipment ID">
-                    </div>
-                    <div class="form-group">
-                        <label for="edit_rental_date">Rental Date</label>
-                        <input type="date" name="RentalDate" id="edit_rental_date" class="form-control" placeholder="Day of the Rental">
-                    </div>
-                    <div class="form-group">
-                        <label for="edit_return_date">Return Date</label>
-                        <input type="date" name="ReturnDate" id="edit_return_date" class="form-control" placeholder="Return Date">
-                    </div>
-                    <div class="form-group">
-                        <label for="edit_return_time">Return Time</label>
-                        <input type="text" name="ReturnTime" id="edit_return_time" class="form-control" placeholder="Return Time">
-                    </div>
-                    <div class="form-group">
-                        <label for="edit_internal_note">Internal Note</label>
-                        <textarea name="InternalNote" id="edit_internal_note" class="form-control" placeholder="Internal Note"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit_status_id_rental">Status ID</label>
-                        <select name="StatusID" id="edit_status_id_rental" class="form-control"></select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 
 
@@ -993,6 +848,23 @@ $("#addEquipmentForm").submit(function(event) {
             // Handle error: for example, show an error message
             alert("An error occurred. Please try again.");
         }
+    });
+});
+
+// Assuming you are using jQuery
+$('#addCustomerModal').on('show.bs.modal', function() {
+    // Clear any previous options
+    $('#EquipmentType').empty();
+    
+    // Fetch available equipment types
+    $.get('/availableEquipment', function(data) {
+        data.forEach(function(equipmentType) {
+            // Create a new option element
+            var option = new Option(equipmentType, equipmentType);
+            
+            // Append the option to the select element
+            $('#EquipmentType').append($(option));
+        });
     });
 });
 
