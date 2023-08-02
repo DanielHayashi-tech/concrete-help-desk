@@ -19,7 +19,6 @@
             color: #333;
             background-color: #f2f2f2;
         }
-
         .back-button {
             position: fixed;
             left: 20px;
@@ -28,7 +27,6 @@
             color: #fff;
             border-color: #f8f9fa;
         }
-
         .print-button {
             position: fixed;
             right: 20px;
@@ -37,25 +35,42 @@
             color: #fff;
             border-color: #007bff;
         }
-
         .signature-area {
             margin-top: 2em;
             border-top: 1px solid #000;
         }
-
+        .img-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .img-container img {
+            max-width: 500px;  /* Adjust to the desired size */
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
         h2 {
             margin-top: 1em;
             font-family: 'Playfair Display', serif;
             color: #7d4627;
         }
-
         p.customer-note {
             height: 100px;
         }
+
+
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="img-container">
+            <img src="{{ url_for('static', filename='concreto.png') }}" alt="Concrete logo">
+        </div>
+        <br>
+        <br>
+
         <a href="/display" class="btn btn-light mb-2 back-button"><i class="fa fa-arrow-left" style="color: #333;"></i></a>
         <button class="btn btn-primary print-button" onClick="window.print()">Print this page</button>
 
