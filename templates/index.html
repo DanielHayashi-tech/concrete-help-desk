@@ -30,12 +30,13 @@
     </style>
 </head>
 <body>
+
     <div class="container">
+        <div class="img-container">
+            <img src="{{ url_for('static', filename='concreto.png') }}" alt="Concrete logo">
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="img-container">
-                    <img src="{{ url_for('static', filename='concreto.png') }}" alt="Concrete logo">
-                </div>
                 <h2 class="text-center mb-4">Login</h2>
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}

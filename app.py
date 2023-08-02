@@ -190,7 +190,9 @@ def display_data():
     ).join(Rentals, Customers.CustomerID == Rentals.CustomerID
     ).join(Equipment, Rentals.EquipmentID == Equipment.EquipmentID
     ).filter(Customers.StatusID == 1  # Only select Customers with StatusID equals to 1 (Active customers)
+    ).filter(Equipment.StatusID == 1  # Only select Equipment with StatusID equals to 2 (Not Available)
     ).order_by(Customers.CustomerID.desc()).all()
+
 
     # Create a list of dictionaries to hold the data for each row
     data = []
@@ -242,7 +244,7 @@ def modals():
     Customers.TDLExpirationDate,
     Customers.InsuranceExpDate,
     Customers.CustomerNote,
-    CustomerStatuses.StatusName  # Added StatusName
+    CustomerStatuses.StatusName 
     ).join(
         CustomerStatuses, CustomerStatuses.StatusID == Customers.StatusID
     ).order_by(Customers.CustomerID.desc()).all()
@@ -516,7 +518,6 @@ def get_status_ids_rentals():
     status_ids = RentalStatuses.query.all()
     return jsonify([{'id': status.StatusID, 'name': status.StatusName} for status in status_ids]), 200
 
-
 @app.route('/getVehicle_status_ids', methods=['GET'])
 def get_status_ids_vehicles():
     status_ids = VehicleStatuses.query.all()
@@ -533,9 +534,6 @@ def create_customer():
         return jsonify({'error': 'Not authenticated'}), 401
 
     data = request.get_json()
-    print(data)  
-
-
     # Create a new Customer instance
     new_customer = Customers(
         FirstName=data['FirstName'],
@@ -592,7 +590,6 @@ def create_rental():
         return jsonify({'error': 'Not authenticated'}), 401
     data = request.get_json()
 
-    print(f'Received data: {data}')
 
     new_rental = Rentals(
         CustomerID=data['CustomerID'],
@@ -645,7 +642,7 @@ def change_status():
         return jsonify({'error': 'Not authenticated'}), 401
 
     # Get the customer ID and status from the request data
-    customer_id = request.form.get('customerId')  # Note that these should match the names you used in the AJAX call
+    customer_id = request.form.get('customerId')
     status_string = request.form.get('status')
 
     # Convert the status from string to integer
@@ -666,14 +663,27 @@ def change_status():
     # Update the status of the customer
     customer.StatusID = status_id
 
+    # If the customer status is set to Inactive, update the status of the equipment to "Ready to use"
+    if status_string == "Inactive":
+        # Get all the rentals of the customer
+        rentals = Rentals.query.filter_by(CustomerID=customer.CustomerID).all()
+
+        for rental in rentals:
+            # Get the equipment of the rental
+            equipment = Equipment.query.get(rental.EquipmentID)
+            
+            if equipment:
+                equipment.StatusID = 2  # Assume 2 means "Ready to use"
+
     try:
         # Save the changes to the database
         db.session.commit()
-        return jsonify({'message': 'Customer status updated successfully'})
+        return jsonify({'message': 'Customer and equipment status updated successfully'})
     except Exception as e:
         db.session.rollback()  # Rollback the changes on error
         print(e)  # print the error to the console
-        return jsonify({'error': 'An error occurred while updating customer status', 'details': str(e)}), 500
+        return jsonify({'error': 'An error occurred while updating statuses', 'details': str(e)}), 500
+
 ##############################################################################################################################################################################################################################
 #                                                                    INACTIVE BUTTON                                                                                                                                         #
 ##############################################################################################################################################################################################################################
