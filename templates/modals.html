@@ -301,6 +301,7 @@
         <div class="text-center mt-4 mb-4">
             <h1> Update Equipment Data</h1>
         </div>
+
 <!-- Equipment Table -->
 <div class="table-container">
     <h3> Equipment Table!</h3>
@@ -308,9 +309,12 @@
         <thead>
             <tr>
                 <th class="text-center">Equipment ID</th>
-                <th class="text-center">Equipment Type</th>
+                <th class="text-center">Equipment Name</th>
+                <th class="text-center">Rental Status</th>
+                <th class="text-center">Date of Rental Start</th>
+                <th class="text-center">Date of Rental return</th>
+                <th class="text-center">Time of Return</th>
                 <th class="text-center">Condition</th>
-                <th class="text-center">Status ID</th>
                 <th class="text-center">Actions</th>
             </tr>
         </thead>
@@ -319,8 +323,13 @@
             <tr>
                 <td class="text-center equipment-equipment-id">{{ row.EquipmentID }}</td>
                 <td class="customer-equipment-type text-center equipment-equipment-type">{{ row.EquipmentType }}</td>
-                <td class="text-center equipment-equipment-condition">{{ row.Condition }}</td>
                 <td class="text-center equipment-status-id">{{ row.StatusID }} ({{ row.EquipmentStatusName }})</td>
+
+                <td class="text-center rentals-rental-date">{{ row.RentalDate }}</td>
+                <td class="text-center rentals-return-date">{{ row.ReturnDate }}</td>
+                <td class="text-center rentals-return-time">{{ row.ReturnTime }}</td>
+                <td class="text-center equipment-equipment-condition">{{ row.Condition }}</td>
+
                 <td class="text-center">
                     <button class="btn btn-primary edit-button-equipment" data-toggle="modal" data-target="#editEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
                 </td>
@@ -333,7 +342,6 @@
         <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addEquipmentModal">Add Equipment</button>
     </div>
 </div>
-
 
 
 <!---------------------------------------------------------- Add Data Modals ---------------------------------------------------------->
@@ -412,10 +420,20 @@
                     <input type="text" name="EquipmentCondition" id="EquipmentCondition" class="form-control" placeholder="Description of the Condition">
                 </div>
                 <div class="form-group">
-                    <label for="addStatusID">Equipment Status ID</label>
-                    <select class="form-control" id="addStatusID" name="StatusID">
-                        <!-- Options will be dynamically generated -->
-                    </select>
+                    <label for="edit_rental_date">Rental Date</label>
+                    <input type="date" name="RentalDate" id="edit_rental_date" class="form-control" placeholder="Day of the Rental">
+                </div>
+                <div class="form-group">
+                    <label for="edit_return_date">Return Date</label>
+                    <input type="date" name="ReturnDate" id="edit_return_date" class="form-control" placeholder="Return Date">
+                </div>
+                <div class="form-group">
+                    <label for="edit_return_time">Return Time</label>
+                    <input type="text" name="ReturnTime" id="edit_return_time" class="form-control" placeholder="Return Time">
+                </div>
+                <div class="form-group">
+                    <label for="edit_internal_note">Internal Note</label>
+                    <textarea name="InternalNote" id="edit_internal_note" class="form-control" placeholder="Internal Note"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="StatusID">Status ID</label>

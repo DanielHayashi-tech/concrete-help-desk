@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, current_user
 from flask_migrate import Migrate
 import os
+from sqlalchemy import desc
+from sqlalchemy.orm import aliased
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 
@@ -27,8 +29,8 @@ def load_user(user_id):
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + os.environ.get('DB_USER') + ':' + os.environ.get('DB_PASSWORD') + '@' + os.environ.get('DB_HOST') + ':' + os.environ.get('DB_PORT') + '/' + os.environ.get('DB_NAME')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
 migrate = Migrate(app, db)
+
 class Company(db.Model):
     CompanyID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     CompanyName = db.Column(db.String(255), nullable=False)
@@ -231,6 +233,7 @@ def display_data():
 ##############################################################################################################################################################################################################################
 #                                                                            DISPLAY                                                                                                                                          #
 ##############################################################################################################################################################################################################################
+RentalsAlias = aliased(Rentals)
 
 @app.route('/modals', methods=['GET'])
 def modals():
@@ -284,12 +287,23 @@ def modals():
         Equipment.EquipmentType,
         Equipment.Condition,
         Equipment.StatusID,
-        EquipmentStatuses.StatusName
+        EquipmentStatuses.StatusName,
+        RentalsAlias.RentalDate,
+        RentalsAlias.ReturnDate,
+        RentalsAlias.ReturnTime,
+        Customers.FirstName
+    ).outerjoin(
+        RentalsAlias,
+        RentalsAlias.EquipmentID == Equipment.EquipmentID
+    ).outerjoin(
+        Customers,
+        Customers.CustomerID == RentalsAlias.CustomerID
     ).join(
         EquipmentStatuses,
         EquipmentStatuses.StatusID == Equipment.StatusID
     ).order_by(
-        Equipment.EquipmentID.desc()
+        Equipment.EquipmentID.desc(),
+        RentalsAlias.RentalDate.desc()  # Ensure we fetch the most recent rental record
     ).all()
 
     equipment_data = []
@@ -299,7 +313,11 @@ def modals():
             'EquipmentType': row.EquipmentType,
             'Condition': row.Condition,
             'StatusID': row.StatusID,
-            'EquipmentStatusName': row.StatusName
+            'EquipmentStatusName': row.StatusName,
+            'RentalDate': row.RentalDate,
+            'ReturnDate': row.ReturnDate,
+            'ReturnTime': row.ReturnTime,
+            'FirstName': row.FirstName
         }
         equipment_data.append(item)
 
@@ -541,7 +559,6 @@ def get_status_ids_vehicles():
 #                                                                            GET                                                                                                                                          #
 ##############################################################################################################################################################################################################################
 
-
 @app.route('/create_customer', methods=['POST'])
 def create_customer():
     if not current_user.is_authenticated:
@@ -567,13 +584,34 @@ def create_customer():
     )
     db.session.add(new_customer)
 
+    # Create a new Equipment instance
+    new_equipment = Equipment(
+        EquipmentType=data['EquipmentType'],
+        Condition=data['Condition'],
+        StatusID=data['StatusID']  # This should be the status of the equipment, not the customer
+    )
+    db.session.add(new_equipment)
+
+    # Create a new Rental instance linking the customer and equipment
+    new_rental = Rentals(
+        CustomerID=new_customer.CustomerID,
+        EquipmentID=new_equipment.EquipmentID,
+        AgentID=current_user.AgentID,  # Assuming current user is an agent who initiates the rental
+        RentalDate=data['RentalDate'],
+        ReturnDate=data['ReturnDate'],
+        ReturnTime=data['ReturnTime'],
+        InternalNote=data['InternalNote'],
+        StatusID=data['RentalStatusID'],  # This should be the status of the rental
+        UpdatedByAgentID=current_user.AgentID  # Assuming current user is the agent who updates the rental
+    )
+    db.session.add(new_rental)
+
     try:
         db.session.commit()
-        return jsonify({'message': 'New customer added successfully!'}), 200
+        return jsonify({'message': 'New customer, equipment, and rental added successfully!'}), 200
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': 'An error occurred while creating new customer', 'details': str(e)}), 500
-
+        return jsonify({'error': 'An error occurred while creating new customer, equipment, and rental', 'details': str(e)}), 500
 
 @app.route('/create_equipment', methods=['POST'])
 def create_equipment():
