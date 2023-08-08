@@ -534,7 +534,6 @@ def available_equipment():
     result = [equipment.EquipmentType for equipment in available_equipments]
     return jsonify(result), 200
 
-
 @app.route('/getEquipment_status_ids', methods=['GET'])
 def get_status_ids_equipment():
     status_ids = EquipmentStatuses.query.all()
@@ -559,10 +558,22 @@ def get_status_ids_vehicles():
 #                                                                            GET                                                                                                                                          #
 ##############################################################################################################################################################################################################################
 
+AVAILABLE_STATUS_ID = 2
+ACTIVE_STATUS_ID = 1
+
 @app.route('/create_customer', methods=['POST'])
 def create_customer():
     if not current_user.is_authenticated:
         return jsonify({'error': 'Not authenticated'}), 401
+
+    available_equipment = Equipment.query.filter_by(StatusID=AVAILABLE_STATUS_ID).first()
+
+    if not available_equipment:
+        return jsonify({'error': 'No available equipment found'}), 404
+
+    # Update equipment status
+    available_equipment.StatusID = ACTIVE_STATUS_ID
+    db.session.add(available_equipment)  # Make sure to update the equipment object in the database
 
     data = request.get_json()
     # Create a new Customer instance
@@ -580,61 +591,30 @@ def create_customer():
         TDLExpirationDate=data['TDLExpirationDate'],
         InsuranceExpDate=data['InsuranceExpDate'],
         CustomerNote=data['CustomerNote'],
-        StatusID=data['StatusID']
+        StatusID=ACTIVE_STATUS_ID
     )
     db.session.add(new_customer)
-
-    # Create a new Equipment instance
-    new_equipment = Equipment(
-        EquipmentType=data['EquipmentType'],
-        Condition=data['Condition'],
-        StatusID=data['StatusID']  # This should be the status of the equipment, not the customer
-    )
-    db.session.add(new_equipment)
 
     # Create a new Rental instance linking the customer and equipment
     new_rental = Rentals(
         CustomerID=new_customer.CustomerID,
-        EquipmentID=new_equipment.EquipmentID,
+        EquipmentID=available_equipment.EquipmentID,
         AgentID=current_user.AgentID,  # Assuming current user is an agent who initiates the rental
         RentalDate=data['RentalDate'],
         ReturnDate=data['ReturnDate'],
         ReturnTime=data['ReturnTime'],
         InternalNote=data['InternalNote'],
-        StatusID=data['RentalStatusID'],  # This should be the status of the rental
+        StatusID=ACTIVE_STATUS_ID,  # This should be the status of the rental
         UpdatedByAgentID=current_user.AgentID  # Assuming current user is the agent who updates the rental
     )
     db.session.add(new_rental)
 
     try:
         db.session.commit()
-        return jsonify({'message': 'New customer, equipment, and rental added successfully!'}), 200
+        return jsonify({'message': 'New customer and rental added successfully!'}), 200
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': 'An error occurred while creating new customer, equipment, and rental', 'details': str(e)}), 500
-
-@app.route('/create_equipment', methods=['POST'])
-def create_equipment():
-    if not current_user.is_authenticated:
-        return jsonify({'error': 'Not authenticated'}), 401
-    
-    data = request.get_json()
-
-    new_equipment = Equipment(
-        EquipmentType=data['EquipmentType'],
-        Condition=data['EquipmentCondition'],
-        StatusID=data['StatusID']
-    )
-
-    db.session.add(new_equipment)
-    
-    try:
-        db.session.commit()
-        return jsonify({'message': 'New equipment added successfully!'}), 200
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': 'An error occurred while creating new equipment', 'details': str(e)}), 500
-    
+        return jsonify({'error': 'An error occurred while creating new customer and rental', 'details': str(e)}), 500
 
 @app.route('/create_rental', methods=['POST'])
 def create_rental():
