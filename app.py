@@ -215,11 +215,9 @@ def display_data():
            ).join(Equipment, Rentals.EquipmentID == Equipment.EquipmentID
                   # Only select Customers with StatusID equals to 1 (Active customers)
                   ).filter(Customers.StatusID == 1
-                           # Only select Equipment with StatusID equals to 1 (Active Equipment)
-                           ).filter(Equipment.StatusID == 1
-                                    # Only select Rentals with StatusID equals to 1 (Active Rental)
-                                    ).filter(Rentals.StatusID == 1
-                                             ).order_by(Customers.CustomerID.desc()).all()
+                            # Only select Rentals with StatusID equals to 1 (Active Rental)
+                            ).filter(Rentals.StatusID == 1
+                                        ).order_by(Customers.CustomerID.desc()).all()
 
     # Create a list of dictionaries to hold the data for each row
     data = []
@@ -329,17 +327,14 @@ def modals():
         Rentals.RentalDate,
         Rentals.ReturnDate,
         Rentals.ReturnTime,
-        Equipment.EquipmentType,
         Rentals.InternalNote
     ).join(Customers, Customers.CustomerID == Rentals.CustomerID
            ).join(Equipment, Equipment.EquipmentID == Rentals.EquipmentID
                   # Only select Customers with StatusID equals to 2 (Active customers)
                   ).filter(Customers.StatusID == 2
-                           # Only select Equipment with StatusID equals to 2 (Active Equipment)
-                           ).filter(Equipment.StatusID == 2
-                                    # Only select Rentals with StatusID equals to 2 (Active Rental)
-                                    ).filter(Rentals.StatusID == 2
-                                             ).order_by(Rentals.RentalID.desc()).all()
+                                # Only select Rentals with StatusID equals to 2 (Active Rental)
+                                ).filter(Rentals.StatusID == 3
+                                            ).order_by(Rentals.RentalID.desc()).all()
 
     rental_data = []
     for row in rental_query:
@@ -356,7 +351,6 @@ def modals():
             'InternalNote': row.InternalNote,
             'RentalsStatusID': row.RentalsStatusID,
         }
-        print(rental_data)
         rental_data.append(item)
 
     vehicles_query = db.session.query(
@@ -721,29 +715,35 @@ def change_status():
         # If the customer was not found, return an error
         return jsonify({'error': 'Customer not found'}), 404
 
-    # Update the status of the customer
+    # Update the status and the agent who updated it for the customer
     customer.StatusID = status_id
+    customer.UpdatedByAgentID = current_user.AgentID
 
-    # If the customer status is set to Inactive, update the status of the equipment to "Ready to use"
+        # If the customer status is set to Inactive
     if status_string == "Inactive":
-        # Get all the rentals of the customer
+        # Update the customer's related rentals and their equipment
         rentals = Rentals.query.filter_by(CustomerID=customer.CustomerID).all()
-
         for rental in rentals:
-            # Get the equipment of the rental
+            rental.StatusID = 3  # Setting rental status to Completed
+            rental.UpdatedByAgentID = current_user.AgentID  # Logging the agent who updated the rental
+            
             equipment = Equipment.query.get(rental.EquipmentID)
-
             if equipment:
-                equipment.StatusID = 2  # Assume 2 means "Ready to use"
+                equipment.StatusID = 2  # Setting equipment status to "Ready to use"
+                equipment.UpdatedByAgentID = current_user.AgentID  # Logging the agent who updated the equipment
+
 
     try:
         # Save the changes to the database
         db.session.commit()
-        return jsonify({'message': 'Customer and equipment status updated successfully'})
+        return jsonify({'message': 'Customer, rentals, and equipment statuses updated successfully'})
     except Exception as e:
         db.session.rollback()  # Rollback the changes on error
-        print(e)  # print the error to the console
+        current_app.logger.error(f"An error occurred: {str(e)}")  # Logging the error
         return jsonify({'error': 'An error occurred while updating statuses', 'details': str(e)}), 500
+
+
+
 
 ##############################################################################################################################################################################################################################
 #                                                                    INACTIVE BUTTON                                                                                                                                         #

@@ -302,7 +302,7 @@
 
 <!-- Title -->
 <div class="text-center mt-4 mb-4">
-    <h1>Active Rentals!</h1>
+    <h1>Past Rentals!</h1>
 </div>
 <div class="table-container">
     <table class="table table-striped">
@@ -312,11 +312,11 @@
                 <th class="text-center">First Name</th>
                 <th class="text-center">Last Name</th>
                 <th class="text-center">Equipment Name</th>
+
                 <th class="text-center equipment-status-id-rental">Rental Status</th>
                 <th class="text-center">Date of Rental Start</th>
                 <th class="text-center">Date of Rental return</th>
                 <th class="text-center">Time of Return</th>
-                <th class="text-center">Condition</th>
                 <th class="text-center">Actions</th>
             </tr>
         </thead>
@@ -327,12 +327,12 @@
                 <td class="text-center customer-first-name">{{ row.FirstName }}</td>
                 <td class="text-center customer-last-name">{{ row.LastName }}</td>
                 <td class="customer-equipment-type text-center equipment-equipment-type">{{ row.EquipmentType }}</td>
+
                 <td class="text-center equipment-status-id-rental">{{ row.EquipmentStatusID }} ({{ row.EquipmentStatusName }})</td>
 
                 <td class="text-center rentals-rental-date">{{ row.RentalDate }}</td>
                 <td class="text-center rentals-return-date">{{ row.ReturnDate }}</td>
                 <td class="text-center rentals-return-time">{{ row.ReturnTime }}</td>
-                <td class="text-center equipment-equipment-condition">{{ row.Condition }}</td>
 
                 <td class="text-center">
                     <button class="btn btn-primary edit-button-equipment" data-toggle="modal" data-target="#editEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
@@ -384,7 +384,7 @@
                 <td class="text-center equipment-equipment-condition">{{ row.Condition }}</td>
                 <td class="text-center equipment-status-id">{{ row.StatusID }} ({{ row.EquipmentStatusName }})</td>
                 <td class="text-center">
-                    <button class="btn btn-primary edit-button-equipment" data-toggle="modal" data-target="#editEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
+                    <button class="btn btn-primary edit-button-equipment" data-toggle="modal" data-target="#editEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">  Edit</button>
                 </td>
             </tr>
             {% endfor %}

@@ -301,7 +301,6 @@ $(document).ready(function() {
     })
 
     $('#confirm-inactive').click(function() {
-        // Send a request to your server to change the status of the customer
         $.ajax({
             url: '/changeStatus',
             type: 'POST',
@@ -316,6 +315,7 @@ $(document).ready(function() {
         });
     });
 });
+
 </script>   
 
 
