@@ -223,7 +223,7 @@
                                 target="_blank">
                                 Print
                             </a>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-id="{{ row.CustomerID }}">Inactive</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#inactivemodal" data-id="{{ row.CustomerID }}">Inactive</button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -233,11 +233,11 @@
 
 
             <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="inactivemodal" tabindex="-1" aria-labelledby="inactivemodallabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+          <h5 class="modal-title" id="inactivemodallabel">Confirmation</h5>
           <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -291,30 +291,31 @@ $(document).ready(function(){
         });
     });
 });
-        $(document).ready(function() {
-            var customerIdToInactive;
-        
-            $('#exampleModal').on('show.bs.modal', function (event) {
-              var button = $(event.relatedTarget)
-              customerIdToInactive = button.data('id')
-            })
-        
-            $('#confirm-inactive').click(function() {
-                // Send a request to your server to change the status of the customer
-                $.ajax({
-                    url: '/changeStatus',
-                    type: 'POST',
-                    data: {
-                        customerId: customerIdToInactive,
-                        status: "Inactive"
-                    },
-                    success: function(data) {
-                        // Refresh the page or do something else
-                        location.reload();
-                    }
-                });
-            });
+
+$(document).ready(function() {
+    var customerIdToInactive;
+
+    $('#inactivemodal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        customerIdToInactive = button.data('id')
+    })
+
+    $('#confirm-inactive').click(function() {
+        // Send a request to your server to change the status of the customer
+        $.ajax({
+            url: '/changeStatus',
+            type: 'POST',
+            data: {
+                customerId: customerIdToInactive,
+                status: "Inactive"
+            },
+            success: function(data) {
+                // Refresh the page or do something else
+                location.reload();
+            }
         });
+    });
+});
 </script>   
 
 

@@ -189,6 +189,10 @@
             color: #7d4627;
         }
 
+        .equipment-status-id-rental {
+    display: none;
+}
+
     </style>
 </head>
 
@@ -201,13 +205,12 @@
 
         <!-- Title -->
         <div class="text-center mt-4 mb-4">
-            <h1> Update Customer Data</h1>
+            <h1>Customer Data</h1>
         </div>
        
 
 <!-- Customer Table -->
 <div class="table-container">
-    <h3 class="table-title mb-4">Manage Customer Data</h3>
          <!-- Customer Filter Section -->
          <div class="row mb-3">
             <div class="col-3">
@@ -275,7 +278,7 @@
                 <td class="customer-email text-center customer-email">{{ row.Email }}</td>
                 <td class="text-center customer-address">{{ row.Address }}</td>
                 <td class="text-center customer-city">{{ row.City }}</td>
-                <td class="text-center customer-state">{{ row.State }}</td>w
+                <td class="text-center customer-state">{{ row.State }}</td>
                 <td class="text-center customer-zip">{{ row.Zip }}</td>
                 <td class="text-center customer-phone">{{ row.Phone }}</td>
                 <td class="text-center customer-altphone">{{ row.AltPhone }}</td>
@@ -297,20 +300,19 @@
     </div>
 </div>
 
-        <!-- Title -->
-        <div class="text-center mt-4 mb-4">
-            <h1> Update Equipment Data</h1>
-        </div>
-
-<!-- Equipment Table -->
+<!-- Title -->
+<div class="text-center mt-4 mb-4">
+    <h1>Active Rentals!</h1>
+</div>
 <div class="table-container">
-    <h3> Equipment Table!</h3>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th class="text-center">Equipment ID</th>
+                <th class="text-center">First Name</th>
+                <th class="text-center">Last Name</th>
                 <th class="text-center">Equipment Name</th>
-                <th class="text-center">Rental Status</th>
+                <th class="text-center equipment-status-id-rental">Rental Status</th>
                 <th class="text-center">Date of Rental Start</th>
                 <th class="text-center">Date of Rental return</th>
                 <th class="text-center">Time of Return</th>
@@ -319,11 +321,13 @@
             </tr>
         </thead>
         <tbody>
-            {% for row in equipment_data %}
+            {% for row in rental_data %}
             <tr>
                 <td class="text-center equipment-equipment-id">{{ row.EquipmentID }}</td>
+                <td class="text-center customer-first-name">{{ row.FirstName }}</td>
+                <td class="text-center customer-last-name">{{ row.LastName }}</td>
                 <td class="customer-equipment-type text-center equipment-equipment-type">{{ row.EquipmentType }}</td>
-                <td class="text-center equipment-status-id">{{ row.StatusID }} ({{ row.EquipmentStatusName }})</td>
+                <td class="text-center equipment-status-id-rental">{{ row.EquipmentStatusID }} ({{ row.EquipmentStatusName }})</td>
 
                 <td class="text-center rentals-rental-date">{{ row.RentalDate }}</td>
                 <td class="text-center rentals-return-date">{{ row.ReturnDate }}</td>
@@ -338,11 +342,59 @@
         </tbody>
     </table>
     <!-- Buttons -->
+    <!-- <div class="button-container text-center mb-4">
+        <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addEquipmentModal">Add Equipment</button>
+    </div> -->
+</div>
+
+
+
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+        <!-- Title -->
+        <div class="text-center mt-4 mb-4">
+            <h1> All My Equipment! </h1>
+        </div>
+<!-- Equipment Table -->
+<div class="table-container">
+    <h3> Equipment Table!</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">Equipment ID</th>
+                <th class="text-center">Equipment Type</th>
+                <th class="text-center">Condition</th>
+                <th class="text-center">Status ID</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in equipment_data %}
+            <tr>
+                <td class="text-center equipment-equipment-id">{{ row.EquipmentID }}</td>
+                <td class="text-center equipment-equipment-type">{{ row.EquipmentType }}</td>
+                <td class="text-center equipment-equipment-condition">{{ row.Condition }}</td>
+                <td class="text-center equipment-status-id">{{ row.StatusID }} ({{ row.EquipmentStatusName }})</td>
+                <td class="text-center">
+                    <button class="btn btn-primary edit-button-equipment" data-toggle="modal" data-target="#editEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Buttons -->
     <div class="button-container text-center mb-4">
         <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addEquipmentModal">Add Equipment</button>
     </div>
 </div>
-
 
 <!---------------------------------------------------------- Add Data Modals ---------------------------------------------------------->
 
@@ -859,22 +911,7 @@ $("#addEquipmentForm").submit(function(event) {
     });
 });
 
-// Assuming you are using jQuery
-$('#addCustomerModal').on('show.bs.modal', function() {
-    // Clear any previous options
-    $('#EquipmentType').empty();
-    
-    // Fetch available equipment types
-    $.get('/availableEquipment', function(data) {
-        data.forEach(function(equipmentType) {
-            // Create a new option element
-            var option = new Option(equipmentType, equipmentType);
-            
-            // Append the option to the select element
-            $('#EquipmentType').append($(option));
-        });
-    });
-});
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -965,47 +1002,39 @@ $('#editCustomerModal').on('show.bs.modal', function (event) {
     });
 
 
-$('#addCustomerModal').on('show.bs.modal', function (event) {
+$('#addCustomerModal').on('show.bs.modal', function () {
     // Fetch the status IDs from the server
     fetch('/getCustomer_status_ids')
         .then(response => response.json())
         .then(data => {
             const select = document.getElementById('StatusID');
-
-            // Remove all previous options
-            while (select.firstChild) {
-                select.removeChild(select.firstChild);
-            }
-
+            while (select.firstChild) select.removeChild(select.firstChild);
             data.forEach(status => {
                 const option = document.createElement('option');
                 option.value = status.id;
                 option.text = status.name + " (" + status.id + ")";
                 select.appendChild(option);
             });
+        })
+        .catch(error => {
+            // Handle error
+            console.error("An error occurred fetching status IDs:", error);
         });
-});
 
-
-$("#editCustomerForm").submit(function(e) {
-    e.preventDefault();  // Prevent the form from submitting normally
-
-    var data = serializeToObject($(this).serializeArray());  // Convert the form data to object
-    var id = $("#edit_customer_id").val();  // Get the id of the customer to update
-
-    $.ajax({
-        url: '/update_customer/' + id,
-        type: 'PUT',
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        success: function(response) {
-            location.reload();
-        },
-        error: function(error) {
-            // Handle error: for example, show an error message
-        }
+    // Fetch available equipment types using jQuery
+    $('#EquipmentType').empty();
+    $.get('/availableEquipment', function(data) {
+        data.forEach(function(equipmentType) {
+            var option = new Option(equipmentType, equipmentType);
+            $('#EquipmentType').append($(option));
+        });
+    })
+    .fail(function(error) {
+        // Handle error
+        console.error("An error occurred fetching equipment types:", error);
     });
 });
+
 
 
 $("#addCustomerForm").submit(function(e) {
@@ -1028,6 +1057,25 @@ $("#addCustomerForm").submit(function(e) {
     });
 });
 
+$("#editCustomerForm").submit(function(e) {
+    e.preventDefault();  // Prevent the form from submitting normally
+
+    var data = serializeToObject($(this).serializeArray());  // Convert the form data to object
+    var id = $("#edit_customer_id").val();  // Get the id of the customer to update
+
+    $.ajax({
+        url: '/update_customer/' + id,
+        type: 'PUT',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(response) {
+            location.reload();
+        },
+        error: function(error) {
+            // Handle error: for example, show an error message
+        }
+    });
+});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                  CUSTOMER                                                                                                                  //     
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
