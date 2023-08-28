@@ -572,6 +572,7 @@ RENTED_STATUS_ID = 1
 
 
 
+
 @app.route('/create_customer', methods=['POST'])
 def create_customer():
     if not current_user.is_authenticated:
@@ -638,6 +639,27 @@ def create_customer():
         db.session.rollback()
         current_app.logger.error(f"An error occurred: {str(e)}")  # Logging the error
         return jsonify({'error': 'An error occurred while creating new customer and rental', 'details': str(e)}), 500
+
+
+@app.route('/create_equipment', methods=['POST'])
+def create_equipment():
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    data = request.get_json()
+    new_equipment = Equipment(
+        EquipmentType=data['EquipmentType'],
+        Condition=data['EquipmentCondition'],
+        StatusID=AVAILABLE_STATUS_ID
+    )
+    db.session.add(new_equipment)
+    
+    try:
+        db.session.commit()
+        return jsonify({'message': 'New equipment added successfully!'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'An error occurred while creating new equipment', 'details': str(e)}), 500
 
 
 @app.route('/create_rental', methods=['POST'])
@@ -748,6 +770,11 @@ def change_status():
 ##############################################################################################################################################################################################################################
 #                                                                    INACTIVE BUTTON                                                                                                                                         #
 ##############################################################################################################################################################################################################################
+
+
+
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5000, debug=True)
 
 
 if __name__ == '__main__':
