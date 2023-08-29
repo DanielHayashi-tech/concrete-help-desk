@@ -334,7 +334,7 @@
                 <td class="text-center rentals-return-time">{{ row.ReturnTime }}</td>
 
                 <td class="text-center">
-                    <button class="btn btn-primary edit-button-equipment" data-toggle="modal" data-target="#editEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
+                    <button class="btn btn-primary edit-button-rentals" data-toggle="modal" data-target="#editEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
                 </td>
             </tr>
             {% endfor %}
@@ -584,12 +584,6 @@
                         <label for="edit_customer_note">Customer Note</label>
                         <textarea name="CustomerNote" id="edit_customer_note" class="form-control" placeholder="Customer Note"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="edit_status_id">Status ID</label>
-                        <select class="form-control" id="edit_status_id" name="StatusID">
-                            <!-- Options will be dynamically generated -->
-                        </select>
-                    </div>
                  </div>
                  <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -598,6 +592,48 @@
              </form>
          </div>
      </div>
+</div>
+
+
+ <!-- Edit Rental Modal -->
+ <div class="modal fade" id="editRentalsModal" tabindex="-1" role="dialog" aria-labelledby="editRentalsModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editRentalsModalLabel">Edit Equipment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editRentalsForm">
+                <div class="modal-body">
+                    <!-- Hidden field for the equipment ID -->
+                    <input type="hidden" id="edit_rentals_id" name="RentalsID">
+                    <!-- Input fields for each column here -->
+                    <div class="form-group">
+                        <label for="editEquipmentType">Equipment Name</label>
+                        <input type="text" name="EquipmentType" id="editEquipmentType" class="form-control" placeholder="Equipment Type">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_rental_date">Date of Rental</label>
+                        <input type="text" name="RentalDate" id="edit_rental_date" class="form-control" placeholder="Equipment Condition">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_return_date">Date of Rental Return</label>
+                        <input type="text" name="ReturnDate" id="edit_return_date" class="form-control" placeholder="Equipment Condition">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_return_time">Time of Rental</label>
+                        <input type="text" name="ReturnTime" id="edit_return_time" class="form-control" placeholder="Equipment Condition">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
  <!-- Edit Equipment Modal -->
@@ -750,7 +786,7 @@ $("#addRentalForm").submit(function(event) {
 });
 
 
-$("#editRentalForm").submit(function(e) {
+$("#editRentalsForm").submit(function(e) {
     e.preventDefault();  
 
     var data = serializeToObject($(this).serializeArray());
@@ -915,29 +951,6 @@ var Customermapping = {
     "customer-status-id": "edit_status_id"  // Corrected this line
 };
 
-
-// Function to fetch the status IDs and populate the select list
-function fetchStatusIDs(select, status_id) {
-    return fetch('/getCustomer_status_ids')
-        .then(response => response.json())
-        .then(data => {
-            // Remove all previous options
-            while (select.firstChild) {
-                select.removeChild(select.firstChild);
-            }
-
-            data.forEach(status => {
-                const option = document.createElement('option');
-                option.value = status.id;
-                option.text = status.name + " (" + status.id + ")";
-                select.appendChild(option);
-            });
-
-            // Set the selected status id
-            select.value = status_id;
-        });
-}
-
 // Function to run when an edit button is clicked
 $(document).on("click", ".edit-button-customers", function () {
     var row = $(this).closest("tr"); // Get the row that the button is in
@@ -947,59 +960,12 @@ $(document).on("click", ".edit-button-customers", function () {
     for(var key in Customermapping){
         $('#'+Customermapping[key]).val( row.find('.'+key).text() );
     }
-    
     // Set status id as data attribute for the modal
     $('#editCustomerModal').data('status-id', status_id);
 });
 
-$('#editCustomerModal').on('show.bs.modal', function (event) {
-    // Fetch the status IDs from the server
-    fetch('/getCustomer_status_ids')
-        .then(response => response.json())
-        .then(data => {
-            const select = document.getElementById('edit_status_id');
-
-            // Remove all previous options
-            while (select.firstChild) {
-                select.removeChild(select.firstChild);
-            }
-
-            data.forEach(status => {
-                const option = document.createElement('option');
-                option.value = status.id;
-                option.text = status.name + " (" + status.id + ")";
-                select.appendChild(option);
-            });
-
-            // Fetch stored status id
-            var status_id = $(this).data('status-id');
-            
-            // Wait until the status IDs have been fetched and the options have been added
-            // before setting the value
-            fetchStatusIDs(select, status_id);
-        });
-    });
-
 
 $('#addCustomerModal').on('show.bs.modal', function () {
-    // Fetch the status IDs from the server
-    fetch('/getCustomer_status_ids')
-        .then(response => response.json())
-        .then(data => {
-            const select = document.getElementById('StatusID');
-            while (select.firstChild) select.removeChild(select.firstChild);
-            data.forEach(status => {
-                const option = document.createElement('option');
-                option.value = status.id;
-                option.text = status.name + " (" + status.id + ")";
-                select.appendChild(option);
-            });
-        })
-        .catch(error => {
-            // Handle error
-            console.error("An error occurred fetching status IDs:", error);
-        });
-
     // Fetch available equipment types using jQuery
     $('#EquipmentType').empty();
     $.get('/availableEquipment', function(data) {
@@ -1013,7 +979,6 @@ $('#addCustomerModal').on('show.bs.modal', function () {
         console.error("An error occurred fetching equipment types:", error);
     });
 });
-
 
 
 $("#addCustomerForm").submit(function(e) {
