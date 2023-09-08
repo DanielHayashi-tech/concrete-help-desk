@@ -105,10 +105,10 @@
             width: 15%; /* Increased width for the Internal Note column */
         }
 
-        .table-container .table thead th:nth-child(1),
+        /* .table-container .table thead th:nth-child(1),
         .table-container .table tbody td:nth-child(1) {
         display: none;
-        }
+        } */
 
         /* Move the title to the left */
         .table-title {
@@ -189,9 +189,9 @@
             color: #7d4627;
         }
 
-        .equipment-status-id-rental {
+        /* .equipment-status-id-rental {
     display: none;
-}
+} */
 
     </style>
 </head>
@@ -206,8 +206,6 @@
 <div class="text-center mt-4 mb-4">
     <h1>Customer Data</h1>
 </div>
-       
-<!-- Customer Table -->
 <div class="table-container">
          <!-- Customer Filter Section -->
          <div class="row mb-3">
@@ -301,13 +299,12 @@
 <div class="text-center mt-4 mb-4">
     <h1>Past Rentals!</h1>
 </div>
-
-<!-- Rentals Table -->
 <div class="table-container">
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="text-center">Equipment ID</th>
+                <th class="text-center">Rental ID</th>
+                <th class="text-center">Customer ID</th>
                 <th class="text-center">First Name</th>
                 <th class="text-center">Last Name</th>
                 <th class="text-center">Equipment Name</th>
@@ -322,9 +319,10 @@
         <tbody>
             {% for row in rental_data %}
             <tr>
-                <td class="text-center equipment-equipment-id">{{ row.EquipmentID }}</td>
-                <td class="text-center customer-first-name">{{ row.FirstName }}</td>
-                <td class="text-center customer-last-name">{{ row.LastName }}</td>
+                <td class="text-center rental-id">{{ row.RentalID }}</td>
+                <td class="text-center rentals-customer-id">{{ row.CustomerID }}</td>
+                <td class="text-center rentals-first-name">{{ row.FirstName }}</td>
+                <td class="text-center rentals-last-name">{{ row.LastName }}</td>
                 <td class="customer-equipment-type text-center equipment-equipment-type">{{ row.EquipmentType }}</td>
 
                 <td class="text-center equipment-status-id-rental">{{ row.EquipmentStatusID }} ({{ row.EquipmentStatusName }})</td>
@@ -334,7 +332,7 @@
                 <td class="text-center rentals-return-time">{{ row.ReturnTime }}</td>
 
                 <td class="text-center">
-                    <button class="btn btn-primary edit-button-rentals" data-toggle="modal" data-target="#editEquipmentModal" data-equipment-id="{{ row.EquipmentID }}">Edit</button>
+                    <button class="btn btn-primary edit-button-rentals" data-toggle="modal" data-target="#editRentalsModal" data-equipment-id="{{ row.RentalID }}">Edit</button>
                 </td>
             </tr>
             {% endfor %}
@@ -345,10 +343,10 @@
         <button class="btn btn-primary add-button" data-toggle="modal" data-target="#addEquipmentModal">Add Equipment</button>
     </div> -->
 </div>
+
 <div class="text-center mt-4 mb-4">
     <h1> All My Equipment! </h1>
 </div>
-<!-- Equipment Table -->
 <div class="table-container">
     <h3> Equipment Table!</h3>
     <table class="table table-striped">
@@ -596,35 +594,36 @@
 
 
  <!-- Edit Rental Modal -->
- <div class="modal fade" id="editRentalsModal" tabindex="-1" role="dialog" aria-labelledby="editRentalsModal" aria-hidden="true">
+ <div class="modal fade" id="editRentalsModal" tabindex="-1" role="dialog" aria-labelledby="editRentalsModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editRentalsModalLabel">Edit Equipment</h5>
+                <h5 class="modal-title" id="editRentalsModalLabel">Edit Rental</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form id="editRentalsForm">
                 <div class="modal-body">
-                    <!-- Hidden field for the equipment ID -->
-                    <input type="hidden" id="edit_rentals_id" name="RentalsID">
-                    <!-- Input fields for each column here -->
+                    <div class="form-group">
+                        <label for="editRentalID">Rental ID</label>
+                        <input type="text" name="RentalID" id="editRentalID" class="form-control">
+                    </div>
                     <div class="form-group">
                         <label for="editEquipmentType">Equipment Name</label>
-                        <input type="text" name="EquipmentType" id="editEquipmentType" class="form-control" placeholder="Equipment Type">
+                        <input type="text" name="EquipmentType" id="editEquipmentType" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="edit_rental_date">Date of Rental</label>
-                        <input type="text" name="RentalDate" id="edit_rental_date" class="form-control" placeholder="Equipment Condition">
+                        <label for="editRentalDate">Date of Rental</label>
+                        <input type="text" name="RentalDate" id="editRentalDate" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="edit_return_date">Date of Rental Return</label>
-                        <input type="text" name="ReturnDate" id="edit_return_date" class="form-control" placeholder="Equipment Condition">
+                        <label for="editReturnDate">Date of Rental Return</label>
+                        <input type="datetime" name="ReturnDate" id="editReturnDate" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="edit_return_time">Time of Rental</label>
-                        <input type="text" name="ReturnTime" id="edit_return_time" class="form-control" placeholder="Equipment Condition">
+                        <label for="editReturnTime">Time of Rental</label>
+                        <input type="text" name="ReturnTime" id="editReturnTime" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -694,14 +693,16 @@ function serializeToObject(formArray) {
 
 // Mapping for Rentals
 var mappingRentals = {
-    "rentals-id": "edit_rentals_id",
-    "rentals-fk-customer-id": "edit_customer_id_rentals",
-    "rentals-equipment-fk-id": "edit_equipment_id_rentals",
-    "rentals-rental-date": "edit_rental_date",
-    "rentals-return-date": "edit_return_date",
-    "rentals-return-time": "edit_return_time",
+    "rental-id": "editRentalID",
+    "rentals-customer-id": "edit_customer_id_rentals",
+    "rentals-equipment-id": "edit_equipment_id_rentals",
+    "rentals-rental-date": "editRentalDate",
+    "rentals-return-date": "editReturnDate",
+    "rentals-return-time": "editReturnTime",
     "rentals-internal-note": "edit_internal_note",
-    "rentals-status-id": "edit_status_id_rental"
+    "rentals-status-id": "edit_status_id_rental",
+    "equipment-equipment-type": "editEquipmentType"
+
 };
 
 function fetchStatusIDsRental(select, status_id) {
@@ -752,7 +753,7 @@ $(document).on("click", ".edit-button-rentals", function () {
     fetchStatusIDsRental(select, status_id)  // Here's where we fetch the status IDs
     .then(() => {
         // Now you can show the modal
-        $('#editRentalModal').modal('show');
+        $('#editRentalsModal').modal('show');
     });
 });
 
@@ -790,7 +791,7 @@ $("#editRentalsForm").submit(function(e) {
     e.preventDefault();  
 
     var data = serializeToObject($(this).serializeArray());
-    var id = $("#edit_rentals_id").val();
+    var id = $("#editRentalID").val();
 
     $.ajax({
         url: '/update_rentals/' + id,
